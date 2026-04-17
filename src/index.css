@@ -11,6 +11,8 @@
     --background--primary-color: #0f0f0f;
     --background--secondary-color: #5f5e5e;
     --text-color: #f3f0ef;
+    --text--secondary-color: #ffb4aa;
+    --text--tertiary-color: #929090;
 }
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
