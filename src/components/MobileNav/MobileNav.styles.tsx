@@ -26,11 +26,13 @@ export const StyledMobileLink = styled(Link)<StyledLinkProps>`
     color: ${({ $isLogo }) =>
         $isLogo ? "var(--primary-color)" : "var(--text--tertiary-color)"};
     font-weight: bold;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     padding: 1rem;
     border-radius: 20px;
     text-align: center;
+    height: 100%;
+    width: 100%;
     &.active {
         color: var(--text-color);
         font-weight: bold;
