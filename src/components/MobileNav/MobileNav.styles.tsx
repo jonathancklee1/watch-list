@@ -2,33 +2,38 @@ import { Link } from "@tanstack/react-router";
 import styled from "styled-components";
 import type { StyledLinkProps } from "../../utils/types";
 
-export const NavWrapper = styled.nav`
+export const MobileNavWrapper = styled.nav`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    background-color: #0f0f0f;
-    padding-block: 1rem;
-`;
+    gap: 0.2rem;
+    background-color: var(--background--secondary-color);
+    padding: 0.5rem;
+    padding-block: 0.5em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
 
-export const LinkWrapper = styled.div`
-    display: none;
-    gap: 1rem;
     @media (min-width: 768px) {
-        display: flex;
+        display: none;
     }
 `;
 
-export const StyledLink = styled(Link)<StyledLinkProps>`
+export const StyledMobileLink = styled(Link)<StyledLinkProps>`
     text-decoration: none;
     color: ${({ $isLogo }) =>
         $isLogo ? "var(--primary-color)" : "var(--text--tertiary-color)"};
-    font-weight: ${({ $isLogo }) => ($isLogo ? "bold" : "600")};
-    font-size: ${({ $isLogo }) => ($isLogo ? "1.5rem" : "1rem")};
+    font-weight: bold;
+    font-size: 0.8rem;
     text-transform: uppercase;
+    padding: 1rem;
+    border-radius: 20px;
+    text-align: center;
     &.active {
         color: var(--text-color);
         font-weight: bold;
-        border-bottom: 2px solid var(--primary-color);
+        background-color: var(--primary-color);
     }
 `;

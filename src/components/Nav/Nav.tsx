@@ -4,18 +4,47 @@ import { Route as tvShowsRoute } from "../../routes/tvShows.tsx";
 import { Route as animeRoute } from "../../routes/anime.tsx";
 import { Route as watchListRoute } from "../../routes/watchList.tsx";
 import { LinkWrapper, NavWrapper, StyledLink } from "./Nav.styles.tsx";
+import UserButton from "../UserButton/UserButton.tsx";
 function Nav() {
+    const navLinks = [
+        {
+            label: "Movies",
+            route: moviesRoute,
+        },
+        {
+            label: "TV Shows",
+            route: tvShowsRoute,
+        },
+        {
+            label: "Anime",
+            route: animeRoute,
+        },
+        {
+            label: "My Board",
+            route: watchListRoute,
+        },
+    ];
     return (
-        <NavWrapper>
-            <StyledLink to={homeRoute.to} $isLogo>
-                MyWatchList
-            </StyledLink>
-            <LinkWrapper>
-                <StyledLink to={moviesRoute.to}>Movies</StyledLink>
-                <StyledLink to={tvShowsRoute.to}>TV Shows</StyledLink>
-                <StyledLink to={animeRoute.to}>Anime</StyledLink>
-                <StyledLink to={watchListRoute.to}>My Board</StyledLink>
-            </LinkWrapper>
+        <NavWrapper className="container">
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                }}
+            >
+                <StyledLink to={homeRoute.to} $isLogo>
+                    MyWatchList
+                </StyledLink>
+                <LinkWrapper>
+                    {navLinks.map((link) => (
+                        <StyledLink key={link.label} to={link.route.to}>
+                            {link.label}
+                        </StyledLink>
+                    ))}
+                </LinkWrapper>
+            </div>
+            <UserButton />
         </NavWrapper>
     );
 }
