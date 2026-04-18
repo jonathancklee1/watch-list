@@ -7,7 +7,24 @@ import { Provider } from "./components/ui/provider";
 
 // Set up a Router instance
 const router = createRouter({ routeTree });
+import {
+    ChakraProvider,
+    createSystem,
+    defaultConfig,
+    defineConfig,
+} from "@chakra-ui/react";
 
+const config = defineConfig({
+    theme: {
+        tokens: {
+            colors: {
+                primary: {},
+            },
+        },
+    },
+});
+
+const system = createSystem(defaultConfig, config);
 // Register things for typesafety
 declare module "@tanstack/react-router" {
     interface Register {
@@ -17,7 +34,9 @@ declare module "@tanstack/react-router" {
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <Provider>
-            <RouterProvider router={router} />
+            <ChakraProvider value={system}>
+                <RouterProvider router={router} />
+            </ChakraProvider>
         </Provider>
     </StrictMode>,
 );

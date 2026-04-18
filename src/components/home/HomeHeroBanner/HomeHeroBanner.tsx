@@ -1,4 +1,3 @@
-import { Heading } from "@chakra-ui/react";
 import type { HomeHeroBannerType } from "../../../utils/types";
 import { SearchInput } from "../../SearchInput/SearchInput";
 
@@ -12,7 +11,7 @@ function HomeHeroBanner({ category }: HomeHeroBannerType) {
                 <span>Discover </span>
                 {category ?? "Your Next Watch"}
             </StyledHeading>
-            <SearchInput />
+            <SearchInput category={category} />
         </StyledHomeHeroBanner>
     );
 }
