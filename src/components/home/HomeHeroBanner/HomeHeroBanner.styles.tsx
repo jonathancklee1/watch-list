@@ -10,7 +10,7 @@ export const StyledHomeHeroBanner = styled.div`
     justify-content: center;
     align-items: center;
     @media (min-width: 768px) {
-        height: 50vh;
+        height: 40vh;
         gap: 2rem;
     }
 `;

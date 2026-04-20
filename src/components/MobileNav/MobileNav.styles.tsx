@@ -15,6 +15,7 @@ export const MobileNavWrapper = styled.nav`
     left: 0;
     width: 100%;
     border-radius: 20px 20px 0 0;
+    z-index: 100;
 
     @media (min-width: 768px) {
         display: none;

@@ -1,9 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import HomeHeroBanner from "../components/home/HomeHeroBanner/HomeHeroBanner";
 
-export const Route = createFileRoute('/anime')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/anime")({
+    component: RouteComponent,
+});
 
 function RouteComponent() {
-  return <div>Hello "/anime"!</div>
+    return (
+        <div>
+            <HomeHeroBanner category="Anime" />
+        </div>
+    );
 }

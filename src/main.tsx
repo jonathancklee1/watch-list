@@ -7,36 +7,22 @@ import { Provider } from "./components/ui/provider";
 
 // Set up a Router instance
 const router = createRouter({ routeTree });
-import {
-    ChakraProvider,
-    createSystem,
-    defaultConfig,
-    defineConfig,
-} from "@chakra-ui/react";
 
-const config = defineConfig({
-    theme: {
-        tokens: {
-            colors: {
-                primary: {},
-            },
-        },
-    },
-});
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const system = createSystem(defaultConfig, config);
 // Register things for typesafety
 declare module "@tanstack/react-router" {
     interface Register {
         router: typeof router;
     }
 }
+const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <Provider>
-            <ChakraProvider value={system}>
+            <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router} />
-            </ChakraProvider>
+            </QueryClientProvider>
         </Provider>
     </StrictMode>,
 );

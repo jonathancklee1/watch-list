@@ -5,7 +5,7 @@ import { StyledHeading, StyledHomeHeroBanner } from "./HomeHeroBanner.styles";
 
 function HomeHeroBanner({ category }: HomeHeroBannerType) {
     return (
-        <StyledHomeHeroBanner className="container">
+        <StyledHomeHeroBanner>
             {/* Animate the "watch" so that it typewrites out Movie, Anime, Show" */}
             <StyledHeading>
                 <span>Discover </span>
