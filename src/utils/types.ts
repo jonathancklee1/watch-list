@@ -2,9 +2,9 @@ export type StyledLinkProps = {
     $isLogo?: boolean;
     isActive?: boolean;
 };
-
+export type MediaType = "Movies" | "TV Shows" | "Anime";
 export type HomeHeroBannerType = {
-    category: "Movies" | "TV Shows" | "Anime" | null;
+    category: MediaType | null;
 };
 type Image = {
     src: string;

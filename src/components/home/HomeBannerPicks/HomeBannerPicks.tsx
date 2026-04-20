@@ -6,7 +6,7 @@ import { isMobile } from "../../../utils/helpers/isMobile";
 import { Grid } from "@chakra-ui/react";
 
 export function HomeBannerPicks() {
-    const [isMobileState, setIsMobileState] = useState(false);
+    const [isMobileState, setIsMobileState] = useState(true);
     const { data: trendingMovies, isLoading } = useTMDBApi({
         queryKey: "trending-movies",
         param: "trending/movie/day",
@@ -17,6 +17,7 @@ export function HomeBannerPicks() {
         trendingMovies?.results[1],
         trendingMovies?.results[2],
     ];
+
     window.addEventListener("resize", () => {
         if (isMobile()) {
             setIsMobileState(true);
@@ -24,6 +25,7 @@ export function HomeBannerPicks() {
             setIsMobileState(false);
         }
     });
+
     return (
         <>
             {isMobileState ? (

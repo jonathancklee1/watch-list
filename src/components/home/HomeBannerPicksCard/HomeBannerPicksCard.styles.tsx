@@ -35,6 +35,9 @@ export const StyledCard = styled(Card.Root)`
     justify-content: flex-end;
     border: none;
     border-radius: 20px;
+    @media (min-width: 768px) {
+        aspect-ratio: 9/16;
+    }
 `;
 export const StyledTag = styled(Tag.Root)`
     background-color: var(--primary-color);
