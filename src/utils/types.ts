@@ -7,22 +7,34 @@ export type HomeHeroBannerType = {
     category: MediaType | null;
 };
 type Image = {
-    src: string;
-    alt: string;
+    src?: string;
+    alt?: string;
 };
 
 export type CardProps = {
-    data: ApiMovieData | null;
+    data: CardType | null;
     isLoading?: boolean;
 };
 
 export interface ApiMovieData {
-    id: number;
-    title: string;
-    image: string;
-    overview: string;
-    release_date: string;
-    poster_path: string;
+    id?: number;
+    title?: string;
+    name?: string;
+    image?: string;
+    overview?: string;
+    release_date?: string;
+    poster_path?: string;
+}
+export interface CardType {
+    id?: number;
+    title?: string;
+    name?: string;
+    image?: Image;
+    overview?: string;
+    releaseDate?: string;
+    posterPath?: string;
+    description?: string;
+    link?: string;
 }
 export interface StyledButtonProps {
     $secondary?: boolean;

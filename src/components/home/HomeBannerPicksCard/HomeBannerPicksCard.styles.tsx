@@ -9,6 +9,7 @@ export const StyledImage = styled(Image)`
     object-fit: cover;
     width: 100%;
     height: 100%;
+    object-position: 50% 25%;
 `;
 export const StyledTitle = styled(Card.Title)`
     font-weight: bold;
@@ -27,10 +28,9 @@ export const StyledCard = styled(Card.Root)`
     overflow: hidden;
     position: relative;
     background-color: var(--background--secondary-color);
-    height: 100%;
-    max-height: 60vh;
+    max-height: 500px;
     width: 100%;
-    aspect-ratio: 3/4;
+    aspect-ratio: 5/8;
     gap: 1rem;
     justify-content: flex-end;
     border: none;

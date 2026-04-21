@@ -11,11 +11,12 @@ import {
 } from "./HomeBannerPicksCard.styles";
 import { useGetPosterImage } from "../../../utils/data-hooks/useGetPosterImage";
 export function HomeBannerPicksCard({ data, isLoading }: CardProps) {
+    console.log(data, "data");
     return (
         <StyledCard>
             <StyledImage
                 src={useGetPosterImage({
-                    posterPath: data?.poster_path,
+                    posterPath: data?.image?.src,
                 })}
                 alt={data?.title}
             />
@@ -28,7 +29,7 @@ export function HomeBannerPicksCard({ data, isLoading }: CardProps) {
                         {isLoading ? "Loading..." : data?.title}
                     </StyledTitle>
                     <StyledDescription>
-                        {isLoading ? "Loading..." : data?.overview}
+                        {isLoading ? "Loading..." : data?.description}
                     </StyledDescription>
                 </Card.Body>
                 <Card.Footer gap="2" zIndex={10} mt={"1rem"}>

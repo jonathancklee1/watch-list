@@ -5,6 +5,7 @@ import { HomeBannerPicks } from "../components/home/HomeBannerPicks/HomeBannerPi
 import { PopularMediaRow } from "../components/home/PopularMediaRow/PopularMediaRow";
 import { useTMDBApi } from "../utils/data-hooks/useTMDBApi";
 import { HomeBannerPicksCard } from "../components/home/HomeBannerPicksCard/HomeBannerPicksCard";
+import { mapToCard } from "../utils/helpers/mapToCard";
 
 export const Route = createFileRoute("/")({
     component: RouteComponent,
@@ -25,15 +26,15 @@ function RouteComponent() {
     });
     const popularMoviesArray =
         popularMovies?.results
-            .slice(0, 5)
+            .slice(0, 10)
             .map((movie) => (
-                <HomeBannerPicksCard key={movie?.id} data={movie} />
+                <HomeBannerPicksCard key={movie?.id} data={mapToCard(movie)} />
             )) || [];
     const popularTVShowsArray =
         popularTVShows?.results
-            .slice(0, 5)
+            .slice(0, 10)
             .map((movie) => (
-                <HomeBannerPicksCard key={movie?.id} data={movie} />
+                <HomeBannerPicksCard key={movie?.id} data={mapToCard(movie)} />
             )) || [];
     console.log(popularMovies);
     console.log(popularTVShows);

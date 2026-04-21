@@ -1,18 +1,17 @@
-import type { ApiMovieData, CardProps } from "../../utils/types";
+import type { ApiMovieData, CardType } from "../../utils/types";
 export function mapToCard<TData extends ApiMovieData>(
     data: TData,
-): CardProps | null {
+): CardType | null {
     if (!data) return null;
     return {
         id: data.id,
-        title: data.title,
+        title: data.title || data.name,
         image: {
-            src: data.image,
+            src: data.poster_path,
             alt: data.title,
         },
         description: data.overview,
-        // Optional chaining added in case release_date is empty
-        year: data.release_date?.split("-")[0] || "Unknown",
+        releaseDate: data.release_date?.split("-")[0] || "Unknown",
         link: `/movie/${data.id}`,
     };
 }

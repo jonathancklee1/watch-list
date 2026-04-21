@@ -4,6 +4,7 @@ import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { HomeBannerPicksCard } from "../HomeBannerPicksCard/HomeBannerPicksCard";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { Grid } from "@chakra-ui/react";
+import { mapToCard } from "../../../utils/helpers/mapToCard";
 
 export function HomeBannerPicks() {
     const [isMobileState, setIsMobileState] = useState(true);
@@ -38,7 +39,7 @@ export function HomeBannerPicks() {
                         >
                             <HomeBannerPicksCard
                                 key={item?.id}
-                                data={item}
+                                data={mapToCard(item)}
                                 isLoading={isLoading}
                             />
                         </Suspense>
@@ -53,7 +54,7 @@ export function HomeBannerPicks() {
                         >
                             <HomeBannerPicksCard
                                 key={item?.id}
-                                data={item}
+                                data={mapToCard(item)}
                                 isLoading={isLoading}
                             />
                         </Suspense>
