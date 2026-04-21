@@ -9,17 +9,12 @@ import {
     StyledDescription,
     StyledInfoWrapper,
 } from "./HomeBannerPicksCard.styles";
-import { useGetPosterImage } from "../../../utils/data-hooks/useGetPosterImage";
+
 export function HomeBannerPicksCard({ data, isLoading }: CardProps) {
-    console.log(data, "data");
+    // console.log(data, "data");
     return (
         <StyledCard>
-            <StyledImage
-                src={useGetPosterImage({
-                    posterPath: data?.image?.src,
-                })}
-                alt={data?.title}
-            />
+            <StyledImage src={data?.image?.src} alt={data?.title} />
             <StyledInfoWrapper>
                 <Card.Body gap="2" zIndex={10} justifyContent={"end"} pb="0">
                     <StyledTag>

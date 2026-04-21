@@ -5,6 +5,8 @@ import { HomeBannerPicksCard } from "../HomeBannerPicksCard/HomeBannerPicksCard"
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { Grid } from "@chakra-ui/react";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
+import { getPosterImage } from "../../../utils/helpers/getPosterImage";
+import { TMDB_IMAGE_URL } from "../../../utils/constants";
 
 export function HomeBannerPicks() {
     const [isMobileState, setIsMobileState] = useState(true);
@@ -12,7 +14,7 @@ export function HomeBannerPicks() {
         queryKey: "trending-movies",
         param: "trending/movie/day",
     });
-    console.log(trendingMovies);
+    // console.log(trendingMovies);
     const trendingArray = [
         trendingMovies?.results[0],
         trendingMovies?.results[1],
@@ -26,24 +28,31 @@ export function HomeBannerPicks() {
             setIsMobileState(false);
         }
     });
-
+    console.log(trendingArray);
     return (
         <>
             {isMobileState ? (
                 <CardCarousel
                     slidesPerPage={1}
-                    items={trendingArray.map((item) => (
-                        <Suspense
-                            key={item?.id}
-                            fallback={<div>Loading...</div>}
-                        >
-                            <HomeBannerPicksCard
+                    items={trendingArray
+                        .map((item) => {
+                            return {
+                                ...item,
+                                poster_path: `${TMDB_IMAGE_URL}${item?.poster_path} `,
+                            };
+                        })
+                        .map((item) => (
+                            <Suspense
                                 key={item?.id}
-                                data={mapToCard(item)}
-                                isLoading={isLoading}
-                            />
-                        </Suspense>
-                    ))}
+                                fallback={<div>Loading...</div>}
+                            >
+                                <HomeBannerPicksCard
+                                    key={item?.id}
+                                    data={mapToCard(item)}
+                                    isLoading={isLoading}
+                                />
+                            </Suspense>
+                        ))}
                 />
             ) : (
                 <Grid templateColumns="repeat(3, 1fr)" gap="6">
