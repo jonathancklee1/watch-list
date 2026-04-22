@@ -31,17 +31,20 @@ function RouteComponent() {
         queryKey: `anime`,
         param: `tv/popular`,
     });
+    type MovieType = (typeof popularMovies.results)[0];
+    type ShowType = (typeof popularTVShows.results)[0];
+    type AnimeType = (typeof popularAnime.results)[0];
     const popularMoviesArray =
         (popularMovies?.results &&
             popularMovies?.results
                 .slice(0, 10)
-                .map((movie) => {
+                .map((movie: MovieType) => {
                     return {
                         ...movie,
                         poster_path: `${TMDB_IMAGE_URL}${movie?.poster_path} `,
                     };
                 })
-                .map((movie) => (
+                .map((movie: MovieType) => (
                     <HomeBannerPicksCard
                         key={movie?.id}
                         data={mapToCard(movie)}
@@ -52,13 +55,13 @@ function RouteComponent() {
         (popularTVShows?.results &&
             popularTVShows?.results
                 .slice(0, 10)
-                .map((show) => {
+                .map((show: ShowType) => {
                     return {
                         ...show,
                         poster_path: `${TMDB_IMAGE_URL}${show?.poster_path} `,
                     };
                 })
-                .map((show) => (
+                .map((show: ShowType) => (
                     <HomeBannerPicksCard
                         key={show?.id}
                         data={mapToCard(show)}
@@ -68,7 +71,7 @@ function RouteComponent() {
     const popularAnimeArray =
         popularAnime?.data
             .slice(0, 10)
-            .map((anime) => (
+            .map((anime: AnimeType) => (
                 <HomeBannerPicksCard key={anime?.id} data={mapToCard(anime)} />
             )) || [];
     // console.log(popularMovies);

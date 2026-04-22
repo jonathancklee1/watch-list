@@ -33,5 +33,6 @@ a {
     padding-bottom: 6rem;
     @media (min-width: 768px) {
         padding: 0 2rem;
+        padding-bottom: 6rem;
     }
 }

@@ -19,7 +19,12 @@ export function HomeBannerPicks() {
         trendingMovies?.results[0],
         trendingMovies?.results[1],
         trendingMovies?.results[2],
-    ];
+    ].map((item) => {
+        return {
+            ...item,
+            poster_path: `${TMDB_IMAGE_URL}${item?.poster_path} `,
+        };
+    });
 
     window.addEventListener("resize", () => {
         if (isMobile()) {
@@ -34,25 +39,18 @@ export function HomeBannerPicks() {
             {isMobileState ? (
                 <CardCarousel
                     slidesPerPage={1}
-                    items={trendingArray
-                        .map((item) => {
-                            return {
-                                ...item,
-                                poster_path: `${TMDB_IMAGE_URL}${item?.poster_path} `,
-                            };
-                        })
-                        .map((item) => (
-                            <Suspense
+                    items={trendingArray.map((item) => (
+                        <Suspense
+                            key={item?.id}
+                            fallback={<div>Loading...</div>}
+                        >
+                            <HomeBannerPicksCard
                                 key={item?.id}
-                                fallback={<div>Loading...</div>}
-                            >
-                                <HomeBannerPicksCard
-                                    key={item?.id}
-                                    data={mapToCard(item)}
-                                    isLoading={isLoading}
-                                />
-                            </Suspense>
-                        ))}
+                                data={mapToCard(item)}
+                                isLoading={isLoading}
+                            />
+                        </Suspense>
+                    ))}
                 />
             ) : (
                 <Grid templateColumns="repeat(3, 1fr)" gap="6">

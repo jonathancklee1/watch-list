@@ -3,7 +3,7 @@ import { StyledButton } from "./Button.styles";
 import type { ButtonProps as ChakraButtonProps } from "@chakra-ui/react";
 
 type ButtonProps = {
-    label: string;
+    label?: string;
     href?: string;
 } & ChakraButtonProps &
     StyledButtonProps;

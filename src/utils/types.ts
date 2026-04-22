@@ -38,4 +38,5 @@ export interface CardType {
 }
 export interface StyledButtonProps {
     $secondary?: boolean;
+    $action?: boolean;
 }
