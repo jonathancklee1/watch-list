@@ -35,9 +35,10 @@ export const StyledCard = styled(Card.Root)`
     justify-content: flex-end;
     border: none;
     border-radius: 20px;
-    transition: scale 0.3s ease;
+    transition: all 0.3s ease;
     &:hover {
-        scale: 1.05;
+        scale: 1.025;
+        border-radius: 0px;
     }
     @media (min-width: 768px) {
         aspect-ratio: 9/16;

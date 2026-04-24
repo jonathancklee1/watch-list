@@ -1,12 +1,14 @@
-import { Group, InputGroup } from "@chakra-ui/react";
+import { Group, InputGroup, Text } from "@chakra-ui/react";
 
 import { LuSearch } from "react-icons/lu";
 import { Button } from "../Button/Button";
 import { StyledInput } from "./SearchInput.styles";
 export function SearchInput({
     category,
+    subText,
 }: {
-    category: "Movies" | "TV Shows" | "Anime" | null;
+    category?: "Movies" | "TV Shows" | "Anime";
+    subText?: string;
 }) {
     return (
         <Group attached w={"100%"} maxW={"600px"}>
@@ -24,6 +26,7 @@ export function SearchInput({
                 paddingBlock={{ base: "1.5rem", md: "2rem" }}
                 label={"Search"}
             />
+            {subText && <Text>{subText}</Text>}
         </Group>
     );
 }
