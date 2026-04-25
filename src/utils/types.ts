@@ -35,7 +35,11 @@ export interface CardType {
     posterPath?: string;
     description?: string;
     link?: string;
+    rating?: number;
+    runTime?: string;
+    genres?: string[];
 }
+
 export interface StyledButtonProps {
     $secondary?: boolean;
     $action?: boolean;

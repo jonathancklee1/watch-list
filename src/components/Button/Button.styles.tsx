@@ -9,9 +9,11 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
             : "var(--button--primary-color)"};
     font-weight: bold;
     transition: background-color 0.3s ease;
+    border-radius: ${(props) => (props.$secondary ? "10px" : "5px")};
     &:hover {
         background-color: var(--secondary-color);
     }
+
     ${(props) =>
         props.$action &&
         css`

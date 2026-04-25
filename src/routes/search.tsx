@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import styled from "styled-components";
 import { SearchInput } from "../components/SearchInput/SearchInput";
 import { SearchTermText } from "../components/search/SearchTermText/SearchTermText";
+import { SearchFilterButtons } from "../components/search/SearchFilterButtons/SearchFilterButtons";
+import { SearchGrid } from "../components/search/SearchGrid/SearchGrid";
 
 export const Route = createFileRoute("/search")({
     component: RouteComponent,
@@ -9,9 +11,10 @@ export const Route = createFileRoute("/search")({
 const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     padding-block: 2rem;
 `;
+
 function RouteComponent() {
     const searchTerm = "Neon"; //Get search term from params
     const searchResultsNumber = 10;
@@ -22,6 +25,8 @@ function RouteComponent() {
                 term={searchTerm}
                 resultsNumber={searchResultsNumber}
             />
+            <SearchFilterButtons />
+            <SearchGrid />
         </PageWrapper>
     );
 }
