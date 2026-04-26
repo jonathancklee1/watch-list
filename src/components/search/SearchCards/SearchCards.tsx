@@ -24,15 +24,9 @@ export function SearchCards({ data, isLoading }: CardProps) {
                     zIndex={2}
                     disabled={isLoading}
                 />
-                <StyledImage
-                    src={
-                        data?.image?.src ??
-                        "https://image.tmdb.org/t/p/w500/9iuGBLJBRuGKR6nRL4SxUV1tIdt.jpg "
-                    }
-                    alt={data?.title}
-                />
+                <StyledImage src={data?.image?.src ?? ""} alt={data?.title} />
                 <StyledTag>
-                    <BiStar />{" "}
+                    <BiStar />
                     {isLoading ? (
                         <Skeleton height="5" />
                     ) : (
@@ -44,6 +38,7 @@ export function SearchCards({ data, isLoading }: CardProps) {
                 gap=".5rem"
                 zIndex={10}
                 pb="0"
+                px="1rem"
                 flexDir={"column"}
                 alignItems={"start"}
             >

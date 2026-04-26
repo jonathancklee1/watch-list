@@ -4,7 +4,7 @@ export type StyledLinkProps = {
 };
 export type MediaType = "Movies" | "TV Shows" | "Anime";
 export type HomeHeroBannerType = {
-    category: MediaType | null;
+    category?: MediaType;
 };
 type Image = {
     src?: string;
@@ -44,3 +44,5 @@ export interface StyledButtonProps {
     $secondary?: boolean;
     $action?: boolean;
 }
+
+export type FilterCategories = "All" | "TV Shows" | "Movies" | "Anime";

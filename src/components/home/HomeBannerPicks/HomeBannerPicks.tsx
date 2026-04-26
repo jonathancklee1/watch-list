@@ -1,19 +1,15 @@
-import { Suspense, useEffect, useState } from "react";
-import { useTMDBApi } from "../../../utils/data-hooks/useTMDBApi";
+import { Suspense, useState } from "react";
+import { useTrendingMovies } from "../../../utils/data-hooks/useTrendingMovies";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { HomeBannerPicksCard } from "../HomeBannerPicksCard/HomeBannerPicksCard";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { Grid } from "@chakra-ui/react";
-import { mapToCard } from "../../../utils/helpers/mapToCard";
-import { getPosterImage } from "../../../utils/helpers/getPosterImage";
 import { TMDB_IMAGE_URL } from "../../../utils/constants";
+import { mapToCard } from "../../../utils/helpers/mapToCard";
 
 export function HomeBannerPicks() {
     const [isMobileState, setIsMobileState] = useState(true);
-    const { data: trendingMovies, isLoading } = useTMDBApi({
-        queryKey: "trending-movies",
-        param: "trending/movie/day",
-    });
+    const { data: trendingMovies, isLoading } = useTrendingMovies();
     // console.log(trendingMovies);
     const trendingArray = [
         trendingMovies?.results[0],

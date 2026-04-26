@@ -1,21 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 
-export function useTMDBApi({
-    queryKey,
-    param,
-}: {
-    queryKey: string;
-    param?: string;
-}) {
+// Generic base hook for common TMDB logic
+export function useTMDBQuery(
+    endpoint: string,
+    params: Record<string, string> = {},
+) {
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-    // const url = `'https://api.themoviedb.org/3/${path}`;
-    const url = `https://api.themoviedb.org/3/${param}?api_key=${apiKey}&language=en-US`;
+    const url = new URL(`https://api.themoviedb.org/3/${endpoint}`);
+    url.searchParams.set("api_key", apiKey);
+    url.searchParams.set("language", "en-US");
 
-    const fetchQuery = () => fetch(url).then((res) => res.json());
-
-    const { data, isLoading, error } = useQuery({
-        queryKey: [queryKey],
-        queryFn: fetchQuery,
+    Object.entries(params).forEach(([key, value]) => {
+        url.searchParams.set(key, value);
     });
-    return { data, isLoading, error };
+
+    return useQuery({
+        queryKey: [endpoint, params],
+        queryFn: () => fetch(url).then((res) => res.json()),
+    });
 }

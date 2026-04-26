@@ -17,7 +17,13 @@ export const StyledImage = styled(Image)`
 export const StyledTitle = styled(Card.Title)`
     font-weight: bold;
     color: var(--text-color);
-    font-size: 1.75rem;
+    font-size: 1.2rem;
+    line-clamp: 2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 3.5rem;
 `;
 export const StyledDescription = styled(Card.Description)`
     color: var(--text--secondary-color);
@@ -61,6 +67,7 @@ export const StyledImageWrapper = styled(Card.Body)`
     aspect-ratio: 5/6;
     overflow: hidden;
     border-radius: 20px;
+    flex-shrink: 0;
     &:hover ${StyledImage} {
         transform: scale(1.025);
     }

@@ -4,9 +4,14 @@ import { SearchInput } from "../components/SearchInput/SearchInput";
 import { SearchTermText } from "../components/search/SearchTermText/SearchTermText";
 import { SearchFilterButtons } from "../components/search/SearchFilterButtons/SearchFilterButtons";
 import { SearchGrid } from "../components/search/SearchGrid/SearchGrid";
+import { useState } from "react";
+import { useSearchMovies } from "../utils/data-hooks/useSearchMovies";
 
 export const Route = createFileRoute("/search")({
     component: RouteComponent,
+    validateSearch: (search: Record<string, unknown>) => ({
+        search: (search.search as string) || "",
+    }),
 });
 const PageWrapper = styled.div`
     display: flex;
@@ -16,17 +21,21 @@ const PageWrapper = styled.div`
 `;
 
 function RouteComponent() {
-    const searchTerm = "Neon"; //Get search term from params
+    const { search } = Route.useSearch();
+    const [searchTerm, setSearchTerm] = useState(search || "");
     const searchResultsNumber = 10;
+    console.log(searchTerm, " url");
+    const { data } = useSearchMovies(searchTerm, searchResultsNumber);
+    console.log(data, "movies data");
     return (
         <PageWrapper className="container">
-            <SearchInput />
-            <SearchTermText
-                term={searchTerm}
-                resultsNumber={searchResultsNumber}
+            <SearchInput
+                searchValue={searchTerm}
+                setSearchValue={setSearchTerm}
             />
+            <SearchTermText term={search} resultsNumber={searchResultsNumber} />
             <SearchFilterButtons />
-            <SearchGrid />
+            <SearchGrid searchResults={data?.results} />
         </PageWrapper>
     );
 }

@@ -1,4 +1,5 @@
 import type { ApiMovieData, CardType } from "../../utils/types";
+import { getPosterImage } from "./getPosterImage";
 export function mapToCard<TData extends ApiMovieData>(
     data: TData,
 ): CardType | null {
@@ -7,7 +8,9 @@ export function mapToCard<TData extends ApiMovieData>(
         id: data.id,
         title: data.title_english || data.title || data.name,
         image: {
-            src: data.poster_path || data?.images?.webp.large_image_url,
+            src: data.poster_path
+                ? getPosterImage(data.poster_path)
+                : data?.images?.webp.large_image_url,
             alt: data.title,
         },
         description: data.overview || data.synopsis,
