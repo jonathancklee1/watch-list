@@ -24,6 +24,9 @@ export interface ApiMovieData {
     overview?: string;
     release_date?: string;
     poster_path?: string;
+    vote_average?: number;
+    genre_ids?: number[];
+    title_english?: string;
 }
 export interface CardType {
     id?: number;
@@ -37,7 +40,7 @@ export interface CardType {
     link?: string;
     rating?: number;
     runTime?: string;
-    genres?: string[];
+    genres?: string | number[];
 }
 
 export interface StyledButtonProps {

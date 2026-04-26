@@ -18,17 +18,23 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
         props.$action &&
         css`
             background-color: var(--background--primary-color);
-            opacity: 0.5;
+            opacity: 0.7;
             border: 2px solid black;
             border-radius: 100%;
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             height: 3rem;
             width: 3rem;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
             &:hover {
-                opacity: 0.8;
+                opacity: 1;
                 background-color: var(--background--primary-color);
+                border: 2px solid var(--primary-color);
+                svg {
+                    transition: all 0.3s ease;
+
+                    color: var(--primary-color);
+                }
             }
         `}
 `;

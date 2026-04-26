@@ -13,8 +13,10 @@ export function mapToCard<TData extends ApiMovieData>(
                 : data?.images?.webp.large_image_url,
             alt: data.title,
         },
-        description: data.overview || data.synopsis,
+        description: data.overview,
         releaseDate: data.release_date?.split("-")[0] || "Unknown",
         link: `/movie/${data.id}`,
+        rating: Number(data?.vote_average?.toFixed(1)) || 0,
+        genres: data.genre_ids,
     };
 }

@@ -32,7 +32,7 @@ function RouteComponent() {
     const popularMoviesArray =
         (popularMovies?.results &&
             popularMovies?.results
-                .slice(0, 10)
+                .slice(0, 14)
                 .map((movie: MovieType) => {
                     return {
                         ...movie,
@@ -49,7 +49,7 @@ function RouteComponent() {
     const popularTVShowsArray =
         (popularTVShows?.results &&
             popularTVShows?.results
-                .slice(0, 10)
+                .slice(0, 14)
                 .map((show: ShowType) => {
                     return {
                         ...show,
@@ -65,7 +65,7 @@ function RouteComponent() {
         [];
     const popularAnimeArray =
         popularAnime?.data
-            .slice(0, 10)
+            .slice(0, 14)
             .map((anime: AnimeType) => (
                 <HomeBannerPicksCard key={anime?.id} data={mapToCard(anime)} />
             )) || [];

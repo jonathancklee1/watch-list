@@ -8,7 +8,7 @@ import { TMDB_IMAGE_URL } from "../../../utils/constants";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 
 export function HomeBannerPicks() {
-    const [isMobileState, setIsMobileState] = useState(true);
+    const [isMobileState, setIsMobileState] = useState(isMobile());
     const { data: trendingMovies, isLoading } = useTrendingMovies();
     // console.log(trendingMovies);
     const trendingArray = [

@@ -1,5 +1,5 @@
 import type { CardProps } from "../../../utils/types";
-import { Box, Card, Skeleton, Tag } from "@chakra-ui/react";
+import { Box, Skeleton } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
 import {
     StyledCard,
@@ -8,10 +8,17 @@ import {
     StyledTitle,
     StyledDescription,
     StyledImageWrapper,
+    StyledCardFooter,
 } from "./SearchCards.styles";
-import { BiStar } from "react-icons/bi";
+import { BiSolidStar } from "react-icons/bi";
+import { useGenreList } from "../../../utils/data-hooks/useGenreList";
 
 export function SearchCards({ data, isLoading }: CardProps) {
+    const { data: genreList } = useGenreList();
+    const mainGenre =
+        genreList?.genres
+            ?.filter((genre) => data?.genres?.includes(genre.id))
+            .map((genre) => genre.name)[0] ?? "Unknown";
     return (
         <StyledCard>
             <StyledImageWrapper>
@@ -26,7 +33,7 @@ export function SearchCards({ data, isLoading }: CardProps) {
                 />
                 <StyledImage src={data?.image?.src ?? ""} alt={data?.title} />
                 <StyledTag>
-                    <BiStar />
+                    <BiSolidStar color="var(--secondary-color)" />
                     {isLoading ? (
                         <Skeleton height="5" />
                     ) : (
@@ -34,14 +41,7 @@ export function SearchCards({ data, isLoading }: CardProps) {
                     )}
                 </StyledTag>
             </StyledImageWrapper>
-            <Card.Footer
-                gap=".5rem"
-                zIndex={10}
-                pb="0"
-                px="1rem"
-                flexDir={"column"}
-                alignItems={"start"}
-            >
+            <StyledCardFooter>
                 <StyledTitle>
                     {isLoading ? (
                         <Skeleton height="5" />
@@ -56,15 +56,10 @@ export function SearchCards({ data, isLoading }: CardProps) {
                         ) : (
                             (data?.releaseDate ?? "null")
                         )}{" "}
-                        |{" "}
-                        {isLoading ? (
-                            <Skeleton height="5" />
-                        ) : (
-                            (data?.runTime ?? "null")
-                        )}
+                        | {isLoading ? <Skeleton height="5" /> : mainGenre}
                     </StyledDescription>
                 </Box>
-            </Card.Footer>
+            </StyledCardFooter>
         </StyledCard>
     );
 }

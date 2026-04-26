@@ -17,15 +17,14 @@ const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding-block: 2rem;
 `;
 
 function RouteComponent() {
     const { search } = Route.useSearch();
     const [searchTerm, setSearchTerm] = useState(search || "");
-    const searchResultsNumber = 10;
+
     console.log(searchTerm, " url");
-    const { data } = useSearchMovies(searchTerm, searchResultsNumber);
+    const { data } = useSearchMovies(searchTerm, 1);
     console.log(data, "movies data");
     return (
         <PageWrapper className="container">
@@ -33,7 +32,7 @@ function RouteComponent() {
                 searchValue={searchTerm}
                 setSearchValue={setSearchTerm}
             />
-            <SearchTermText term={search} resultsNumber={searchResultsNumber} />
+            <SearchTermText term={search} resultsNumber={data?.total_results} />
             <SearchFilterButtons />
             <SearchGrid searchResults={data?.results} />
         </PageWrapper>
