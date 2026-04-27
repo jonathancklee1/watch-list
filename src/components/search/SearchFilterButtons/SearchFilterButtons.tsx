@@ -5,8 +5,8 @@ import type { FilterCategories } from "../../../utils/types";
 export function SearchFilterButtons() {
     const categories = [
         "All",
-        "TV Shows",
         "Movies",
+        "TV Shows",
         "Anime",
     ] as FilterCategories[];
     const [selectedCategory, setSelectedCategory] =

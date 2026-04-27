@@ -1,6 +1,8 @@
 import type { CardProps } from "../../../utils/types";
 import { Box, Skeleton } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
+import { Tooltip } from "../../../components/ui/tooltip";
+
 import {
     StyledCard,
     StyledImage,
@@ -20,23 +22,30 @@ export function SearchCards({ data, isLoading }: CardProps) {
         genreList?.genres
             ?.filter((genre) => data?.genres?.includes(genre.id))
             .map((genre) => genre.name)[0] ?? "Unknown";
+    console.log(mainGenre);
     return (
         <StyledCard>
             <StyledImageWrapper>
-                <Button
-                    label={"Add"}
-                    position={"absolute"}
-                    right={"4"}
-                    bottom={"4"}
-                    zIndex={2}
-                    disabled={isLoading}
-                    p={"2"}
+                <Tooltip
+                    content="Add to watchlist"
+                    positioning={{ placement: "top" }}
+                    showArrow
                 >
-                    <BiPlus
-                        color="var(--text--primary-color)"
-                        strokeWidth={"1.5"}
-                    />
-                </Button>
+                    <Button
+                        label={"Add"}
+                        position={"absolute"}
+                        right={".75rem"}
+                        bottom={".75rem"}
+                        zIndex={2}
+                        disabled={isLoading}
+                        p={"1"}
+                    >
+                        <BiPlus
+                            color="var(--text--primary-color)"
+                            strokeWidth={"1.5"}
+                        />
+                    </Button>
+                </Tooltip>
                 {isLoading ? (
                     <Skeleton
                         height="100%"
@@ -74,7 +83,11 @@ export function SearchCards({ data, isLoading }: CardProps) {
                         {isLoading ? (
                             <Skeleton height="5" width="80px" />
                         ) : (
-                            (data?.releaseDate ?? "null" + "|" + mainGenre)
+                            (data?.releaseDate ?? "null") +
+                            " " +
+                            "|" +
+                            " " +
+                            mainGenre
                         )}
                     </StyledDescription>
                 </Box>

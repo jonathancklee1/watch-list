@@ -26,7 +26,7 @@ function RouteComponent() {
     const [searchTerm, setSearchTerm] = useState(search || "");
     const [page, setPage] = useState(pageParam);
 
-    const { data, isLoading } = useSearchMovies(searchTerm, page);
+    const { data, isLoading } = useSearchMovies("Movies", searchTerm, page);
     console.log(data, "movies data");
     const count = data?.total_results ?? 0;
     const pageSize = data?.results.length ?? 0;

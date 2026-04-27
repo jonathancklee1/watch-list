@@ -1,14 +1,11 @@
 import { Card, Tag, Image } from "@chakra-ui/react";
 import styled from "styled-components";
-export const StyledDiv = styled.div`
-    display: flex;
-`;
+
 export const StyledImage = styled(Image)`
     position: absolute;
     inset: 0;
     object-fit: cover;
     width: 100%;
-    height: 100%;
     object-position: center;
     transition: all 0.3s ease;
 `;
@@ -44,12 +41,9 @@ export const StyledCard = styled(Card.Root)`
     width: 100%;
     gap: 1rem;
     border: none;
-    border-radius: 20px;
+    border-radius: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    @media (min-width: 768px) {
-        aspect-ratio: 9/16;
-    }
 `;
 export const StyledCardFooter = styled(Card.Footer)`
     gap: 0.5rem;
@@ -67,24 +61,29 @@ export const StyledTag = styled(Tag.Root)`
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     color: var(--text-color);
-    padding: 0.5rem;
-    padding-inline: 1rem;
+    padding: 0.25rem;
+    padding-inline: 0.75rem;
     width: fit-content;
     border: none;
     position: absolute;
-    top: 1rem;
+    top: 0.5rem;
     border-radius: 15px;
-    right: 1rem;
+    right: 0.5rem;
     z-index: 1;
     gap: 0.5rem;
     font-weight: bold;
+    font-size: 0.875rem;
+    @media (min-width: 768px) {
+        top: 0.75rem;
+        right: 0.75rem;
+    }
 `;
 export const StyledImageWrapper = styled(Card.Body)`
     position: relative;
-    aspect-ratio: 5/6;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 16px;
     flex-shrink: 0;
+    aspect-ratio: 2/3;
     &:hover ${StyledImage} {
         transform: scale(1.025);
     }

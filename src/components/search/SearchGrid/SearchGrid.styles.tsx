@@ -1,9 +1,9 @@
 import styled from "styled-components";
 export const StyledResultsGrid = styled.div`
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     width: 100%;
-    gap: 2rem;
+    gap: 1rem;
     @media (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
     }

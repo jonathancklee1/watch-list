@@ -9,6 +9,8 @@ import {
     StyledDescription,
     StyledInfoWrapper,
 } from "./HomeBannerPicksCard.styles";
+import { Tooltip } from "../../ui/tooltip";
+import { BiPlus } from "react-icons/bi";
 
 export function HomeBannerPicksCard({ data, isLoading }: CardProps) {
     // console.log(data, "data");
@@ -35,10 +37,24 @@ export function HomeBannerPicksCard({ data, isLoading }: CardProps) {
                             flexGrow: 1,
                         }}
                     />
-                    <Button
-                        label={isLoading ? "Loading..." : "Add"}
-                        $secondary
-                    />
+                    <Tooltip
+                        content="Add to watchlist"
+                        positioning={{ placement: "top" }}
+                        showArrow
+                    >
+                        <Button
+                            label={"Add"}
+                            zIndex={2}
+                            disabled={isLoading}
+                            p={"1"}
+                            $secondary
+                        >
+                            <BiPlus
+                                color="var(--text--primary-color)"
+                                strokeWidth={"1.5"}
+                            />
+                        </Button>
+                    </Tooltip>
                 </Card.Footer>
             </StyledInfoWrapper>
         </StyledCard>
