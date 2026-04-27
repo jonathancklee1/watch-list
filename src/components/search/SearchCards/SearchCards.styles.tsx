@@ -11,7 +11,6 @@ export const StyledImage = styled(Image)`
     height: 100%;
     object-position: center;
     transition: all 0.3s ease;
-    cursor: pointer;
 `;
 export const StyledTitle = styled(Card.Title)`
     font-weight: bold;
@@ -46,6 +45,7 @@ export const StyledCard = styled(Card.Root)`
     gap: 1rem;
     border: none;
     border-radius: 20px;
+    cursor: pointer;
     transition: all 0.3s ease;
     @media (min-width: 768px) {
         aspect-ratio: 9/16;

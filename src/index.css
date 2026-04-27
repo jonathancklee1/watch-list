@@ -10,7 +10,7 @@
     --background--primary-color: #0f0f0f;
     --background--primary-color-80: #0f0f0f80;
     --background--secondary-color: #1c1b1b;
-    --text-color: #f3f0ef;
+    --text--primary-color: #f3f0ef;
     --text--secondary-color: #ffb4aa;
     --text--tertiary-color: #929090;
     --button--primary-color: #ec1419;
@@ -19,7 +19,7 @@
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--background--primary-color);
-    color: var(--text-color);
+    color: var(--text--primary-color);
 }
 
 a {

@@ -6,6 +6,7 @@ import { SearchFilterButtons } from "../components/search/SearchFilterButtons/Se
 import { SearchGrid } from "../components/search/SearchGrid/SearchGrid";
 import { useState } from "react";
 import { useSearchMovies } from "../utils/data-hooks/useSearchMovies";
+import { SearchPagination } from "../components/SearchPagination/SearchPagination";
 
 export const Route = createFileRoute("/search")({
     component: RouteComponent,
@@ -22,10 +23,22 @@ const PageWrapper = styled.div`
 function RouteComponent() {
     const { search } = Route.useSearch();
     const [searchTerm, setSearchTerm] = useState(search || "");
+    const [page, setPage] = useState(1);
 
+    const { data } = useSearchMovies(searchTerm, page);
     console.log(searchTerm, " url");
-    const { data } = useSearchMovies(searchTerm, 1);
     console.log(data, "movies data");
+    const count = data?.total_results ?? 0;
+    const pageSize = data?.results.length ?? 0;
+    const startRange = (page - 1) * pageSize;
+    const endRange = startRange + pageSize;
+    // const visibleItems = items.slice(startRange, endRange);
+    console.log(count, "count");
+    console.log(pageSize, "pageSize");
+    console.log(startRange, "startRange");
+    console.log(endRange, "endRange");
+
+    console.log(page, "current page");
     return (
         <PageWrapper className="container">
             <SearchInput
@@ -35,6 +48,12 @@ function RouteComponent() {
             <SearchTermText term={search} resultsNumber={data?.total_results} />
             <SearchFilterButtons />
             <SearchGrid searchResults={data?.results} />
+            <SearchPagination
+                count={count}
+                pageSize={pageSize}
+                page={page}
+                setPage={setPage}
+            />
         </PageWrapper>
     );
 }

@@ -10,8 +10,9 @@ import {
     StyledImageWrapper,
     StyledCardFooter,
 } from "./SearchCards.styles";
-import { BiSolidStar } from "react-icons/bi";
+import { BiPlus, BiSolidStar } from "react-icons/bi";
 import { useGenreList } from "../../../utils/data-hooks/useGenreList";
+import { EmptyImage } from "../../EmptyImage/EmptyImage";
 
 export function SearchCards({ data, isLoading }: CardProps) {
     const { data: genreList } = useGenreList();
@@ -24,14 +25,25 @@ export function SearchCards({ data, isLoading }: CardProps) {
             <StyledImageWrapper>
                 <Button
                     label={"Add"}
-                    $secondary
                     position={"absolute"}
                     right={"4"}
                     bottom={"4"}
                     zIndex={2}
                     disabled={isLoading}
-                />
-                <StyledImage src={data?.image?.src ?? ""} alt={data?.title} />
+                >
+                    <BiPlus
+                        color="var(--text--primary-color)"
+                        strokeWidth={"1.5"}
+                    />
+                </Button>
+                {data?.image?.src ? (
+                    <StyledImage
+                        src={data?.image?.src ?? ""}
+                        alt={data?.title}
+                    />
+                ) : (
+                    <EmptyImage />
+                )}
                 <StyledTag>
                     <BiSolidStar color="var(--secondary-color)" />
                     {isLoading ? (

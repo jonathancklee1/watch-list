@@ -32,7 +32,6 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
                 border: 2px solid var(--primary-color);
                 svg {
                     transition: all 0.3s ease;
-
                     color: var(--primary-color);
                 }
             }

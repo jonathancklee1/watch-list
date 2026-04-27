@@ -49,3 +49,10 @@ export interface StyledButtonProps {
 }
 
 export type FilterCategories = "All" | "TV Shows" | "Movies" | "Anime";
+
+export type SearchPaginationProps = {
+    count: number;
+    pageSize: number;
+    page: number;
+    setPage: (page: number) => void;
+};
