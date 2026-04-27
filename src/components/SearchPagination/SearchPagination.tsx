@@ -4,11 +4,12 @@ import type { SearchPaginationProps } from "../../utils/types";
 import { Button } from "../Button/Button";
 import { isMobile } from "../../utils/helpers/isMobile";
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 export function SearchPagination({
     count,
     pageSize,
     page,
-    setPage,
+    route,
 }: SearchPaginationProps) {
     const [isMobileState, setIsMobileState] = useState(isMobile());
     window.addEventListener("resize", () => {
@@ -23,28 +24,49 @@ export function SearchPagination({
             count={count}
             pageSize={pageSize}
             page={page}
-            onPageChange={(e) => setPage(e.page)}
             mx={"auto"}
             mt={isMobileState ? ".5rem" : "2rem"}
         >
             <ButtonGroup size="sm">
                 <Pagination.PrevTrigger asChild>
-                    <Button $secondary>
-                        <HiChevronLeft />
-                    </Button>
+                    <Link
+                        from={route.fullPath}
+                        search={(old) => ({ ...old, page: page - 1 })}
+                    >
+                        <Button $secondary>
+                            <HiChevronLeft />
+                        </Button>
+                    </Link>
                 </Pagination.PrevTrigger>
                 {isMobileState ? (
                     <Pagination.PageText />
                 ) : (
                     <Pagination.Items
-                        render={(page) => <Button>{page.value}</Button>}
+                        render={(pageItem) => (
+                            <Link
+                                from={route.fullPath}
+                                search={(old) => ({
+                                    ...old,
+                                    page: pageItem.value,
+                                })}
+                            >
+                                <Button $secondary={pageItem.value !== page}>
+                                    {pageItem.value}
+                                </Button>
+                            </Link>
+                        )}
                     />
                 )}
 
                 <Pagination.NextTrigger asChild>
-                    <Button $secondary>
-                        <HiChevronRight />
-                    </Button>
+                    <Link
+                        from={route.fullPath}
+                        search={(old) => ({ ...old, page: page + 1 })}
+                    >
+                        <Button $secondary>
+                            <HiChevronRight />
+                        </Button>
+                    </Link>
                 </Pagination.NextTrigger>
             </ButtonGroup>
         </Pagination.Root>

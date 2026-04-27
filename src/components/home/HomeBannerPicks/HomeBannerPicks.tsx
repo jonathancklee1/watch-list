@@ -21,7 +21,7 @@ export function HomeBannerPicks() {
             poster_path: `${TMDB_IMAGE_URL}${item?.poster_path} `,
         };
     });
-
+    const mobileSlidesNumber = 1;
     window.addEventListener("resize", () => {
         if (isMobile()) {
             setIsMobileState(true);
@@ -34,7 +34,7 @@ export function HomeBannerPicks() {
         <>
             {isMobileState ? (
                 <CardCarousel
-                    slidesPerPage={1}
+                    slidesPerPage={mobileSlidesNumber}
                     items={trendingArray.map((item) => (
                         <Suspense
                             key={item?.id}

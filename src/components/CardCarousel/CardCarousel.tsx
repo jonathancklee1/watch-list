@@ -6,10 +6,12 @@ import { Button } from "../Button/Button";
 export function CardCarousel({
     items,
     enableControls,
+    slidesPerPage = 1,
     ...props
 }: {
     items: JSX.Element[];
     enableControls?: boolean;
+    slidesPerPage?: number;
 }) {
     return (
         <Carousel.Root
@@ -17,6 +19,7 @@ export function CardCarousel({
             mx="auto"
             allowMouseDrag
             w={"100%"}
+            slidesPerPage={slidesPerPage}
             {...props}
         >
             <Carousel.Control gap="4" width="full" position="relative">

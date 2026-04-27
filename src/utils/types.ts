@@ -1,3 +1,5 @@
+import type { Route } from "@tanstack/react-router";
+
 export type StyledLinkProps = {
     $isLogo?: boolean;
     isActive?: boolean;
@@ -54,5 +56,5 @@ export type SearchPaginationProps = {
     count: number;
     pageSize: number;
     page: number;
-    setPage: (page: number) => void;
+    route: Route;
 };

@@ -30,13 +30,21 @@ export function SearchCards({ data, isLoading }: CardProps) {
                     bottom={"4"}
                     zIndex={2}
                     disabled={isLoading}
+                    p={"2"}
                 >
                     <BiPlus
                         color="var(--text--primary-color)"
                         strokeWidth={"1.5"}
                     />
                 </Button>
-                {data?.image?.src ? (
+                {isLoading ? (
+                    <Skeleton
+                        height="100%"
+                        width="100%"
+                        position={"absolute"}
+                        inset={"0"}
+                    />
+                ) : data?.image?.src ? (
                     <StyledImage
                         src={data?.image?.src ?? ""}
                         alt={data?.title}
@@ -47,7 +55,7 @@ export function SearchCards({ data, isLoading }: CardProps) {
                 <StyledTag>
                     <BiSolidStar color="var(--secondary-color)" />
                     {isLoading ? (
-                        <Skeleton height="5" />
+                        <Skeleton height="5" width="30px" />
                     ) : (
                         (data?.rating ?? "null")
                     )}
@@ -56,7 +64,7 @@ export function SearchCards({ data, isLoading }: CardProps) {
             <StyledCardFooter>
                 <StyledTitle>
                     {isLoading ? (
-                        <Skeleton height="5" />
+                        <Skeleton height="5" width="200px" />
                     ) : (
                         (data?.title ?? "null")
                     )}
@@ -64,11 +72,10 @@ export function SearchCards({ data, isLoading }: CardProps) {
                 <Box>
                     <StyledDescription>
                         {isLoading ? (
-                            <Skeleton height="5" />
+                            <Skeleton height="5" width="80px" />
                         ) : (
-                            (data?.releaseDate ?? "null")
-                        )}{" "}
-                        | {isLoading ? <Skeleton height="5" /> : mainGenre}
+                            (data?.releaseDate ?? "null" + "|" + mainGenre)
+                        )}
                     </StyledDescription>
                 </Box>
             </StyledCardFooter>
