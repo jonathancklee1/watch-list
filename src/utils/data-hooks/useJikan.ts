@@ -1,19 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
-export function useJikan({
-    queryKey,
-    param,
-}: {
-    queryKey: string;
-    param?: string;
-}) {
-    const url = `https://api.jikan.moe/v4/seasons/now`;
+export function useJikan<TData = unknown>(
+    endpoint: string,
+    params: Record<string, string> = {},
+    options?: Omit<
+        UseQueryOptions<unknown, unknown, TData>,
+        "queryKey" | "queryFn"
+    >,
+) {
+    const url = new URL(`https://api.jikan.moe/v4/${endpoint}`);
 
-    const fetchQuery = () => fetch(url).then((res) => res.json());
-
-    const { data, isLoading, error } = useQuery({
-        queryKey: [queryKey],
-        queryFn: fetchQuery,
+    Object.entries(params).forEach(([key, value]) => {
+        url.searchParams.set(key, value);
     });
-    return { data, isLoading, error };
+
+    return useQuery<unknown, unknown, TData>({
+        queryKey: [endpoint, params],
+        queryFn: () => fetch(url).then((res) => res.json()),
+        ...options,
+    });
 }

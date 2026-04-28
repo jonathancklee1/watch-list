@@ -29,7 +29,19 @@ export interface ApiMovieData {
     vote_average?: number;
     genre_ids?: number[];
     title_english?: string;
+    first_air_date?: string;
+    images?: {
+        webp: {
+            large_image_url?: string;
+        };
+    };
+    aired?: {
+        from?: string;
+    };
+    genres?: { id: number; name: string }[];
+    score: number;
 }
+
 export interface CardType {
     id?: number;
     title?: string;
@@ -42,7 +54,7 @@ export interface CardType {
     link?: string;
     rating?: number;
     runTime?: string;
-    genres?: string | number[];
+    genres?: string | number[] | { id: number; name: string }[];
 }
 
 export interface StyledButtonProps {
@@ -50,7 +62,7 @@ export interface StyledButtonProps {
     $action?: boolean;
 }
 
-export type FilterCategories = "All" | "TV Shows" | "Movies" | "Anime";
+export type FilterCategories = "TV Shows" | "Movies" | "Anime";
 
 export type SearchPaginationProps = {
     count: number;
@@ -58,3 +70,12 @@ export type SearchPaginationProps = {
     page: number;
     route: Route;
 };
+
+export interface JikanSearchResponse {
+    data?: unknown[];
+    pagination?: {
+        items?: {
+            total?: number;
+        };
+    };
+}

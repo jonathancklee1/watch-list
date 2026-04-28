@@ -6,6 +6,7 @@ export const StyledImage = styled(Image)`
     inset: 0;
     object-fit: cover;
     width: 100%;
+    height: 100%;
     object-position: center;
     transition: all 0.3s ease;
 `;

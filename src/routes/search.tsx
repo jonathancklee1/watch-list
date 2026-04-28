@@ -5,8 +5,9 @@ import { SearchTermText } from "../components/search/SearchTermText/SearchTermTe
 import { SearchFilterButtons } from "../components/search/SearchFilterButtons/SearchFilterButtons";
 import { SearchGrid } from "../components/search/SearchGrid/SearchGrid";
 import { useEffect, useState } from "react";
-import { useSearchMovies } from "../utils/data-hooks/useSearchMovies";
+import { useSearchMedia } from "../utils/data-hooks/useSearchMedia";
 import { SearchPagination } from "../components/SearchPagination/SearchPagination";
+import type { FilterCategories } from "../utils/types";
 
 export const Route = createFileRoute("/search")({
     component: RouteComponent,
@@ -25,8 +26,13 @@ function RouteComponent() {
     const { search, page: pageParam } = Route.useSearch();
     const [searchTerm, setSearchTerm] = useState(search || "");
     const [page, setPage] = useState(pageParam);
-
-    const { data, isLoading } = useSearchMovies("Movies", searchTerm, page);
+    const [selectedCategory, setSelectedCategory] =
+        useState<FilterCategories>("Movies");
+    const { data, isLoading } = useSearchMedia(
+        selectedCategory,
+        searchTerm,
+        page,
+    );
     console.log(data, "movies data");
     const count = data?.total_results ?? 0;
     const pageSize = data?.results.length ?? 0;
@@ -49,15 +55,24 @@ function RouteComponent() {
                 setSearchValue={setSearchTerm}
             />
             <SearchTermText term={search} resultsNumber={data?.total_results} />
-            <SearchFilterButtons />
-            <SearchGrid searchResults={data?.results} isLoading={isLoading} />
-            <SearchPagination
-                count={count}
-                pageSize={pageSize}
-                page={page}
-                setPage={setPage}
-                route={Route}
+            <SearchFilterButtons
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
             />
+            <SearchGrid
+                searchResults={data?.results}
+                isLoading={isLoading}
+                searchTerm={search}
+            />
+            {count > 0 && (
+                <SearchPagination
+                    count={count}
+                    pageSize={pageSize}
+                    page={page}
+                    setPage={setPage}
+                    route={Route}
+                />
+            )}
         </PageWrapper>
     );
 }

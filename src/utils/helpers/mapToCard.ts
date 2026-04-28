@@ -14,9 +14,16 @@ export function mapToCard<TData extends ApiMovieData>(
             alt: data.title,
         },
         description: data.overview,
-        releaseDate: data.release_date?.split("-")[0] || "Unknown",
+        releaseDate:
+            data.release_date?.split("-")[0] ||
+            data.first_air_date?.split("-")[0] ||
+            data?.aired?.from?.split("-")[0] ||
+            "Unknown",
         link: `/movie/${data.id}`,
-        rating: Number(data?.vote_average?.toFixed(1)) || 0,
-        genres: data.genre_ids,
+        rating:
+            Number(data?.vote_average?.toFixed(1)) ||
+            data.score?.toFixed(1) ||
+            0,
+        genres: data.genre_ids || data.genres || "Unknown",
     };
 }

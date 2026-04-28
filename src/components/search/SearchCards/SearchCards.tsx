@@ -18,10 +18,9 @@ import { EmptyImage } from "../../EmptyImage/EmptyImage";
 
 export function SearchCards({ data, isLoading }: CardProps) {
     const { data: genreList } = useGenreList();
-    const mainGenre =
-        genreList?.genres
-            ?.filter((genre) => data?.genres?.includes(genre.id))
-            .map((genre) => genre.name)[0] ?? "Unknown";
+    const mainGenre = genreList?.genres
+        ?.filter((genre) => data?.genres?.includes(genre.id))
+        .map((genre) => genre.name)[0];
     console.log(mainGenre);
     return (
         <StyledCard>
@@ -87,7 +86,7 @@ export function SearchCards({ data, isLoading }: CardProps) {
                             " " +
                             "|" +
                             " " +
-                            mainGenre
+                            (mainGenre ?? data?.genres?.[0]?.name ?? "Unknown")
                         )}
                     </StyledDescription>
                 </Box>

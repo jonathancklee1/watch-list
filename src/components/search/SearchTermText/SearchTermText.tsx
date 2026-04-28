@@ -10,7 +10,11 @@ export function SearchTermText({
     return (
         <StyledDiv>
             <Text fontSize=".75rem" color="var(--text--tertiary-color)">
-                FOUND {resultsNumber ?? 0} SEARCH RESULTS FOR
+                FOUND{" "}
+                <span style={{ color: "var(--text--secondary-color)" }}>
+                    {resultsNumber ?? 0}
+                </span>{" "}
+                SEARCH RESULTS FOR
             </Text>
             <StyledSearchHeading>
                 {term && <Text>'{term}'</Text>}
