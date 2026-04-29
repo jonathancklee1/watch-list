@@ -14,6 +14,7 @@ export const Route = createFileRoute("/search")({
     validateSearch: (search: Record<string, unknown>) => ({
         search: (search.search as string) || "",
         page: Number(search.page as string) || 1,
+        category: (search.category as FilterCategories) || "Movies",
     }),
 });
 const PageWrapper = styled.div`
@@ -23,11 +24,16 @@ const PageWrapper = styled.div`
 `;
 
 function RouteComponent() {
-    const { search, page: pageParam } = Route.useSearch();
+    const {
+        search,
+        page: pageParam,
+        category: categoryParam,
+    } = Route.useSearch();
+    const navigate = Route.useNavigate();
     const [searchTerm, setSearchTerm] = useState(search || "");
     const [page, setPage] = useState(pageParam);
     const [selectedCategory, setSelectedCategory] =
-        useState<FilterCategories>("Movies");
+        useState<FilterCategories>(categoryParam);
     const { data, isLoading } = useSearchMedia(
         selectedCategory,
         searchTerm,
@@ -48,6 +54,14 @@ function RouteComponent() {
     useEffect(() => {
         setPage(pageParam);
     }, [pageParam]);
+
+    useEffect(() => {
+        setPage(1);
+        navigate({
+            search: (prev) => ({ ...prev, page: 1 }),
+            replace: true,
+        });
+    }, [selectedCategory, navigate]);
     return (
         <PageWrapper className="container">
             <SearchInput

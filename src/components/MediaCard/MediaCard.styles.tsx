@@ -14,7 +14,11 @@ export const StyledImage = styled(Image)`
 export const StyledTitle = styled(Card.Title)`
     font-weight: bold;
     color: var(--text-color);
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+
+    @media (min-width: 768px) {
+        font-size: 1.75rem;
+    }
 `;
 export const StyledDescription = styled(Card.Description)`
     color: var(--text--secondary-color);
@@ -22,6 +26,10 @@ export const StyledDescription = styled(Card.Description)`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    font-size: 0.875rem;
+    @media (min-width: 768px) {
+        font-size: 1rem;
+    }
 `;
 export const StyledCard = styled(Card.Root)`
     color: var(--text-color);

@@ -5,27 +5,21 @@ import { HomeBannerPicks } from "../components/home/HomeBannerPicks/HomeBannerPi
 import { PopularMediaRow } from "../components/home/PopularMediaRow/PopularMediaRow";
 import { usePopularMovies } from "../utils/data-hooks/usePopularMovies";
 import { usePopularTVShows } from "../utils/data-hooks/usePopularTVShows";
-import { HomeBannerPicksCard } from "../components/home/HomeBannerPicksCard/HomeBannerPicksCard";
+import { MediaCard } from "../components/MediaCard/MediaCard";
 import { mapToCard } from "../utils/helpers/mapToCard";
 import { useJikan } from "../utils/data-hooks/useJikan";
 
 import { TMDB_IMAGE_URL } from "../utils/constants";
+import { PageWrapper } from "./__root";
 
 export const Route = createFileRoute("/")({
     component: RouteComponent,
 });
-const PageWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-`;
+
 function RouteComponent() {
     const { data: popularMovies } = usePopularMovies();
     const { data: popularTVShows } = usePopularTVShows();
-    const { data: popularAnime } = useJikan({
-        queryKey: `anime`,
-        param: `tv/popular`,
-    });
+    const { data: popularAnime } = useJikan("top/anime", { page: "1" });
     type MovieType = (typeof popularMovies.results)[0];
     type ShowType = (typeof popularTVShows.results)[0];
     type AnimeType = (typeof popularAnime.results)[0];
@@ -40,10 +34,7 @@ function RouteComponent() {
                     };
                 })
                 .map((movie: MovieType) => (
-                    <HomeBannerPicksCard
-                        key={movie?.id}
-                        data={mapToCard(movie)}
-                    />
+                    <MediaCard key={movie?.id} data={mapToCard(movie)} />
                 ))) ||
         [];
     const popularTVShowsArray =
@@ -57,17 +48,14 @@ function RouteComponent() {
                     };
                 })
                 .map((show: ShowType) => (
-                    <HomeBannerPicksCard
-                        key={show?.id}
-                        data={mapToCard(show)}
-                    />
+                    <MediaCard key={show?.id} data={mapToCard(show)} />
                 ))) ||
         [];
     const popularAnimeArray =
         popularAnime?.data
             .slice(0, 14)
             .map((anime: AnimeType) => (
-                <HomeBannerPicksCard key={anime?.id} data={mapToCard(anime)} />
+                <MediaCard key={anime?.id} data={mapToCard(anime)} />
             )) || [];
     // console.log(popularMovies);
     // console.log(popularTVShows);

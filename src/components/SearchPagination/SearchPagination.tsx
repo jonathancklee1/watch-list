@@ -33,7 +33,7 @@ export function SearchPagination({
                         from={route.fullPath}
                         search={(old) => ({ ...old, page: page - 1 })}
                     >
-                        <Button $secondary>
+                        <Button $secondary disabled={page === 1}>
                             <HiChevronLeft />
                         </Button>
                     </Link>
@@ -63,7 +63,7 @@ export function SearchPagination({
                         from={route.fullPath}
                         search={(old) => ({ ...old, page: page + 1 })}
                     >
-                        <Button $secondary>
+                        <Button $secondary disabled={page * pageSize >= count}>
                             <HiChevronRight />
                         </Button>
                     </Link>

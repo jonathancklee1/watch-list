@@ -26,9 +26,19 @@ export const StyledLink = styled(Link)<StyledLinkProps>`
     font-weight: ${({ $isLogo }) => ($isLogo ? "bold" : "600")};
     font-size: ${({ $isLogo }) => ($isLogo ? "1.5rem" : "1rem")};
     text-transform: uppercase;
-    &.active {
-        color: var(--text-color);
-        font-weight: bold;
-        border-bottom: 2px solid var(--primary-color);
+    &::after {
+        content: "";
+        display: block;
+        width: 0%;
+        height: 2px;
+        background: var(--primary-color);
+        transition: width 0.3s;
+    }
+    &.active,
+    &:hover {
+        color: var(--text--primary-color);
+        &::after {
+            width: 100%;
+        }
     }
 `;

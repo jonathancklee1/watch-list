@@ -28,6 +28,7 @@ export function SearchInput({
                 to: "/search",
                 search: {
                     search: value.trim(),
+                    category: category,
                 },
             });
         }

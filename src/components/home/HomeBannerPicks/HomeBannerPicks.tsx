@@ -1,7 +1,7 @@
 import { Suspense, useState } from "react";
 import { useTrendingMovies } from "../../../utils/data-hooks/useTrendingMovies";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
-import { HomeBannerPicksCard } from "../HomeBannerPicksCard/HomeBannerPicksCard";
+import { MediaCard } from "../../MediaCard/MediaCard";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { Grid } from "@chakra-ui/react";
 import { TMDB_IMAGE_URL } from "../../../utils/constants";
@@ -40,10 +40,11 @@ export function HomeBannerPicks() {
                             key={item?.id}
                             fallback={<div>Loading...</div>}
                         >
-                            <HomeBannerPicksCard
+                            <MediaCard
                                 key={item?.id}
                                 data={mapToCard(item)}
                                 isLoading={isLoading}
+                                tagText="Trending"
                             />
                         </Suspense>
                     ))}
@@ -55,10 +56,11 @@ export function HomeBannerPicks() {
                             key={item?.id}
                             fallback={<div>Loading...</div>}
                         >
-                            <HomeBannerPicksCard
+                            <MediaCard
                                 key={item?.id}
                                 data={mapToCard(item)}
                                 isLoading={isLoading}
+                                tagText="Trending"
                             />
                         </Suspense>
                     ))}

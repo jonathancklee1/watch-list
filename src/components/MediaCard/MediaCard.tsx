@@ -1,6 +1,6 @@
-import type { CardProps } from "../../../utils/types";
-import { Card, Tag } from "@chakra-ui/react";
-import { Button } from "../../Button/Button";
+import type { CardProps } from "../../utils/types";
+import { Card, Flex, Tag } from "@chakra-ui/react";
+import { Button } from "../Button/Button";
 import {
     StyledCard,
     StyledImage,
@@ -8,23 +8,35 @@ import {
     StyledTitle,
     StyledDescription,
     StyledInfoWrapper,
-} from "./HomeBannerPicksCard.styles";
-import { Tooltip } from "../../ui/tooltip";
+} from "./MediaCard.styles";
+import { Tooltip } from "../ui/tooltip";
 import { BiPlus } from "react-icons/bi";
+import { useGenreList } from "../../utils/data-hooks/useGenreList";
 
-export function HomeBannerPicksCard({ data, isLoading }: CardProps) {
-    // console.log(data, "data");
+export function MediaCard({ data, isLoading, tagText }: CardProps) {
+    const { data: genreList } = useGenreList();
+    const mainGenre = genreList?.genres
+        ?.filter((genre) => data?.genres?.includes(genre.id))
+        .map((genre) => genre.name)[0];
     return (
         <StyledCard>
             <StyledImage src={data?.image?.src} alt={data?.title} />
             <StyledInfoWrapper>
                 <Card.Body gap="2" zIndex={10} justifyContent={"end"} pb="0">
-                    <StyledTag>
-                        <Tag.Label>Trending</Tag.Label>
-                    </StyledTag>
+                    {tagText && (
+                        <StyledTag>
+                            <Tag.Label>{tagText}</Tag.Label>
+                        </StyledTag>
+                    )}
                     <StyledTitle>
                         {isLoading ? "Loading..." : data?.title}
                     </StyledTitle>
+                    <StyledDescription>
+                        {!isLoading && data?.releaseDate && data?.releaseDate}
+                        {!isLoading && mainGenre && " | " + mainGenre}
+                        {!isLoading && data?.runTime && " | " + data?.runTime}
+                    </StyledDescription>
+
                     <StyledDescription>
                         {isLoading ? "Loading..." : data?.description}
                     </StyledDescription>

@@ -2,6 +2,7 @@ import { Carousel } from "@chakra-ui/react";
 import type { JSX } from "react";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import { Button } from "../Button/Button";
+import { isMobile } from "../../utils/helpers/isMobile";
 
 export function CardCarousel({
     items,
@@ -23,7 +24,7 @@ export function CardCarousel({
             {...props}
         >
             <Carousel.Control gap="4" width="full" position="relative">
-                {enableControls && (
+                {enableControls && !isMobile() && (
                     <Carousel.PrevTrigger asChild>
                         <Button
                             position={"absolute"}
@@ -50,7 +51,7 @@ export function CardCarousel({
                         </Carousel.Item>
                     ))}
                 </Carousel.ItemGroup>
-                {enableControls && (
+                {enableControls && !isMobile() && (
                     <Carousel.NextTrigger asChild>
                         <Button
                             position={"absolute"}
