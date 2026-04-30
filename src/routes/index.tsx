@@ -53,7 +53,7 @@ function RouteComponent() {
         [];
     const popularAnimeArray =
         popularAnime?.data
-            .slice(0, 14)
+            ?.slice(0, 14)
             .map((anime: AnimeType) => (
                 <MediaCard key={anime?.id} data={mapToCard(anime)} />
             )) || [];

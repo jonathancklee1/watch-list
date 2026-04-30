@@ -27,7 +27,7 @@ export function AiringNowSection({
                 <Heading
                     as={"h2"}
                     fontSize={".75rem"}
-                    color={"var(--text--secondary-color)"}
+                    color={"var(--primary-color)"}
                 >
                     FEATURED
                 </Heading>

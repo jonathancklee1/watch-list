@@ -21,6 +21,7 @@ export function CardCarousel({
             allowMouseDrag
             w={"100%"}
             slidesPerPage={slidesPerPage}
+            slidesPerMove={1}
             {...props}
         >
             <Carousel.Control gap="4" width="full" position="relative">

@@ -39,6 +39,18 @@ export function PopularMediaRow({
                     icon={<BiChevronRight />}
                 />
             </StyledRowHeaderWrapper>
+            {items.length === 0 && (
+                <Text
+                    fontSize={"1rem"}
+                    color={"var(--text--secondary-color)"}
+                    text-align={"center"}
+                    fontWeight={"bold"}
+                    mx="auto"
+                    my="4"
+                >
+                    No popular {mediaType} available.
+                </Text>
+            )}
             <CardCarousel
                 items={items}
                 slidesPerPage={visibleSlidesNumber}

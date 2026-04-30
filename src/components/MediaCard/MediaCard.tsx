@@ -1,5 +1,5 @@
 import type { CardProps } from "../../utils/types";
-import { Card, Flex, Tag } from "@chakra-ui/react";
+import { Card, Flex, Tag, Text } from "@chakra-ui/react";
 import { Button } from "../Button/Button";
 import {
     StyledCard,
@@ -31,12 +31,11 @@ export function MediaCard({ data, isLoading, tagText }: CardProps) {
                     <StyledTitle>
                         {isLoading ? "Loading..." : data?.title}
                     </StyledTitle>
-                    <StyledDescription>
+                    <Text fontSize={"0.875rem"} fontWeight={"500"}>
                         {!isLoading && data?.releaseDate && data?.releaseDate}
                         {!isLoading && mainGenre && " | " + mainGenre}
                         {!isLoading && data?.runTime && " | " + data?.runTime}
-                    </StyledDescription>
-
+                    </Text>
                     <StyledDescription>
                         {isLoading ? "Loading..." : data?.description}
                     </StyledDescription>
