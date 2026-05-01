@@ -1,5 +1,5 @@
 import type { HomeHeroBannerType } from "../../../utils/types";
-import { SearchInput } from "../../SearchInput/SearchInput";
+import { SearchInput } from "../../search/SearchInput/SearchInput";
 import { useState } from "react";
 
 import { StyledHeading, StyledHomeHeroBanner } from "./HomeHeroBanner.styles";

@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import styled from "styled-components";
-import { SearchInput } from "../components/SearchInput/SearchInput";
+import { SearchInput } from "../components/search/SearchInput/SearchInput";
 import { SearchTermText } from "../components/search/SearchTermText/SearchTermText";
 import { SearchFilterButtons } from "../components/search/SearchFilterButtons/SearchFilterButtons";
 import { SearchGrid } from "../components/search/SearchGrid/SearchGrid";
 import { useEffect, useState } from "react";
 import { useSearchMedia } from "../utils/data-hooks/useSearchMedia";
-import { SearchPagination } from "../components/SearchPagination/SearchPagination";
+import { SearchPagination } from "../components/search/SearchPagination/SearchPagination";
 import type { FilterCategories } from "../utils/types";
 
 export const Route = createFileRoute("/search")({

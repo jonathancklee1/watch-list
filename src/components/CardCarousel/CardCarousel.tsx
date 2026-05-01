@@ -1,4 +1,4 @@
-import { Carousel } from "@chakra-ui/react";
+import { Carousel, EmptyState } from "@chakra-ui/react";
 import type { JSX } from "react";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import { Button } from "../Button/Button";
@@ -14,7 +14,11 @@ export function CardCarousel({
     enableControls?: boolean;
     slidesPerPage?: number;
 }) {
-    return (
+    return items.length <= 0 ? (
+        <EmptyState.Root>
+            <EmptyState.Title textAlign={"center"}>No Data</EmptyState.Title>
+        </EmptyState.Root>
+    ) : (
         <Carousel.Root
             slideCount={items.length}
             mx="auto"
@@ -47,6 +51,7 @@ export function CardCarousel({
                             mx={"auto"}
                             display={"flex"}
                             justifyContent={"center"}
+                            overflow={"hidden"}
                         >
                             {item}
                         </Carousel.Item>

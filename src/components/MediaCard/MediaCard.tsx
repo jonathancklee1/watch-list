@@ -22,23 +22,30 @@ export function MediaCard({ data, isLoading, tagText }: CardProps) {
         <StyledCard>
             <StyledImage src={data?.image?.src} alt={data?.title} />
             <StyledInfoWrapper>
-                <Card.Body gap="2" zIndex={10} justifyContent={"end"} pb="0">
+                <Card.Body
+                    gap={{ base: "1", md: "2" }}
+                    zIndex={10}
+                    justifyContent={"end"}
+                    pb="0"
+                >
                     {tagText && (
                         <StyledTag>
                             <Tag.Label>{tagText}</Tag.Label>
                         </StyledTag>
                     )}
-                    <StyledTitle>
+                    <StyledTitle lineClamp={3} overflow={"hidden"}>
                         {isLoading ? "Loading..." : data?.title}
                     </StyledTitle>
-                    <Text fontSize={"0.875rem"} fontWeight={"500"}>
+                    <Text fontSize={"0.75rem"} fontWeight={"500"}>
                         {!isLoading && data?.releaseDate && data?.releaseDate}
                         {!isLoading && mainGenre && " | " + mainGenre}
                         {!isLoading && data?.runTime && " | " + data?.runTime}
                     </Text>
-                    <StyledDescription>
-                        {isLoading ? "Loading..." : data?.description}
-                    </StyledDescription>
+                    {!isLoading && data?.description && (
+                        <StyledDescription>
+                            {isLoading ? "Loading..." : data?.description}
+                        </StyledDescription>
+                    )}
                 </Card.Body>
                 <Card.Footer gap="2" zIndex={10} mt={"1rem"}>
                     <Button

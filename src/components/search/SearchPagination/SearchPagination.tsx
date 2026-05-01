@@ -1,8 +1,8 @@
 import { ButtonGroup, Pagination } from "@chakra-ui/react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import type { SearchPaginationProps } from "../../utils/types";
-import { Button } from "../Button/Button";
-import { isMobile } from "../../utils/helpers/isMobile";
+import type { SearchPaginationProps } from "../../../utils/types";
+import { Button } from "../../Button/Button";
+import { isMobile } from "../../../utils/helpers/isMobile";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 export function SearchPagination({

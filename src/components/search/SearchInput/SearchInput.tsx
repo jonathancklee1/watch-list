@@ -1,10 +1,10 @@
 import { Group, InputGroup, Text } from "@chakra-ui/react";
 
 import { LuSearch } from "react-icons/lu";
-import { Button } from "../Button/Button";
+import { Button } from "../../Button/Button";
 import { StyledInput } from "./SearchInput.styles";
 import { useNavigate } from "@tanstack/react-router";
-import type { FilterCategories } from "../../utils/types";
+import type { FilterCategories } from "../../../utils/types";
 import { useState } from "react";
 export function SearchInput({
     category,
@@ -28,7 +28,8 @@ export function SearchInput({
                 to: "/search",
                 search: {
                     search: value.trim(),
-                    category: category,
+                    page: 1,
+                    category: category ?? "Movies",
                 },
             });
         }

@@ -14,7 +14,7 @@ export const StyledImage = styled(Image)`
 export const StyledTitle = styled(Card.Title)`
     font-weight: bold;
     color: var(--text-color);
-    font-size: 1.5rem;
+    font-size: 1.125rem;
 
     @media (min-width: 768px) {
         font-size: 1.75rem;

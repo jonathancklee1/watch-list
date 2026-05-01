@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import styled from "styled-components";
-import type { StyledLinkProps } from "../../utils/types";
+import type { StyledLinkProps } from "../../../utils/types";
 
 export const MobileNavWrapper = styled.nav`
     display: flex;
