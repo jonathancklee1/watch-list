@@ -1,26 +1,15 @@
-import { Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
-import { useState } from "react";
-import { isMobile } from "../../../utils/helpers/isMobile";
+import { Flex, Grid, Heading } from "@chakra-ui/react";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { TopRatedCard } from "../TopRatedCard/TopRatedCard";
 import { StyledDiv } from "./TopRatedSection.styles";
-import type { CardType } from "../../../utils/types";
+import type { ApiMovieData, MediaType } from "../../../utils/types";
 export function TopRatedSection({
     cardData,
     isLoading,
 }: {
-    cardData: CardType[];
+    cardData: ApiMovieData[];
     isLoading?: boolean;
 }) {
-    console.log(cardData);
-    const [mobileSlidesNumber, setMobileSlidesNumber] = useState(1.5);
-    window.addEventListener("resize", () => {
-        if (isMobile()) {
-            setMobileSlidesNumber(1.5);
-        } else {
-            setMobileSlidesNumber(3);
-        }
-    });
     return (
         <StyledDiv>
             <Flex gap="1" direction="column">
@@ -51,14 +40,12 @@ export function TopRatedSection({
                 gap={4}
             >
                 {cardData?.map((item, index) => (
-                    // <GridItem key={item?.id}>
                     <TopRatedCard
                         key={item?.id}
                         data={mapToCard(item)}
                         isLoading={isLoading}
                         ranking={index + 1}
                     />
-                    // </GridItem>
                 ))}
             </Grid>
         </StyledDiv>

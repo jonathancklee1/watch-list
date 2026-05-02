@@ -14,7 +14,7 @@ export function CardCarousel({
     enableControls?: boolean;
     slidesPerPage?: number;
 }) {
-    return items.length <= 0 ? (
+    return !items || items?.length <= 0 ? (
         <EmptyState.Root>
             <EmptyState.Title textAlign={"center"}>No Data</EmptyState.Title>
         </EmptyState.Root>
@@ -44,7 +44,7 @@ export function CardCarousel({
                     </Carousel.PrevTrigger>
                 )}
                 <Carousel.ItemGroup>
-                    {items.map((item, index: number) => (
+                    {items?.map((item, index: number) => (
                         <Carousel.Item
                             key={index}
                             index={index}

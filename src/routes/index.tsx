@@ -1,10 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import HomeHeroBanner from "../components/home/HomeHeroBanner/HomeHeroBanner";
-import styled from "styled-components";
 import { HomeBannerPicks } from "../components/home/HomeBannerPicks/HomeBannerPicks";
 import { PopularMediaRow } from "../components/home/PopularMediaRow/PopularMediaRow";
-import { usePopularMovies } from "../utils/data-hooks/usePopularMovies";
-import { usePopularTVShows } from "../utils/data-hooks/usePopularTVShows";
+import { usePopularMedia } from "../utils/data-hooks/usePopularMedia";
 import { MediaCard } from "../components/MediaCard/MediaCard";
 import { mapToCard } from "../utils/helpers/mapToCard";
 import { useJikan } from "../utils/data-hooks/useJikan";
@@ -17,8 +15,8 @@ export const Route = createFileRoute("/")({
 });
 
 function RouteComponent() {
-    const { data: popularMovies } = usePopularMovies();
-    const { data: popularTVShows } = usePopularTVShows();
+    const { data: popularMovies } = usePopularMedia("movie");
+    const { data: popularTVShows } = usePopularMedia("tv");
     const { data: popularAnime } = useJikan("top/anime", { page: "1" });
     type MovieType = (typeof popularMovies.results)[0];
     type ShowType = (typeof popularTVShows.results)[0];

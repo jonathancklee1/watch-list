@@ -16,6 +16,7 @@ type Image = {
 export type CardProps = {
     data: CardType | null;
     isLoading?: boolean;
+    mediaType: MediaType;
     tagText?: string;
 };
 

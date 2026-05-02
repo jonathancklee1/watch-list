@@ -5,15 +5,17 @@ import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { MediaCard } from "../../MediaCard/MediaCard";
 import { StyledDiv } from "./GenreShowcaseSection.styles";
-import type { ApiMovieData } from "../../../utils/types";
+import type { ApiMovieData, MediaType } from "../../../utils/types";
 export function GenreShowcaseSection({
     carouselData,
     isLoading,
     genreName = "Genre Name",
+    mediaType,
 }: {
     carouselData: ApiMovieData[];
     isLoading?: boolean;
     genreName: string;
+    mediaType: MediaType;
 }) {
     console.log(carouselData);
     const [mobileSlidesNumber, setMobileSlidesNumber] = useState(2);
@@ -22,7 +24,7 @@ export function GenreShowcaseSection({
         if (isMobile()) {
             setMobileSlidesNumber(2);
         } else {
-            setMobileSlidesNumber(4);
+            setMobileSlidesNumber(3);
         }
     });
     return (
@@ -51,6 +53,7 @@ export function GenreShowcaseSection({
                             key={item?.id}
                             data={mapToCard(newItem)}
                             isLoading={isLoading}
+                            mediaType={mediaType}
                         />
                     );
                 })}

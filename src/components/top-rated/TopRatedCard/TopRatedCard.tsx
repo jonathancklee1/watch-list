@@ -1,15 +1,9 @@
-import { Box, Card, Text } from "@chakra-ui/react";
-import {
-    StyledBody,
-    StyledCard,
-    StyledDescription,
-    StyledImage,
-} from "./TopRatedCard.styles";
+import { Badge, Box, Card } from "@chakra-ui/react";
+import { StyledBody, StyledCard, StyledImage } from "./TopRatedCard.styles";
 import { BiPlus } from "react-icons/bi";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../../components/ui/tooltip";
 import type { CardType } from "../../../utils/types";
-import { getPosterImage } from "../../../utils/helpers/getPosterImage";
 
 export function TopRatedCard({
     data,
@@ -24,20 +18,19 @@ export function TopRatedCard({
     const isFirst = ranking === 1;
     return (
         <StyledCard $isFirst={isFirst}>
-            <StyledImage
-                src={getPosterImage(data?.image?.src ?? "")}
-                alt={data?.title}
-            />
+            <StyledImage src={data?.image?.src} alt={data?.title} />
             <StyledBody $isFirst={isFirst}>
-                <Text
+                <Badge
+                    variant={"solid"}
                     fontSize={isFirst ? "2rem" : "1.5rem"}
                     fontWeight="bold"
                     color={"var(--primary-color)"}
                     position={"absolute"}
                     top={".5em"}
+                    p={".4em"}
                 >
                     #{ranking}
-                </Text>
+                </Badge>
                 <Box
                     display={"flex"}
                     flexDirection={isFirst ? "column" : "row"}

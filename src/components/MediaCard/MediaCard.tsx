@@ -12,15 +12,21 @@ import {
 import { Tooltip } from "../ui/tooltip";
 import { BiPlus } from "react-icons/bi";
 import { useGenreList } from "../../utils/data-hooks/useGenreList";
+import { EmptyImage } from "../EmptyImage/EmptyImage";
 
-export function MediaCard({ data, isLoading, tagText }: CardProps) {
-    const { data: genreList } = useGenreList();
+export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
+    const { data: genreList } = useGenreList(mediaType);
     const mainGenre = genreList?.genres
         ?.filter((genre) => data?.genres?.includes(genre.id))
         .map((genre) => genre.name)[0];
     return (
         <StyledCard>
-            <StyledImage src={data?.image?.src} alt={data?.title} />
+            {data?.image?.src ? (
+                <StyledImage src={data?.image?.src} alt={data?.title} />
+            ) : (
+                <EmptyImage />
+            )}
+
             <StyledInfoWrapper>
                 <Card.Body
                     gap={{ base: "1", md: "2" }}

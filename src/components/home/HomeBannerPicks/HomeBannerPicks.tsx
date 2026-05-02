@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { useTrendingMovies } from "../../../utils/data-hooks/useTrendingMovies";
+import { useTrendingMedia } from "../../../utils/data-hooks/useTrendingMedia";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { MediaCard } from "../../MediaCard/MediaCard";
 import { isMobile } from "../../../utils/helpers/isMobile";
@@ -9,7 +9,7 @@ import { mapToCard } from "../../../utils/helpers/mapToCard";
 
 export function HomeBannerPicks() {
     const [isMobileState, setIsMobileState] = useState(isMobile());
-    const { data: trendingMovies, isLoading } = useTrendingMovies();
+    const { data: trendingMovies, isLoading } = useTrendingMedia("movie");
     // console.log(trendingMovies);
     const trendingArray = [
         trendingMovies?.results[0],
@@ -45,6 +45,7 @@ export function HomeBannerPicks() {
                                 data={mapToCard(item)}
                                 isLoading={isLoading}
                                 tagText="Trending"
+                                mediaType="Movies"
                             />
                         </Suspense>
                     ))}
@@ -61,6 +62,7 @@ export function HomeBannerPicks() {
                                 data={mapToCard(item)}
                                 isLoading={isLoading}
                                 tagText="Trending"
+                                mediaType="Movies"
                             />
                         </Suspense>
                     ))}

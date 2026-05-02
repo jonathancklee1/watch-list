@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import HomeHeroBanner from "../components/home/HomeHeroBanner/HomeHeroBanner";
 import { AiringNowSection } from "../components/media-page/AiringNowSection/AiringNowSection";
 import { PageWrapper } from "./__root";
-import { useAiringNowMovies } from "../utils/data-hooks/useAiringNowMovies";
+import { useAiringNowMedia } from "../utils/data-hooks/useAiringNowMedia";
 import { TopRatedSection } from "../components/top-rated/TopRatedSection/TopRatedSection";
-import { useTopRatedMovies } from "../utils/data-hooks/useTopRatedMovies";
+import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
 import { GenreShowcaseSection } from "../components/genre-showcase/GenreShowcaseSection/GenreShowcaseSection";
 import { useGenreList } from "../utils/data-hooks/useGenreList";
 import { useTopGenresMedia } from "../utils/data-hooks/useTopGenresMedia";
@@ -15,15 +15,17 @@ export const Route = createFileRoute("/movies")({
 });
 
 function RouteComponent() {
-    const { data, isLoading } = useAiringNowMovies();
+    const { data, isLoading } = useAiringNowMedia("Movies");
     const { data: topRatedData, isLoading: isTopRatedLoading } =
-        useTopRatedMovies();
+        useTopRatedMedia("Movies");
 
     const airingNowMovies = data?.results || [];
     const topRatedMovies = topRatedData?.results?.slice(0, 5) || [];
 
-    const { data: genreData } = useGenreList();
-    const genreList = genreData?.genres || [];
+    const { data: genreData } = useGenreList("Movies");
+    const genreList = useMemo(() => {
+        return genreData?.genres || [];
+    }, [genreData?.genres]);
 
     const [genreListState, setGenreListState] = useState(genreList);
     const getRandomGenres = useMemo(() => {
@@ -38,7 +40,7 @@ function RouteComponent() {
     }, [getRandomGenres]);
     const topGenresMedia = useTopGenresMedia(
         genreListState.map((genre) => genre?.id.toString() ?? ""),
-        "movie",
+        "Movies",
     );
     console.log(genreListState, "genreListState");
     return (
@@ -47,6 +49,7 @@ function RouteComponent() {
             <AiringNowSection
                 carouselData={airingNowMovies}
                 isLoading={isLoading}
+                mediaType="Movies"
             />
             <TopRatedSection
                 cardData={topRatedMovies}
@@ -58,6 +61,7 @@ function RouteComponent() {
                     carouselData={topGenresMedia[index]?.data?.results || []}
                     isLoading={topGenresMedia[index]?.isLoading}
                     genreName={genre?.name}
+                    mediaType="Movies"
                 />
             ))}
         </PageWrapper>

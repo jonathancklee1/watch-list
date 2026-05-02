@@ -5,12 +5,15 @@ import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { MediaCard } from "../../MediaCard/MediaCard";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { useState } from "react";
+import type { MediaType } from "../../../utils/types";
 export function AiringNowSection({
     carouselData,
     isLoading,
+    mediaType,
 }: {
     carouselData: [];
     isLoading?: boolean;
+    mediaType: MediaType;
 }) {
     console.log(carouselData);
     const [mobileSlidesNumber, setMobileSlidesNumber] = useState(1.5);
@@ -46,6 +49,7 @@ export function AiringNowSection({
                         key={item?.id}
                         data={mapToCard(item)}
                         isLoading={isLoading}
+                        mediaType={mediaType}
                     />
                 ))}
             />
