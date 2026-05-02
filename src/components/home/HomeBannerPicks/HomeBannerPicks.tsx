@@ -10,7 +10,6 @@ import { mapToCard } from "../../../utils/helpers/mapToCard";
 export function HomeBannerPicks() {
     const [isMobileState, setIsMobileState] = useState(isMobile());
     const { data: trendingMovies, isLoading } = useTrendingMedia("movie");
-    // console.log(trendingMovies);
     const trendingArray = [
         trendingMovies?.results[0],
         trendingMovies?.results[1],
@@ -29,7 +28,6 @@ export function HomeBannerPicks() {
             setIsMobileState(false);
         }
     });
-    console.log(trendingArray);
     return (
         <>
             {isMobileState ? (

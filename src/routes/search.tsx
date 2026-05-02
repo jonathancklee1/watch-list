@@ -77,6 +77,7 @@ function RouteComponent() {
                 searchResults={data?.results}
                 isLoading={isLoading}
                 searchTerm={search}
+                selectedCategory={selectedCategory}
             />
             {count > 0 && (
                 <SearchPagination

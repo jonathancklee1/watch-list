@@ -16,8 +16,8 @@ type Image = {
 export type CardProps = {
     data: CardType | null;
     isLoading?: boolean;
-    mediaType: MediaType;
     tagText?: string;
+    selectedCategory?: MediaType;
 };
 
 export interface ApiMovieData {
@@ -54,7 +54,7 @@ export interface CardType {
     posterPath?: string;
     description?: string;
     link?: string;
-    rating?: number;
+    rating?: number | string;
     runTime?: string;
     genres?: string | number[] | { id: number; name: string }[];
 }

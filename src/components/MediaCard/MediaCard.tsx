@@ -1,5 +1,5 @@
 import type { CardProps } from "../../utils/types";
-import { Card, Flex, Tag, Text } from "@chakra-ui/react";
+import { Card, Tag, Text } from "@chakra-ui/react";
 import { Button } from "../Button/Button";
 import {
     StyledCard,
@@ -11,18 +11,25 @@ import {
 } from "./MediaCard.styles";
 import { Tooltip } from "../ui/tooltip";
 import { BiPlus } from "react-icons/bi";
-import { useGenreList } from "../../utils/data-hooks/useGenreList";
+
 import { EmptyImage } from "../EmptyImage/EmptyImage";
+import { useContext } from "react";
+import { GenreListContext } from "../../utils/context/GenreListContext";
+import { mapToValidMedia } from "../../utils/helpers/mapToValidMedia";
 
 export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
-    const { data: genreList } = useGenreList(mediaType);
+    const genreList = useContext(GenreListContext)[mapToValidMedia(mediaType)];
     const mainGenre = genreList?.genres
         ?.filter((genre) => data?.genres?.includes(genre.id))
         .map((genre) => genre.name)[0];
     return (
         <StyledCard>
             {data?.image?.src ? (
-                <StyledImage src={data?.image?.src} alt={data?.title} />
+                <StyledImage
+                    src={data?.image?.src}
+                    alt={data?.title}
+                    loading="lazy"
+                />
             ) : (
                 <EmptyImage />
             )}

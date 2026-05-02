@@ -4,11 +4,13 @@ import { AiringNowSection } from "../components/media-page/AiringNowSection/Airi
 import { PageWrapper } from "./__root";
 import { useAiringNowMedia } from "../utils/data-hooks/useAiringNowMedia";
 import { TopRatedSection } from "../components/top-rated/TopRatedSection/TopRatedSection";
-import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
+
 import { GenreShowcaseSection } from "../components/genre-showcase/GenreShowcaseSection/GenreShowcaseSection";
-import { useGenreList } from "../utils/data-hooks/useGenreList";
+
+import { useContext, useEffect, useMemo, useState } from "react";
+import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
 import { useTopGenresMedia } from "../utils/data-hooks/useTopGenresMedia";
-import { useEffect, useMemo, useState } from "react";
+import { GenreListContext } from "../utils/context/GenreListContext";
 
 export const Route = createFileRoute("/movies")({
     component: RouteComponent,
@@ -22,10 +24,7 @@ function RouteComponent() {
     const airingNowMovies = data?.results || [];
     const topRatedMovies = topRatedData?.results?.slice(0, 5) || [];
 
-    const { data: genreData } = useGenreList("Movies");
-    const genreList = useMemo(() => {
-        return genreData?.genres || [];
-    }, [genreData?.genres]);
+    const genreList = useContext(GenreListContext).movie;
 
     const [genreListState, setGenreListState] = useState(genreList);
     const getRandomGenres = useMemo(() => {

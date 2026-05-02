@@ -1,14 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import HomeHeroBanner from "../components/home/HomeHeroBanner/HomeHeroBanner";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useContext } from "react";
 import { GenreShowcaseSection } from "../components/genre-showcase/GenreShowcaseSection/GenreShowcaseSection";
 import { AiringNowSection } from "../components/media-page/AiringNowSection/AiringNowSection";
 import { TopRatedSection } from "../components/top-rated/TopRatedSection/TopRatedSection";
 import { useAiringNowMedia } from "../utils/data-hooks/useAiringNowMedia";
-import { useGenreList } from "../utils/data-hooks/useGenreList";
+
+import { PageWrapper } from "./__root";
 import { useTopGenresMedia } from "../utils/data-hooks/useTopGenresMedia";
 import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
-import { PageWrapper } from "./__root";
+import { GenreListContext } from "../utils/context/GenreListContext";
 
 export const Route = createFileRoute("/tvShows")({
     component: RouteComponent,
@@ -22,10 +23,7 @@ function RouteComponent() {
     const airingNowMovies = data?.results || [];
     const topRatedMovies = topRatedData?.results?.slice(0, 5) || [];
 
-    const { data: genreData } = useGenreList("TV Shows");
-    const genreList = useMemo(() => {
-        return genreData?.genres || [];
-    }, [genreData?.genres]);
+    const genreList = useContext(GenreListContext).tv;
 
     const [genreListState, setGenreListState] = useState(genreList);
     const getRandomGenres = useMemo(() => {

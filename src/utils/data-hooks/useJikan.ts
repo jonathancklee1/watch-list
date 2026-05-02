@@ -17,6 +17,8 @@ export function useJikan<TData = unknown>(
     return useQuery<unknown, unknown, TData>({
         queryKey: [endpoint, params],
         queryFn: () => fetch(url).then((res) => res.json()),
+        staleTime: 5 * 60 * 1000, // 5 minutes - data stays fresh
+        gcTime: 10 * 60 * 1000, // 10 minutes - cache persists
         ...options,
     });
 }

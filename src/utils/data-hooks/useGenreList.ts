@@ -1,22 +1,7 @@
 import { mapToValidMedia } from "../helpers/mapToValidMedia";
 import type { MediaType } from "../types";
-import { useJikan } from "./useJikan";
 import { useTMDBQuery } from "./useTMDBApi";
 
-export function useGenreList(media: MediaType) {
-    const endpoints = {
-        movie: `genre/${mapToValidMedia(media)}/list`,
-        tv: `genre/${mapToValidMedia(media)}/list`,
-        anime: "genres/anime",
-    };
-
-    // Always call both hooks to follow rules of hooks
-    const jikanData = useJikan(endpoints.anime);
-    const tmdbData = useTMDBQuery(endpoints[mapToValidMedia(media)]);
-
-    // Conditionally return based on mediaType
-    if (media === "Anime") {
-        return jikanData;
-    }
-    return tmdbData;
+export function useGenreList(media: Omit<MediaType, "Anime">) {
+    return useTMDBQuery(`genre/${mapToValidMedia(media)}/list`);
 }

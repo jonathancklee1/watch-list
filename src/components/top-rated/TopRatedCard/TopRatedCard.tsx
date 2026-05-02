@@ -18,7 +18,11 @@ export function TopRatedCard({
     const isFirst = ranking === 1;
     return (
         <StyledCard $isFirst={isFirst}>
-            <StyledImage src={data?.image?.src} alt={data?.title} />
+            <StyledImage
+                src={data?.image?.src}
+                alt={data?.title}
+                loading="lazy"
+            />
             <StyledBody $isFirst={isFirst}>
                 <Badge
                     variant={"solid"}

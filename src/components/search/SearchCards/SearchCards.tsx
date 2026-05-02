@@ -1,4 +1,4 @@
-import type { CardProps } from "../../../utils/types";
+import type { CardProps, MediaType } from "../../../utils/types";
 import { Box, Skeleton } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../../components/ui/tooltip";
@@ -13,15 +13,18 @@ import {
     StyledCardFooter,
 } from "./SearchCards.styles";
 import { BiPlus, BiSolidStar } from "react-icons/bi";
-import { useGenreList } from "../../../utils/data-hooks/useGenreList";
-import { EmptyImage } from "../../EmptyImage/EmptyImage";
 
-export function SearchCards({ data, isLoading }: CardProps) {
-    const { data: genreList } = useGenreList();
-    const mainGenre = genreList?.genres
+import { EmptyImage } from "../../EmptyImage/EmptyImage";
+import { useContext } from "react";
+import { GenreListContext } from "../../../utils/context/GenreListContext";
+import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
+
+export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
+    const genreList =
+        useContext(GenreListContext)[mapToValidMedia(selectedCategory)];
+    const mainGenre = genreList
         ?.filter((genre) => data?.genres?.includes(genre.id))
         .map((genre) => genre.name)[0];
-    console.log(mainGenre);
     return (
         <StyledCard>
             <StyledImageWrapper>
@@ -56,6 +59,7 @@ export function SearchCards({ data, isLoading }: CardProps) {
                     <StyledImage
                         src={data?.image?.src ?? ""}
                         alt={data?.title}
+                        loading="lazy"
                     />
                 ) : (
                     <EmptyImage />

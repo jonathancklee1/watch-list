@@ -2,7 +2,7 @@ import { Flex, Grid, Heading } from "@chakra-ui/react";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { TopRatedCard } from "../TopRatedCard/TopRatedCard";
 import { StyledDiv } from "./TopRatedSection.styles";
-import type { ApiMovieData, MediaType } from "../../../utils/types";
+import type { ApiMovieData } from "../../../utils/types";
 export function TopRatedSection({
     cardData,
     isLoading,

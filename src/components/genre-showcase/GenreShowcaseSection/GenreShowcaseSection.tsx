@@ -1,4 +1,4 @@
-import { Flex, Heading, Separator } from "@chakra-ui/react";
+import { Flex, Heading, Separator, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
@@ -17,7 +17,6 @@ export function GenreShowcaseSection({
     genreName: string;
     mediaType: MediaType;
 }) {
-    console.log(carouselData);
     const [mobileSlidesNumber, setMobileSlidesNumber] = useState(2);
 
     window.addEventListener("resize", () => {
@@ -44,21 +43,27 @@ export function GenreShowcaseSection({
                     borderColor={"var(--secondary-color)"}
                 />
             </Flex>
-            <CardCarousel
-                slidesPerPage={mobileSlidesNumber}
-                items={carouselData?.map((item) => {
-                    const { overview, ...newItem } = item;
-                    return (
-                        <MediaCard
-                            key={item?.id}
-                            data={mapToCard(newItem)}
-                            isLoading={isLoading}
-                            mediaType={mediaType}
-                        />
-                    );
-                })}
-                enableControls
-            />
+            {isLoading ? (
+                <Spinner size="sm" mx={"auto"} />
+            ) : (
+                <CardCarousel
+                    slidesPerPage={mobileSlidesNumber}
+                    items={carouselData?.map((item) => {
+                        const { overview, ...newItem } = item;
+                        return (
+                            <MediaCard
+                                key={item?.id}
+                                data={mapToCard(newItem)}
+                                isLoading={isLoading}
+                                mediaType={mediaType}
+                            />
+                        );
+                    })}
+                    enableControls
+                />
+            )}
         </StyledDiv>
     );
 }
+
+export default GenreShowcaseSection;

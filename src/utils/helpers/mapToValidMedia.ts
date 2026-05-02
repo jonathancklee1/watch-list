@@ -1,6 +1,8 @@
 import type { MediaType } from "../types";
 
-export function mapToValidMedia(mediaType: MediaType) {
+export function mapToValidMedia(
+    mediaType: MediaType | Omit<MediaType, "Anime">,
+): "movie" | "tv" | "anime" {
     let validMediaType = "";
     switch (mediaType) {
         case "Movies":
