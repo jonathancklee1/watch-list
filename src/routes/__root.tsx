@@ -14,7 +14,6 @@ export const Route = createRootRoute({
     component: () => (
         <>
             <Nav />
-            <hr />
             <Outlet /> {/* This is where child routes render */}
             <MobileNav />
         </>

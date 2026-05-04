@@ -16,6 +16,7 @@ import { EmptyImage } from "../EmptyImage/EmptyImage";
 import { useContext } from "react";
 import { GenreListContext } from "../../utils/context/GenreListContext";
 import { mapToValidMedia } from "../../utils/helpers/mapToValidMedia";
+import { Link } from "@tanstack/react-router";
 
 export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
     const genreList = useContext(GenreListContext)[mapToValidMedia(mediaType)];
@@ -24,7 +25,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
         mediaType === "Anime"
             ? data?.genres[0]?.name
             : genreList
-                  .filter((genre) => data?.genres?.includes(genre.id))
+                  ?.filter((genre) => data?.genres?.includes(genre.id))
                   .map((genre) => genre.name)[0];
     return (
         <StyledCard>
@@ -65,13 +66,25 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                     )}
                 </Card.Body>
                 <Card.Footer gap="2" zIndex={10} mt={"1rem"}>
-                    <Button
-                        label={isLoading ? "Loading..." : "View Details"}
-                        href={data?.id ? `/movie/${data?.id}` : ""}
-                        style={{
-                            flexGrow: 1,
+                    <Link
+                        to="/details/$mediaType/$id"
+                        params={{
+                            mediaType: mapToValidMedia(mediaType),
+                            id: data?.id,
                         }}
-                    />
+                    >
+                        <Button
+                            label={isLoading ? "Loading..." : "View Details"}
+                            // href={
+                            //     data?.id
+                            //         ? `/details/${mapToValidMedia(mediaType)}/${data?.id}`
+                            //         : ""
+                            // }
+                            style={{
+                                flexGrow: 1,
+                            }}
+                        />
+                    </Link>
                     <Tooltip
                         content="Add to watchlist"
                         positioning={{ placement: "top" }}

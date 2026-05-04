@@ -9,6 +9,9 @@ export const NavWrapper = styled.nav`
     gap: 1rem;
     background-color: #0f0f0f;
     padding-block: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 `;
 
 export const LinkWrapper = styled.div`

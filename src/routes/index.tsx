@@ -32,7 +32,11 @@ function RouteComponent() {
                     };
                 })
                 .map((movie: MovieType) => (
-                    <MediaCard key={movie?.id} data={mapToCard(movie)} />
+                    <MediaCard
+                        key={movie?.id}
+                        data={mapToCard(movie)}
+                        mediaType={"Movies"}
+                    />
                 ))) ||
         [];
     const popularTVShowsArray =
@@ -46,14 +50,22 @@ function RouteComponent() {
                     };
                 })
                 .map((show: ShowType) => (
-                    <MediaCard key={show?.id} data={mapToCard(show)} />
+                    <MediaCard
+                        key={show?.id}
+                        data={mapToCard(show)}
+                        mediaType={"TV Shows"}
+                    />
                 ))) ||
         [];
     const popularAnimeArray =
         popularAnime?.data
             ?.slice(0, 14)
             .map((anime: AnimeType) => (
-                <MediaCard key={anime?.id} data={mapToCard(anime)} />
+                <MediaCard
+                    key={anime?.id}
+                    data={mapToCard(anime)}
+                    mediaType={"Anime"}
+                />
             )) || [];
     // console.log(popularMovies);
     // console.log(popularTVShows);

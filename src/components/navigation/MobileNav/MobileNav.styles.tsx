@@ -30,7 +30,7 @@ export const StyledMobileLink = styled(Link)<StyledLinkProps>`
     font-size: 0.7rem;
     text-transform: uppercase;
     padding: 1rem;
-    border-radius: 20px;
+    border-radius: 12px;
     text-align: center;
     height: 100%;
     width: 100%;
