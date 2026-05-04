@@ -39,18 +39,18 @@ function RouteComponent() {
         searchTerm,
         page,
     );
-    console.log(data, "movies data");
+    // console.log(data, "movies data");
     const count = data?.total_results ?? 0;
     const pageSize = data?.results.length ?? 0;
     const startRange = (page - 1) * pageSize;
     const endRange = startRange + pageSize;
     // const visibleItems = items.slice(startRange, endRange);
-    console.log(count, "count");
-    console.log(pageSize, "pageSize");
-    console.log(startRange, "startRange");
-    console.log(endRange, "endRange");
+    // console.log(count, "count");
+    // console.log(pageSize, "pageSize");
+    // console.log(startRange, "startRange");
+    // console.log(endRange, "endRange");
 
-    console.log(page, "current page");
+    // console.log(page, "current page");
     useEffect(() => {
         setPage(pageParam);
     }, [pageParam]);

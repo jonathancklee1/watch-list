@@ -19,9 +19,13 @@ import { mapToValidMedia } from "../../utils/helpers/mapToValidMedia";
 
 export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
     const genreList = useContext(GenreListContext)[mapToValidMedia(mediaType)];
-    const mainGenre = genreList?.genres
-        ?.filter((genre) => data?.genres?.includes(genre.id))
-        .map((genre) => genre.name)[0];
+    console.log(genreList, mediaType, data);
+    const mainGenre =
+        mediaType === "Anime"
+            ? data?.genres[0]?.name
+            : genreList
+                  .filter((genre) => data?.genres?.includes(genre.id))
+                  .map((genre) => genre.name)[0];
     return (
         <StyledCard>
             {data?.image?.src ? (

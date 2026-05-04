@@ -18,10 +18,12 @@ export type CardProps = {
     isLoading?: boolean;
     tagText?: string;
     selectedCategory?: MediaType;
+    mediaType: MediaType;
 };
 
 export interface ApiMovieData {
     id?: number;
+    mal_id?: number;
     title?: string;
     name?: string;
     image?: string;
@@ -80,4 +82,10 @@ export interface JikanSearchResponse {
             total?: number;
         };
     };
+}
+
+export interface GenreContextType {
+    movie: { id: number; name: string }[];
+    tv: { id: number; name: string }[];
+    anime: { mal_id: number; name: string; count: number; url: string }[];
 }

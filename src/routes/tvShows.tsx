@@ -40,7 +40,7 @@ function RouteComponent() {
         genreListState.map((genre) => genre?.id.toString() ?? ""),
         "TV Shows",
     );
-    console.log(genreListState, "genreListState");
+    // console.log(genreListState, "genreListState");
     return (
         <PageWrapper className="container">
             <HomeHeroBanner category="TV Shows" />

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import HomeHeroBanner from "../components/home/HomeHeroBanner/HomeHeroBanner";
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext, useCallback, useMemo } from "react";
 import { GenreShowcaseSection } from "../components/genre-showcase/GenreShowcaseSection/GenreShowcaseSection";
 import { AiringNowSection } from "../components/media-page/AiringNowSection/AiringNowSection";
 import { TopRatedSection } from "../components/top-rated/TopRatedSection/TopRatedSection";
@@ -23,34 +23,33 @@ function RouteComponent() {
     const topRatedAnime = topRatedData?.data?.slice(0, 5) || [];
 
     const genreList = useContext(GenreListContext).anime;
-
     const [genresLoading, setGenresLoading] = useState(true);
     const [debouncedGenreIds, setDebouncedGenreIds] = useState<string[]>([]);
-
-    const getRandomGenres = useCallback(
-        (count: number) => {
+    const [genreListState, setGenreListState] =
+        useState<typeof genreList>(genreList);
+    useEffect(() => {
+        setGenreListState(
+            genreList.sort(() => Math.random() - 0.5).slice(0, 3) || [],
+        );
+    }, [genreList]);
+    const getRandomGenres = useMemo(() => {
+        return (count: number) => {
             if (genreList.length === 0) return [];
             const shuffled = [...genreList].sort(() => Math.random() - 0.5);
             return shuffled.slice(0, count);
-        },
-        [genreList],
-    );
-
+        };
+    }, [genreList]);
+    const topGenresMedia = useTopGenresAnime(debouncedGenreIds);
     useEffect(() => {
         const timeout = setTimeout(() => {
             setDebouncedGenreIds(
-                getRandomGenres(3).map(
-                    (genre) => genre?.mal_id?.toString() ?? "",
-                ),
+                genreListState.map((genre) => genre?.mal_id?.toString() ?? ""),
             );
-
             setGenresLoading(false);
         }, 3000);
 
         return () => clearTimeout(timeout);
-    }, [getRandomGenres]);
-
-    const topGenresMedia = useTopGenresAnime(debouncedGenreIds);
+    }, [getRandomGenres, genreListState]);
 
     return (
         <PageWrapper className="container">
@@ -64,7 +63,7 @@ function RouteComponent() {
                 cardData={topRatedAnime}
                 isLoading={isTopRatedLoading}
             />
-            {getRandomGenres(3).map((genre, index) => (
+            {genreListState.map((genre, index) => (
                 <GenreShowcaseSection
                     key={genre?.mal_id ?? index}
                     carouselData={topGenresMedia[index]?.data?.data || []}

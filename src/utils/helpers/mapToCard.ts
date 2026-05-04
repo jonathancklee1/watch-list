@@ -5,7 +5,7 @@ export function mapToCard<TData extends ApiMovieData>(
 ): CardType | null {
     if (!data) return null;
     return {
-        id: data.id,
+        id: data.id || data.mal_id,
         title: data.title_english || data.title || data.name,
         image: {
             src: data.poster_path
@@ -19,7 +19,7 @@ export function mapToCard<TData extends ApiMovieData>(
             data.first_air_date?.split("-")[0] ||
             data?.aired?.from?.split("-")[0] ||
             "Unknown",
-        link: `/movie/${data.id}`,
+        link: `/movie/${data.id || data.mal_id}`,
         rating:
             Number(data?.vote_average?.toFixed(1)) ||
             data.score?.toFixed(1) ||

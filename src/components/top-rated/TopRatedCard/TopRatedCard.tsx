@@ -14,7 +14,7 @@ export function TopRatedCard({
     ranking: number;
     isLoading?: boolean;
 }) {
-    console.log(data, "data");
+    // console.log(data, "data");
     const isFirst = ranking === 1;
     return (
         <StyledCard $isFirst={isFirst}>

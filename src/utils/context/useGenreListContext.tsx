@@ -11,7 +11,7 @@ export function GenreListProvider({ children }: { children: React.ReactNode }) {
         tv: tvShowGenres?.genres || [],
         anime: animeGenres?.data || [],
     };
-    console.log(genres, data, tvShowGenres, animeGenres, "genres in provider");
+    // console.log(genres, data, tvShowGenres, animeGenres, "genres in provider");
     return (
         <GenreListContext.Provider value={genres}>
             {children}
