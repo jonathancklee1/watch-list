@@ -1,4 +1,4 @@
-import type { CardProps, MediaType } from "../../../utils/types";
+import type { CardProps } from "../../../utils/types";
 import { Box, Skeleton } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../../components/ui/tooltip";
@@ -6,18 +6,18 @@ import { Tooltip } from "../../../components/ui/tooltip";
 import {
     StyledCard,
     StyledImage,
-    StyledTag,
     StyledTitle,
     StyledDescription,
     StyledImageWrapper,
     StyledCardFooter,
 } from "./SearchCards.styles";
-import { BiPlus, BiSolidStar } from "react-icons/bi";
+import { BiPlus } from "react-icons/bi";
 
 import { EmptyImage } from "../../EmptyImage/EmptyImage";
 import { useContext } from "react";
 import { GenreListContext } from "../../../utils/context/GenreListContext";
 import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
+import { RatingTag } from "../../RatingTag/RatingTag";
 
 export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
     const genreList =
@@ -64,14 +64,15 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
                 ) : (
                     <EmptyImage />
                 )}
-                <StyledTag>
-                    <BiSolidStar color="var(--secondary-color)" />
-                    {isLoading ? (
-                        <Skeleton height="5" width="30px" />
-                    ) : (
-                        (data?.rating ?? "null")
-                    )}
-                </StyledTag>
+                <RatingTag
+                    rating={Number(data?.rating)}
+                    isLoading={!!isLoading}
+                    style={{
+                        position: "absolute",
+                        top: "0.75rem",
+                        right: "0.75rem",
+                    }}
+                />
             </StyledImageWrapper>
             <StyledCardFooter>
                 <StyledTitle>
