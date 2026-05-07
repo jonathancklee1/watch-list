@@ -18,6 +18,7 @@ import { mapToCard } from "../utils/helpers/mapToCard";
 import { isMobile } from "../utils/helpers/isMobile";
 import { useMediaDetails } from "../utils/data-hooks/useMediaDetails";
 import { getPosterImage } from "../utils/helpers/getPosterImage";
+import { useMediaRecommendations } from "../utils/data-hooks/useMediaRecommendations";
 
 export const Route = createFileRoute("/details/$mediaType/$id")({
     // Load data using the params
@@ -60,10 +61,13 @@ function MediaDetailsComponent() {
     // Access params directly in the component
     const { mediaType, id } = Route.useParams();
     const { data } = useMediaDetails(mediaType, id);
+    const { data: recommendations } = useMediaRecommendations(mediaType, id);
     console.log(data);
+    console.log(recommendations);
     const genres = (data && data?.genres?.map((genre) => genre?.name)) ?? [];
+    const recommendationData = recommendations && recommendations?.results;
     return (
-        <PageWrapper>
+        <PageWrapper style={{ paddingBottom: "6rem" }}>
             <Flex gap={4} direction={"column"}>
                 <Flex gap={6} direction={"column"}>
                     <Flex
@@ -142,21 +146,23 @@ function MediaDetailsComponent() {
                         </Flex>
 
                         {isMobile() && (
-                            <CardCarousel
-                                slidesPerPage={3}
-                                items={[]?.map((item) => {
-                                    const { overview, ...newItem } = item;
-                                    return (
-                                        <MediaCard
-                                            key={item?.id}
-                                            data={mapToCard(newItem)}
-                                            isLoading={false}
-                                            mediaType={mediaType}
-                                        />
-                                    );
-                                })}
-                                enableControls
-                            />
+                            <Box px={"1em"}>
+                                <CardCarousel
+                                    slidesPerPage={2}
+                                    items={recommendationData?.map((item) => {
+                                        const { overview, ...newItem } = item;
+                                        return (
+                                            <MediaCard
+                                                key={item?.id}
+                                                data={mapToCard(newItem)}
+                                                isLoading={false}
+                                                mediaType={mediaType}
+                                            />
+                                        );
+                                    })}
+                                    enableControls
+                                />
+                            </Box>
                         )}
                     </Box>
                 </Flex>
