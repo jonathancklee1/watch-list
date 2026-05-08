@@ -15,7 +15,9 @@ export function AiringNowSection({
     isLoading?: boolean;
     mediaType: MediaType;
 }) {
-    const [mobileSlidesNumber, setMobileSlidesNumber] = useState(1.5);
+    const [mobileSlidesNumber, setMobileSlidesNumber] = useState(
+        isMobile() ? 1.5 : 3,
+    );
     window.addEventListener("resize", () => {
         if (isMobile()) {
             setMobileSlidesNumber(1.5);

@@ -3,16 +3,20 @@ import { StyledBody, StyledCard, StyledImage } from "./TopRatedCard.styles";
 import { BiPlus } from "react-icons/bi";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../../components/ui/tooltip";
-import type { CardType } from "../../../utils/types";
+import type { CardType, MediaType } from "../../../utils/types";
+import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
+import { Link } from "@tanstack/react-router";
 
 export function TopRatedCard({
     data,
     ranking,
     isLoading,
+    mediaType,
 }: {
     data: CardType | null;
     ranking: number;
     isLoading?: boolean;
+    mediaType: MediaType;
 }) {
     // console.log(data, "data");
     const isFirst = ranking === 1;
@@ -55,15 +59,24 @@ export function TopRatedCard({
 
                     <Card.Footer p={0} gap={".75em"}>
                         {isFirst && (
-                            <Button
-                                label={
-                                    isLoading ? "Loading..." : "View Details"
-                                }
-                                href={data?.id ? `/movie/${data?.id}` : ""}
-                                style={{
-                                    flexGrow: 1,
+                            <Link
+                                to="/details/$mediaType/$id"
+                                params={{
+                                    mediaType: mapToValidMedia(mediaType),
+                                    id: data?.id,
                                 }}
-                            />
+                            >
+                                <Button
+                                    label={
+                                        isLoading
+                                            ? "Loading..."
+                                            : "View Details"
+                                    }
+                                    style={{
+                                        flexGrow: 1,
+                                    }}
+                                />
+                            </Link>
                         )}
                         <Tooltip
                             content="Add to watchlist"

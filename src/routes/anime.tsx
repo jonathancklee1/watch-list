@@ -62,6 +62,7 @@ function RouteComponent() {
             <TopRatedSection
                 cardData={topRatedAnime}
                 isLoading={isTopRatedLoading}
+                mediaType="Anime"
             />
             {genreListState.map((genre, index) => (
                 <GenreShowcaseSection

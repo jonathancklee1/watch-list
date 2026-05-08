@@ -2,13 +2,15 @@ import { Flex, Grid, Heading } from "@chakra-ui/react";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { TopRatedCard } from "../TopRatedCard/TopRatedCard";
 import { StyledDiv } from "./TopRatedSection.styles";
-import type { ApiMovieData } from "../../../utils/types";
+import type { ApiMovieData, MediaType } from "../../../utils/types";
 export function TopRatedSection({
     cardData,
     isLoading,
+    mediaType,
 }: {
     cardData: ApiMovieData[];
     isLoading?: boolean;
+    mediaType: MediaType;
 }) {
     return (
         <StyledDiv>
@@ -45,6 +47,7 @@ export function TopRatedSection({
                         data={mapToCard(item)}
                         isLoading={isLoading}
                         ranking={index + 1}
+                        mediaType={mediaType}
                     />
                 ))}
             </Grid>

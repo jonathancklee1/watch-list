@@ -17,13 +17,15 @@ export function GenreShowcaseSection({
     genreName: string;
     mediaType: MediaType;
 }) {
-    const [mobileSlidesNumber, setMobileSlidesNumber] = useState(2);
+    const [mobileSlidesNumber, setMobileSlidesNumber] = useState(
+        isMobile() ? 2 : 4,
+    );
 
     window.addEventListener("resize", () => {
         if (isMobile()) {
             setMobileSlidesNumber(2);
         } else {
-            setMobileSlidesNumber(3);
+            setMobileSlidesNumber(4);
         }
     });
     return (

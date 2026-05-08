@@ -16,7 +16,8 @@ import { CardCarousel } from "../components/CardCarousel/CardCarousel";
 import { MediaCard } from "../components/MediaCard/MediaCard";
 import { mapToCard } from "../utils/helpers/mapToCard";
 import { isMobile } from "../utils/helpers/isMobile";
-import { useMediaDetails } from "../utils/data-hooks/useMediaDetails";
+import { useMediaDetails } from "../utils/data-hooks/useDetailsMedia";
+import { useDetailsAnime } from "../utils/data-hooks/useDetailsAnime";
 import { getPosterImage } from "../utils/helpers/getPosterImage";
 import { useMediaRecommendations } from "../utils/data-hooks/useMediaRecommendations";
 
@@ -61,13 +62,44 @@ function MediaDetailsComponent() {
     // Access params directly in the component
     const { mediaType, id } = Route.useParams();
     const { data } = useMediaDetails(mediaType, id);
+    const { data: animeDetail } = useDetailsAnime(id);
     const { data: recommendations } = useMediaRecommendations(mediaType, id);
-    console.log(data);
+    console.log(data, animeDetail);
     console.log(recommendations);
-    const genres = (data && data?.genres?.map((genre) => genre?.name)) ?? [];
+    const genres =
+        mediaType === "anime"
+            ? animeDetail?.data?.genres.map((genre) => genre.name)
+            : ((data && data?.genres?.map((genre) => genre?.name)) ?? []);
     const recommendationData = recommendations && recommendations?.results;
+    const detailsData =
+        mediaType === "anime"
+            ? {
+                  rating: animeDetail?.data?.score,
+                  poster: animeDetail?.data?.images?.webp.large_image_url,
+                  title:
+                      animeDetail?.data?.title_english ||
+                      animeDetail?.data?.title,
+                  overview: animeDetail?.data?.synopsis,
+                  releaseDate: animeDetail?.data?.aired?.from?.split("-")[0],
+                  genres: animeDetail?.data?.genres.map((genre) => genre.name),
+                  episodes: animeDetail?.data?.episodes,
+              }
+            : {
+                  poster: data?.poster_path,
+                  releaseDate:
+                      data?.release_date?.split("-")[0] ||
+                      data?.first_air_date?.split("-")[0],
+                  genres: data?.genres.map((genre) => genre.name),
+                  episodes: data?.number_of_episodes,
+                  seasons: data?.number_of_seasons,
+                  runtime: data?.runtime,
+                  backdrop: data?.backdrop_path,
+                  overview: data?.overview,
+                  title: data?.title || data?.name,
+                  rating: data?.vote_average,
+              };
     return (
-        <PageWrapper style={{ paddingBottom: "6rem" }}>
+        <PageWrapper style={{ paddingBottom: "8rem" }}>
             <Flex gap={4} direction={"column"}>
                 <Flex gap={6} direction={"column"}>
                     <Flex
@@ -80,32 +112,46 @@ function MediaDetailsComponent() {
                     >
                         <StyledInfoBox>
                             <RatingTag
-                                rating={data && data?.vote_average?.toFixed(1)}
+                                rating={detailsData?.rating?.toFixed(1)}
                                 isLoading={false}
                             />
                             <Heading as="h1" fontSize={"2rem"}>
-                                {data && data?.title}
+                                {detailsData?.title}
                             </Heading>
                             <Flex
                                 gap={"4"}
                                 color={"var(--text--secondary-color)"}
                             >
-                                <Text>{data && data?.runtime} mins</Text>{" "}
+                                <Text>
+                                    {detailsData?.runtime
+                                        ? `${detailsData?.runtime} mins`
+                                        : null}
+                                    {detailsData?.episodes
+                                        ? `${detailsData?.episodes} Episodes`
+                                        : null}
+                                    {detailsData?.seasons
+                                        ? `| ${detailsData?.seasons} Seasons`
+                                        : null}
+                                </Text>{" "}
                                 <Separator
                                     orientation={"vertical"}
                                     borderColor={"var(--primary-color)"}
                                 />
-                                <Text>{data && data?.release_date}</Text>
+                                <Text>
+                                    {detailsData?.releaseDate
+                                        ? detailsData?.releaseDate
+                                        : "N/A"}
+                                </Text>
                             </Flex>
                             <Button label="Add to Watchlist" $secondary />
                         </StyledInfoBox>
                         <StyledBackgroundImage
-                            src={`${getPosterImage(data && data?.poster_path)}`}
+                            src={`${mediaType === "anime" ? detailsData.poster : getPosterImage(detailsData.poster)}`}
                             alt="Media Image"
                         />
                     </Flex>
                     <Flex gap={6} direction={"column"} px={"1em"}>
-                        <Flex gap={4} alignItems={"center"}>
+                        <Flex gap={4} alignItems={"center"} flexWrap={"wrap"}>
                             {genres?.map((genre) => (
                                 <Badge
                                     key={genre}
@@ -119,7 +165,7 @@ function MediaDetailsComponent() {
                             ))}
                         </Flex>
                         <Text color={"var(--text--secondary-color)"}>
-                            {data && data?.overview}
+                            {detailsData?.overview}
                         </Text>
                     </Flex>
                     {/* Add Similar recommendation as carousel */}
@@ -148,7 +194,7 @@ function MediaDetailsComponent() {
                         {isMobile() && (
                             <Box px={"1em"}>
                                 <CardCarousel
-                                    slidesPerPage={2}
+                                    slidesPerPage={1.5}
                                     items={recommendationData?.map((item) => {
                                         const { overview, ...newItem } = item;
                                         return (

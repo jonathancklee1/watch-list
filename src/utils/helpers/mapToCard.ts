@@ -11,8 +11,10 @@ export function mapToCard<TData extends ApiMovieData>(
             src: data.poster_path
                 ? getPosterImage(data.poster_path)
                 : data?.images?.webp.large_image_url,
+
             alt: data.title,
         },
+        backdrop: getPosterImage(data.backdrop_path || ""),
         description: data.overview,
         releaseDate:
             data.release_date?.split("-")[0] ||

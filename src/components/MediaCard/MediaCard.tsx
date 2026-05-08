@@ -75,11 +75,6 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                     >
                         <Button
                             label={isLoading ? "Loading..." : "View Details"}
-                            // href={
-                            //     data?.id
-                            //         ? `/details/${mapToValidMedia(mediaType)}/${data?.id}`
-                            //         : ""
-                            // }
                             style={{
                                 flexGrow: 1,
                             }}
