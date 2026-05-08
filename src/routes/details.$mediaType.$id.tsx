@@ -19,7 +19,8 @@ import { isMobile } from "../utils/helpers/isMobile";
 import { useMediaDetails } from "../utils/data-hooks/useDetailsMedia";
 import { useDetailsAnime } from "../utils/data-hooks/useDetailsAnime";
 import { getPosterImage } from "../utils/helpers/getPosterImage";
-import { useMediaRecommendations } from "../utils/data-hooks/useMediaRecommendations";
+import { useMediaRecommendations } from "../utils/data-hooks/useRecommendationsMedia";
+import { useRecommendationsAnime } from "../utils/data-hooks/useRecommendationsAnime";
 
 export const Route = createFileRoute("/details/$mediaType/$id")({
     // Load data using the params
@@ -59,18 +60,26 @@ const StyledInfoBox = styled(Flex)`
 `;
 
 function MediaDetailsComponent() {
-    // Access params directly in the component
     const { mediaType, id } = Route.useParams();
     const { data } = useMediaDetails(mediaType, id);
     const { data: animeDetail } = useDetailsAnime(id);
+    const { data: animeRecommendations } = useRecommendationsAnime(id);
     const { data: recommendations } = useMediaRecommendations(mediaType, id);
-    console.log(data, animeDetail);
-    console.log(recommendations);
+    console.log(mediaType, id, "mediaType, id");
     const genres =
         mediaType === "anime"
             ? animeDetail?.data?.genres.map((genre) => genre.name)
             : ((data && data?.genres?.map((genre) => genre?.name)) ?? []);
-    const recommendationData = recommendations && recommendations?.results;
+    const recommendationData =
+        mediaType == "anime"
+            ? animeRecommendations?.data?.map((rec) => {
+                  return {
+                      id: rec.entry.mal_id,
+                      title: rec.entry.title,
+                      images: rec.entry.images,
+                  };
+              })
+            : recommendations?.results;
     const detailsData =
         mediaType === "anime"
             ? {
@@ -150,7 +159,10 @@ function MediaDetailsComponent() {
                             alt="Media Image"
                         />
                     </Flex>
-                    <Flex gap={6} direction={"column"} px={"1em"}>
+                    <Flex gap={2} direction={"column"} px={"1em"}>
+                        <Text as="h2" fontSize={"1.3rem"} fontWeight={"bold"}>
+                            Genres
+                        </Text>
                         <Flex gap={4} alignItems={"center"} flexWrap={"wrap"}>
                             {genres?.map((genre) => (
                                 <Badge
@@ -164,6 +176,14 @@ function MediaDetailsComponent() {
                                 </Badge>
                             ))}
                         </Flex>
+                        <Text
+                            as="h2"
+                            fontSize={"1.3rem"}
+                            fontWeight={"bold"}
+                            mt={"1em"}
+                        >
+                            Overview
+                        </Text>
                         <Text color={"var(--text--secondary-color)"}>
                             {detailsData?.overview}
                         </Text>

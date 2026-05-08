@@ -53,14 +53,14 @@ export interface CardType {
     name?: string;
     image?: Image;
     overview?: string;
-    releaseDate?: string;
+    releaseDate?: string | null;
     posterPath?: string;
     backdrop?: string;
     description?: string;
     link?: string;
     rating?: number | string;
     runTime?: string;
-    genres?: string | number[] | { id: number; name: string }[];
+    genres?: string | number[] | { id: number; name: string }[] | null;
 }
 
 export interface StyledButtonProps {

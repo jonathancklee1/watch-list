@@ -20,12 +20,12 @@ export function mapToCard<TData extends ApiMovieData>(
             data.release_date?.split("-")[0] ||
             data.first_air_date?.split("-")[0] ||
             data?.aired?.from?.split("-")[0] ||
-            "Unknown",
+            null,
         link: `/movie/${data.id || data.mal_id}`,
         rating:
             Number(data?.vote_average?.toFixed(1)) ||
             data.score?.toFixed(1) ||
             0,
-        genres: data.genre_ids || data.genres || "Unknown",
+        genres: data.genre_ids || data.genres || null,
     };
 }
