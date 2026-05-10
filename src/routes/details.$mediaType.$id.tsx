@@ -1,63 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageWrapper } from "./__root";
-import {
-    Badge,
-    Box,
-    Flex,
-    Heading,
-    Image,
-    Separator,
-    Text,
-} from "@chakra-ui/react";
-import { RatingTag } from "../components/RatingTag/RatingTag";
-import { Button } from "../components/Button/Button";
-import styled from "styled-components";
-import { CardCarousel } from "../components/CardCarousel/CardCarousel";
-import { MediaCard } from "../components/MediaCard/MediaCard";
-import { mapToCard } from "../utils/helpers/mapToCard";
-import { isMobile } from "../utils/helpers/isMobile";
+import { Box, Flex, Grid } from "@chakra-ui/react";
 import { useMediaDetails } from "../utils/data-hooks/useDetailsMedia";
 import { useDetailsAnime } from "../utils/data-hooks/useDetailsAnime";
-import { getPosterImage } from "../utils/helpers/getPosterImage";
 import { useMediaRecommendations } from "../utils/data-hooks/useRecommendationsMedia";
 import { useRecommendationsAnime } from "../utils/data-hooks/useRecommendationsAnime";
+import { DetailsBanner } from "../components/details/DetailsBanner/DetailsBanner";
+import { DetailsContent } from "../components/details/DetailsContent/DetailsContent";
+import { SimilarRecommendations } from "../components/details/SimilarRecommendations/SimilarRecommendations";
 
 export const Route = createFileRoute("/details/$mediaType/$id")({
     // Load data using the params
     component: MediaDetailsComponent,
 });
-
-const StyledBackgroundImage = styled(Image)`
-    z-index: -1;
-    object-fit: cover;
-    aspect-ratio: 3/4;
-    position: relative;
-
-    filter: brightness(0.6);
-    &::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            to top,
-            rgba(0, 0, 0, 0.8),
-            rgba(0, 0, 0, 0.5) 50%,
-            rgba(0, 0, 0, 0) 100%
-        );
-        z-index: 1; /* Add a higher z-index value to ensure the pseudo-element is on top */
-        border: 1px solid red; /* Add a border to the pseudo-element for visibility */
-    }
-`;
-const StyledInfoBox = styled(Flex)`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    position: absolute;
-    inset: 0;
-    justify-content: flex-end;
-    padding-inline: 1em;
-    padding-bottom: 1.5em;
-`;
 
 function MediaDetailsComponent() {
     const { mediaType, id } = Route.useParams();
@@ -65,11 +20,8 @@ function MediaDetailsComponent() {
     const { data: animeDetail } = useDetailsAnime(id);
     const { data: animeRecommendations } = useRecommendationsAnime(id);
     const { data: recommendations } = useMediaRecommendations(mediaType, id);
-    console.log(mediaType, id, "mediaType, id");
-    const genres =
-        mediaType === "anime"
-            ? animeDetail?.data?.genres.map((genre) => genre.name)
-            : ((data && data?.genres?.map((genre) => genre?.name)) ?? []);
+    // console.log(mediaType, id, "mediaType, id");
+
     const recommendationData =
         mediaType == "anime"
             ? animeRecommendations?.data?.map((rec) => {
@@ -108,130 +60,31 @@ function MediaDetailsComponent() {
                   rating: data?.vote_average,
               };
     return (
-        <PageWrapper style={{ paddingBottom: "8rem" }}>
+        <PageWrapper
+            style={{
+                paddingBottom: "8rem",
+                maxWidth: "1200px",
+                marginInline: "auto",
+            }}
+        >
             <Flex gap={4} direction={"column"}>
-                <Flex gap={6} direction={"column"}>
-                    <Flex
-                        gap={4}
-                        direction={"column"}
-                        zIndex={10}
-                        position={"relative"}
-                        maxHeight={"60vh"}
-                        overflow={"hidden"}
-                    >
-                        <StyledInfoBox>
-                            <RatingTag
-                                rating={detailsData?.rating?.toFixed(1)}
-                                isLoading={false}
-                            />
-                            <Heading as="h1" fontSize={"2rem"}>
-                                {detailsData?.title}
-                            </Heading>
-                            <Flex
-                                gap={"4"}
-                                color={"var(--text--secondary-color)"}
-                            >
-                                <Text>
-                                    {detailsData?.runtime
-                                        ? `${detailsData?.runtime} mins`
-                                        : null}
-                                    {detailsData?.episodes
-                                        ? `${detailsData?.episodes} Episodes`
-                                        : null}
-                                    {detailsData?.seasons
-                                        ? `| ${detailsData?.seasons} Seasons`
-                                        : null}
-                                </Text>{" "}
-                                <Separator
-                                    orientation={"vertical"}
-                                    borderColor={"var(--primary-color)"}
-                                />
-                                <Text>
-                                    {detailsData?.releaseDate
-                                        ? detailsData?.releaseDate
-                                        : "N/A"}
-                                </Text>
-                            </Flex>
-                            <Button label="Add to Watchlist" $secondary />
-                        </StyledInfoBox>
-                        <StyledBackgroundImage
-                            src={`${mediaType === "anime" ? detailsData.poster : getPosterImage(detailsData.poster)}`}
-                            alt="Media Image"
-                        />
-                    </Flex>
-                    <Flex gap={2} direction={"column"} px={"1em"}>
-                        <Text as="h2" fontSize={"1.3rem"} fontWeight={"bold"}>
-                            Genres
-                        </Text>
-                        <Flex gap={4} alignItems={"center"} flexWrap={"wrap"}>
-                            {genres?.map((genre) => (
-                                <Badge
-                                    key={genre}
-                                    width={"fit-content"}
-                                    fontWeight={"bold"}
-                                    p={".5em"}
-                                    background={"var(--secondary-color)"}
-                                >
-                                    {genre}
-                                </Badge>
-                            ))}
-                        </Flex>
-                        <Text
-                            as="h2"
-                            fontSize={"1.3rem"}
-                            fontWeight={"bold"}
-                            mt={"1em"}
-                        >
-                            Overview
-                        </Text>
-                        <Text color={"var(--text--secondary-color)"}>
-                            {detailsData?.overview}
-                        </Text>
-                    </Flex>
-                    {/* Add Similar recommendation as carousel */}
-                    <Box>
-                        <Flex
-                            gap="4"
-                            alignItems={"center"}
-                            width={"100%"}
-                            my={"1em"}
-                            px={"1em"}
-                        >
-                            <Heading
-                                as={"h2"}
-                                fontSize={"1.5rem"}
-                                color={"var(--text--primary-color)"}
-                            >
-                                Similar Recommendations
-                            </Heading>
-                            <Separator
-                                variant="solid"
-                                width={"100%"}
-                                borderColor={"var(--secondary-color)"}
-                            />
-                        </Flex>
-
-                        {isMobile() && (
-                            <Box px={"1em"}>
-                                <CardCarousel
-                                    slidesPerPage={1.5}
-                                    items={recommendationData?.map((item) => {
-                                        const { overview, ...newItem } = item;
-                                        return (
-                                            <MediaCard
-                                                key={item?.id}
-                                                data={mapToCard(newItem)}
-                                                isLoading={false}
-                                                mediaType={mediaType}
-                                            />
-                                        );
-                                    })}
-                                    enableControls
-                                />
-                            </Box>
-                        )}
-                    </Box>
-                </Flex>
+                <Grid
+                    gap={6}
+                    templateColumns={{
+                        base: "1fr",
+                        md: "3fr 2fr",
+                    }}
+                >
+                    <DetailsBanner
+                        detailsData={detailsData}
+                        mediaType={mediaType}
+                    />
+                    <DetailsContent detailsData={detailsData} />
+                    <SimilarRecommendations
+                        recommendationData={recommendationData}
+                        mediaType={mediaType}
+                    />
+                </Grid>
             </Flex>
         </PageWrapper>
     );

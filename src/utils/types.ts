@@ -18,7 +18,7 @@ export type CardProps = {
     isLoading?: boolean;
     tagText?: string;
     selectedCategory?: MediaType;
-    mediaType: MediaType;
+    mediaType: MediaType | string;
 };
 
 export interface ApiMovieData {
@@ -91,3 +91,47 @@ export interface GenreContextType {
     tv: { id: number; name: string }[];
     anime: { mal_id: number; name: string; count: number; url: string }[];
 }
+
+export interface RecommendationData {
+    id: string;
+    title: string;
+    images: Image;
+}
+
+export type DetailDataType = {
+    rating?: number | string;
+    poster?: string;
+    title?: string;
+    overview?: string;
+    releaseDate?: string;
+    genres?: string[];
+    episodes?: number;
+    seasons?: number;
+    runtime?: number;
+    backdrop?: string;
+} & (
+    | {
+          rating: number;
+          poster: string;
+          title: string;
+          overview: string;
+          releaseDate: string;
+          genres: string[];
+          episodes: number | undefined;
+          seasons: undefined;
+          runtime: undefined;
+          backdrop: undefined;
+      }
+    | {
+          poster: string;
+          releaseDate: string;
+          genres: string[];
+          episodes: number;
+          seasons: number;
+          runtime: number;
+          backdrop: string;
+          title: string;
+          overview: string;
+          rating: number | string;
+      }
+);
