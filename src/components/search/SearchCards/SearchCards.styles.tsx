@@ -55,6 +55,7 @@ export const StyledCardFooter = styled(Card.Footer)`
     flex-direction: column;
     align-items: flex-start;
     height: 5.5rem;
+    margin-top: 1em;
 `;
 
 export const StyledImageWrapper = styled(Card.Body)`
@@ -63,6 +64,7 @@ export const StyledImageWrapper = styled(Card.Body)`
     border-radius: 16px;
     flex-shrink: 0;
     aspect-ratio: 2/3;
+
     &:hover ${StyledImage} {
         transform: scale(1.025);
     }

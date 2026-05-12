@@ -18,6 +18,7 @@ import { useContext } from "react";
 import { GenreListContext } from "../../../utils/context/GenreListContext";
 import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
 import { RatingTag } from "../../RatingTag/RatingTag";
+import { Link } from "@tanstack/react-router";
 
 export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
     const genreList =
@@ -27,75 +28,85 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
         .map((genre) => genre.name)[0];
     return (
         <StyledCard>
-            <StyledImageWrapper>
-                <Tooltip
-                    content="Add to watchlist"
-                    positioning={{ placement: "top" }}
-                    showArrow
-                >
-                    <Button
-                        label={"Add"}
-                        position={"absolute"}
-                        right={".75rem"}
-                        bottom={".75rem"}
-                        zIndex={2}
-                        disabled={isLoading}
-                        p={"1"}
+            <Link
+                to="/details/$mediaType/$id"
+                params={{
+                    mediaType: mapToValidMedia(selectedCategory),
+                    id: data?.id,
+                }}
+            >
+                <StyledImageWrapper>
+                    <Tooltip
+                        content="Add to watchlist"
+                        positioning={{ placement: "top" }}
+                        showArrow
                     >
-                        <BiPlus
-                            color="var(--text--primary-color)"
-                            strokeWidth={"1.5"}
-                        />
-                    </Button>
-                </Tooltip>
-                {isLoading ? (
-                    <Skeleton
-                        height="100%"
-                        width="100%"
-                        position={"absolute"}
-                        inset={"0"}
-                    />
-                ) : data?.image?.src ? (
-                    <StyledImage
-                        src={data?.image?.src ?? ""}
-                        alt={data?.title}
-                        loading="lazy"
-                    />
-                ) : (
-                    <EmptyImage />
-                )}
-                <RatingTag
-                    rating={Number(data?.rating)}
-                    isLoading={!!isLoading}
-                    style={{
-                        position: "absolute",
-                        top: "0.75rem",
-                        right: "0.75rem",
-                    }}
-                />
-            </StyledImageWrapper>
-            <StyledCardFooter>
-                <StyledTitle>
+                        <Button
+                            label={"Add"}
+                            position={"absolute"}
+                            right={".75rem"}
+                            bottom={".75rem"}
+                            zIndex={2}
+                            disabled={isLoading}
+                            p={"1"}
+                        >
+                            <BiPlus
+                                color="var(--text--primary-color)"
+                                strokeWidth={"1.5"}
+                            />
+                        </Button>
+                    </Tooltip>
                     {isLoading ? (
-                        <Skeleton height="5" width="200px" />
+                        <Skeleton
+                            height="100%"
+                            width="100%"
+                            position={"absolute"}
+                            inset={"0"}
+                        />
+                    ) : data?.image?.src ? (
+                        <StyledImage
+                            src={data?.image?.src ?? ""}
+                            alt={data?.title}
+                            loading="lazy"
+                        />
                     ) : (
-                        (data?.title ?? "null")
+                        <EmptyImage />
                     )}
-                </StyledTitle>
-                <Box>
-                    <StyledDescription>
+                    <RatingTag
+                        rating={Number(data?.rating)}
+                        isLoading={!!isLoading}
+                        style={{
+                            position: "absolute",
+                            top: "0.75rem",
+                            right: "0.75rem",
+                        }}
+                    />
+                </StyledImageWrapper>
+                <StyledCardFooter>
+                    <StyledTitle>
                         {isLoading ? (
-                            <Skeleton height="5" width="80px" />
+                            <Skeleton height="5" width="200px" />
                         ) : (
-                            (data?.releaseDate ?? "null") +
-                            " " +
-                            "|" +
-                            " " +
-                            (mainGenre ?? data?.genres?.[0]?.name ?? "Unknown")
+                            (data?.title ?? "null")
                         )}
-                    </StyledDescription>
-                </Box>
-            </StyledCardFooter>
+                    </StyledTitle>
+                    <Box>
+                        <StyledDescription>
+                            {isLoading ? (
+                                <Skeleton height="5" width="80px" />
+                            ) : (
+                                (data?.releaseDate ?? "null") +
+                                " " +
+                                "|" +
+                                " " +
+                                (mainGenre ??
+                                    data?.genres?.[0]?.name ??
+                                    "Unknown")
+                            )}
+                        </StyledDescription>
+                    </Box>
+                </StyledCardFooter>
+            </Link>
         </StyledCard>
     );
 }

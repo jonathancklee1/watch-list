@@ -36,8 +36,8 @@ export const StyledBanner = styled(Flex)`
     flex-direction: column;
     z-index: 10;
     position: relative;
-    max-height: 60vh;
     overflow: hidden;
+    max-height: 650px;
     @media (min-width: 768px) {
         flex-order: 1;
         flex-basis: 60%;

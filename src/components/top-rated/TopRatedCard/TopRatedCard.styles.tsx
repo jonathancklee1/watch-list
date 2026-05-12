@@ -1,7 +1,6 @@
 import { Card, Image } from "@chakra-ui/react";
 import styled from "styled-components";
 export const StyledImage = styled(Image)`
-    aspect-ratio: square;
     object-fit: cover;
     width: 100%;
     height: 100%;
@@ -25,12 +24,21 @@ export const StyledBody = styled(Card.Body)<{ $isFirst?: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    cursor: pointer;
     padding: ${(props) => (props.$isFirst ? "1em" : ".5rem")};
     background: linear-gradient(
         180deg,
         rgba(0, 0, 0, 0) 0%,
         rgba(0, 0, 0, 0.8) 100%
     );
+    &:hover {
+        h3 {
+            text-decoration: underline;
+        }
+        > img {
+            transform: scale(1.1);
+        }
+    }
     @media (min-width: 768px) {
         padding: ${(props) => (props.$isFirst ? "2em" : "1em")};
     }

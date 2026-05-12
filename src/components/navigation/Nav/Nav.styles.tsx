@@ -7,11 +7,20 @@ export const NavWrapper = styled.nav`
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    background-color: #0f0f0f;
     padding-block: 1rem;
     position: sticky;
     top: 0;
     z-index: 1000;
+    width: 100%;
+    background-color: var(--background--secondary-color);
+    border-radius: 0;
+    background-opacity: 0;
+    @media (min-width: 768px) {
+        transform: translateY(0.5em);
+        border-radius: 15px;
+        background-color: var(--background--secondary-color);
+        background-opacity: 1;
+    }
 `;
 
 export const LinkWrapper = styled.div`

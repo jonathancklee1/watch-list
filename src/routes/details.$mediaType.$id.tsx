@@ -24,14 +24,16 @@ function MediaDetailsComponent() {
 
     const recommendationData =
         mediaType == "anime"
-            ? animeRecommendations?.data?.map((rec) => {
-                  return {
-                      id: rec.entry.mal_id,
-                      title: rec.entry.title,
-                      images: rec.entry.images,
-                  };
-              })
-            : recommendations?.results;
+            ? animeRecommendations?.data
+                  ?.map((rec) => {
+                      return {
+                          id: rec.entry.mal_id,
+                          title: rec.entry.title,
+                          images: rec.entry.images,
+                      };
+                  })
+                  .slice(0, 8)
+            : recommendations?.results.slice(0, 8);
     const detailsData =
         mediaType === "anime"
             ? {
@@ -74,6 +76,7 @@ function MediaDetailsComponent() {
                         base: "1fr",
                         md: "3fr 2fr",
                     }}
+                    alignContent={"start"}
                 >
                     <DetailsBanner
                         detailsData={detailsData}

@@ -25,7 +25,7 @@ function Nav() {
         },
     ];
     return (
-        <NavWrapper className="container">
+        <NavWrapper className="container glass">
             <div
                 style={{
                     display: "flex",

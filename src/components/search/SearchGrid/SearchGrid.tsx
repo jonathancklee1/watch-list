@@ -45,6 +45,7 @@ export function SearchGrid({
                             key={index}
                             data={mapToCard(item)}
                             selectedCategory={selectedCategory}
+                            mediaType={selectedCategory}
                         />
                     ))}
                 </StyledResultsGrid>

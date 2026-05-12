@@ -1,4 +1,11 @@
-import { Flex, Heading, Separator, Box, Stack } from "@chakra-ui/react";
+import {
+    Flex,
+    Heading,
+    Separator,
+    Box,
+    Stack,
+    EmptyState,
+} from "@chakra-ui/react";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
@@ -6,6 +13,7 @@ import { MediaCard } from "../../MediaCard/MediaCard";
 import type { RecommendationData } from "../../../utils/types";
 import { StyledHeadingWrapper } from "./SimilarRecommendations.styles";
 import { useState } from "react";
+import { RecommendationCard } from "../RecommendationCard/RecommendationCard";
 export function SimilarRecommendations({
     recommendationData,
     mediaType,
@@ -63,32 +71,43 @@ export function SimilarRecommendations({
                     gap={"1em"}
                     p={"1em"}
                     borderRadius={"16px"}
-                    background={"gray"}
-                    alignItems={"stretch"}
-                    justifyItems={"stretch"}
+                    className="glass"
+                    mr={"1em"}
                 >
                     <Heading
                         as={"h2"}
-                        fontSize={"1rem"}
-                        color={"var(--text--primary-color)"}
+                        fontSize={"1.25rem"}
+                        color={"var(--secondary-color)"}
+                        fontWeight={"bold"}
                     >
                         Similar Recommendations
                     </Heading>
                     <Flex
                         flexDirection={"column"}
                         gap="1em"
-                        height={"40em"}
-                        maxHeight={"50em"}
                         overflowY={"auto"}
+                        h={"550px"}
                     >
+                        {recommendationData?.length === 0 && (
+                            <EmptyState.Root>
+                                <EmptyState.Content>
+                                    <EmptyState.Title textAlign={"center"}>
+                                        No Recommendations
+                                    </EmptyState.Title>
+                                </EmptyState.Content>
+                            </EmptyState.Root>
+                        )}
                         {recommendationData?.map((item) => {
-                            const { overview, ...newItem } = item;
                             return (
-                                <MediaCard
+                                // <MediaCard
+                                //     key={item?.id}
+                                //     data={mapToCard(newItem)}
+                                //     isLoading={false}
+                                //     mediaType={mediaType}
+                                // />
+                                <RecommendationCard
                                     key={item?.id}
-                                    data={mapToCard(newItem)}
-                                    isLoading={false}
-                                    mediaType={mediaType}
+                                    data={item}
                                 />
                             );
                         })}

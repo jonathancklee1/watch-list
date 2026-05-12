@@ -13,7 +13,7 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
     &:hover {
         background-color: var(--secondary-color);
     }
-
+    max-width: 200px;
     ${(props) =>
         props.$action &&
         css`
