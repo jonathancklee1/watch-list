@@ -61,6 +61,7 @@ export interface CardType {
     rating?: number | string;
     runTime?: string;
     genres?: string | number[] | { id: number; name: string }[] | null;
+    watchStatus?: WatchStatus;
 }
 
 export interface StyledButtonProps {
@@ -135,3 +136,5 @@ export type DetailDataType = {
           rating: number | string;
       }
 );
+
+export type WatchStatus = "to-watch" | "watching" | "completed";
