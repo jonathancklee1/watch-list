@@ -10,6 +10,7 @@ const router = createRouter({ routeTree });
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GenreListProvider } from "./utils/context/useGenreListContext";
+import { WatchListProvider } from "./utils/context/useWatchListContext";
 
 // Register things for typesafety
 declare module "@tanstack/react-router" {
@@ -23,9 +24,11 @@ createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <Provider>
             <QueryClientProvider client={queryClient}>
-                <GenreListProvider>
-                    <RouterProvider router={router} />
-                </GenreListProvider>
+                <WatchListProvider>
+                    <GenreListProvider>
+                        <RouterProvider router={router} />
+                    </GenreListProvider>
+                </WatchListProvider>
             </QueryClientProvider>
         </Provider>
     </StrictMode>,

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
-const useLocalStorage = (key: string, initialValue: string | object) => {
-    const [storedValue, setStoredValue] = useState(() => {
+const useLocalStorageHelper = <TData>(key: string, initialValue?: TData) => {
+    const [storedValue, setStoredValue] = useState<TData>(() => {
         try {
             const item = window.localStorage.getItem(key);
             return item ? JSON.parse(item) : initialValue;
@@ -12,7 +12,7 @@ const useLocalStorage = (key: string, initialValue: string | object) => {
     });
 
     const setValue = useCallback(
-        (value) => {
+        (value: TData) => {
             try {
                 const valueToStore =
                     value instanceof Function ? value(storedValue) : value;
@@ -33,4 +33,4 @@ const useLocalStorage = (key: string, initialValue: string | object) => {
     return [storedValue, setValue];
 };
 
-export default useLocalStorage;
+export default useLocalStorageHelper;

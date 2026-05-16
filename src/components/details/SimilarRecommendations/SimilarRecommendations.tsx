@@ -1,11 +1,4 @@
-import {
-    Flex,
-    Heading,
-    Separator,
-    Box,
-    Stack,
-    EmptyState,
-} from "@chakra-ui/react";
+import { Flex, Heading, Separator, Box, EmptyState } from "@chakra-ui/react";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
@@ -108,6 +101,7 @@ export function SimilarRecommendations({
                                 <RecommendationCard
                                     key={item?.id}
                                     data={item}
+                                    mediaType={mediaType}
                                 />
                             );
                         })}

@@ -6,6 +6,8 @@ import { Tooltip } from "../../../components/ui/tooltip";
 import type { CardType, MediaType } from "../../../utils/types";
 import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
 import { Link } from "@tanstack/react-router";
+import { useContext } from "react";
+import { WatchListContext } from "../../../utils/context/WatchListContext";
 
 export function TopRatedCard({
     data,
@@ -20,6 +22,8 @@ export function TopRatedCard({
 }) {
     // console.log(data, "data");
     const isFirst = ranking === 1;
+    const { setWatchList } = useContext(WatchListContext);
+
     return (
         <StyledCard $isFirst={isFirst}>
             <Link
@@ -95,10 +99,23 @@ export function TopRatedCard({
                             >
                                 <Button
                                     label={"Add"}
-                                    zIndex={2}
+                                    zIndex={10}
                                     disabled={isLoading}
                                     p={"1"}
                                     $secondary
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        setWatchList((prev) => {
+                                            return {
+                                                ...prev,
+                                                toWatch: [
+                                                    ...prev.toWatch,
+                                                    { ...data, mediaType },
+                                                ],
+                                            };
+                                        });
+                                    }}
                                 >
                                     <BiPlus
                                         color="var(--text--primary-color)"

@@ -19,14 +19,23 @@ import { getPosterImage } from "../../../utils/helpers/getPosterImage";
 import { RatingTag } from "../../RatingTag/RatingTag";
 import { Button } from "../../Button/Button";
 import type { CardType } from "../../../utils/types";
+import { useContext } from "react";
+import { GenreListContext } from "../../../utils/context/GenreListContext";
+import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
 export function WatchListCard({ data }: { data: CardType }) {
+    const genreList =
+        useContext(GenreListContext)[mapToValidMedia(data.mediaType)];
+    const mainGenre = genreList
+        ?.filter((genre) => data?.genres?.includes(genre.id))
+        .map((genre) => genre.name)[0];
+    console.log(data);
     return (
         <StyledCard
             className="glass"
             background={"var(--background--secondary-color)/80"}
         >
             <StyledImage
-                src={data?.posterPath ?? getPosterImage(data?.posterPath ?? "")}
+                src={data?.image?.src ?? getPosterImage(data?.image?.src ?? "")}
                 alt={data.title}
             />
             <Flex
@@ -46,7 +55,7 @@ export function WatchListCard({ data }: { data: CardType }) {
                         marginTop={".5em"}
                     >
                         <Text fontWeight={800} lineClamp={2}>
-                            {data.genres?.[0].name}
+                            {mainGenre}
                         </Text>
                         <Separator
                             orientation="vertical"

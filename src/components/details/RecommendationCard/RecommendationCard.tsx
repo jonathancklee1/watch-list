@@ -1,12 +1,16 @@
 import { BiPlus } from "react-icons/bi";
 import { StyledCard, StyledImage } from "./RecommendationCard.styles";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../ui/tooltip";
 import { getPosterImage } from "../../../utils/helpers/getPosterImage";
+import { useContext } from "react";
+import { WatchListContext } from "../../../utils/context/WatchListContext";
 
-export function RecommendationCard({ data }) {
+export function RecommendationCard({ data, mediaType }) {
     console.log(data);
+    const { setWatchList } = useContext(WatchListContext);
+
     return (
         <StyledCard
             className="glass"
@@ -37,7 +41,25 @@ export function RecommendationCard({ data }) {
                         positioning={{ placement: "top" }}
                         showArrow
                     >
-                        <Button label={"Add"} zIndex={2} p={"1"} $secondary>
+                        <Button
+                            label={"Add"}
+                            zIndex={2}
+                            p={"1"}
+                            $secondary
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                setWatchList((prev) => {
+                                    return {
+                                        ...prev,
+                                        toWatch: [
+                                            ...prev.toWatch,
+                                            { ...data, mediaType },
+                                        ],
+                                    };
+                                });
+                            }}
+                        >
                             <BiPlus
                                 color="var(--text--primary-color)"
                                 strokeWidth={"1.5"}

@@ -1,4 +1,5 @@
 import type { Route } from "@tanstack/react-router";
+import type { Dispatch, SetStateAction } from "react";
 
 export type StyledLinkProps = {
     $isLogo?: boolean;
@@ -62,6 +63,7 @@ export interface CardType {
     runTime?: string;
     genres?: string | number[] | { id: number; name: string }[] | null;
     watchStatus?: WatchStatus;
+    mediaType?: MediaType | string;
 }
 
 export interface StyledButtonProps {
@@ -138,3 +140,14 @@ export type DetailDataType = {
 );
 
 export type WatchStatus = "to-watch" | "watching" | "completed";
+
+export interface WatchListStatusType {
+    toWatch: CardType[];
+    watching: CardType[];
+    completed: CardType[];
+}
+
+export type WatchListContextType = {
+    watchList?: WatchListStatusType;
+    setWatchList?: Dispatch<SetStateAction<WatchListStatusType>>;
+};

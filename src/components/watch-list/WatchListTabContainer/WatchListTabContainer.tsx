@@ -1,8 +1,10 @@
-import { Flex, Tabs } from "@chakra-ui/react";
+import { EmptyState, Flex, Tabs } from "@chakra-ui/react";
 
 import { WATCH_LIST_STATE } from "../../../utils/constants";
 import { WatchListCard } from "../WatchListCard/WatchListCard";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
+import { useContext } from "react";
+import { WatchListContext } from "../../../utils/context/WatchListContext";
 export function WatchListTabContainer() {
     const data = {
         title: "Avatar: The Way of Water",
@@ -12,6 +14,7 @@ export function WatchListTabContainer() {
         releaseDate: "2019",
         watchStatus: "to-watch",
     };
+    const { watchList, setWatchList } = useContext(WatchListContext);
     return (
         <Tabs.Root
             defaultValue="to-watch"
@@ -50,9 +53,66 @@ export function WatchListTabContainer() {
                     background={"var(--background--secondary-color)"}
                     p={"1em"}
                 >
-                    {/* Empty state */}
-                    <WatchListCard data={data} />
-                    <WatchListCard data={data} />
+                    {watchList?.toWatch && watchList?.toWatch?.length <= 0 ? (
+                        <EmptyState.Root>
+                            <EmptyState.Content>
+                                <EmptyState.Title textAlign={"center"}>
+                                    Nothing here
+                                </EmptyState.Title>
+                            </EmptyState.Content>
+                        </EmptyState.Root>
+                    ) : (
+                        watchList?.toWatch.map((item, index) => (
+                            <WatchListCard key={index} data={item} />
+                        ))
+                    )}
+                </Flex>
+            </Tabs.Content>
+            <Tabs.Content value="watching">
+                <Flex
+                    direction={"column"}
+                    gap={"1em"}
+                    borderRadius={"20px"}
+                    background={"var(--background--secondary-color)"}
+                    p={"1em"}
+                >
+                    {watchList?.watching && watchList?.watching?.length <= 0 ? (
+                        <EmptyState.Root>
+                            <EmptyState.Content>
+                                <EmptyState.Title textAlign={"center"}>
+                                    Nothing here
+                                </EmptyState.Title>
+                            </EmptyState.Content>
+                        </EmptyState.Root>
+                    ) : (
+                        watchList?.watching.map((item, index) => (
+                            <WatchListCard key={index} data={item} />
+                        ))
+                    )}
+                </Flex>
+            </Tabs.Content>
+            <Tabs.Content value="completed">
+                <Flex
+                    direction={"column"}
+                    gap={"1em"}
+                    borderRadius={"20px"}
+                    background={"var(--background--secondary-color)"}
+                    p={"1em"}
+                >
+                    {watchList?.completed &&
+                    watchList?.completed?.length <= 0 ? (
+                        <EmptyState.Root>
+                            <EmptyState.Content>
+                                <EmptyState.Title textAlign={"center"}>
+                                    Nothing here
+                                </EmptyState.Title>
+                            </EmptyState.Content>
+                        </EmptyState.Root>
+                    ) : (
+                        watchList?.completed.map((item, index) => (
+                            <WatchListCard key={index} data={item} />
+                        ))
+                    )}
                 </Flex>
             </Tabs.Content>
         </Tabs.Root>

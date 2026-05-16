@@ -17,13 +17,15 @@ import { useContext } from "react";
 import { GenreListContext } from "../../utils/context/GenreListContext";
 import { mapToValidMedia } from "../../utils/helpers/mapToValidMedia";
 import { Link } from "@tanstack/react-router";
+import { WatchListContext } from "../../utils/context/WatchListContext";
 
 export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
     const genreList = useContext(GenreListContext)[mapToValidMedia(mediaType)];
-    console.log(genreList, mediaType, data);
+    const { setWatchList } = useContext(WatchListContext);
+
     const mainGenre =
         mediaType === "Anime"
-            ? data?.genres[0]?.name
+            ? data?.genres?.[0]?.name
             : genreList
                   ?.filter((genre) => data?.genres?.includes(genre.id))
                   .map((genre) => genre.name)[0];
@@ -51,7 +53,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                             <Tag.Label>{tagText}</Tag.Label>
                         </StyledTag>
                     )}
-                    <StyledTitle lineClamp={3} overflow={"hidden"}>
+                    <StyledTitle>
                         {isLoading ? "Loading..." : data?.title}
                     </StyledTitle>
                     <Text fontSize={"0.75rem"} fontWeight={"500"}>
@@ -91,6 +93,19 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                             disabled={isLoading}
                             p={"1"}
                             $secondary
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                setWatchList((prev) => {
+                                    return {
+                                        ...prev,
+                                        toWatch: [
+                                            ...prev.toWatch,
+                                            { ...data, mediaType },
+                                        ],
+                                    };
+                                });
+                            }}
                         >
                             <BiPlus
                                 color="var(--text--primary-color)"
