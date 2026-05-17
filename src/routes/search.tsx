@@ -7,14 +7,14 @@ import { SearchGrid } from "../components/search/SearchGrid/SearchGrid";
 import { useEffect, useState } from "react";
 import { useSearchMedia } from "../utils/data-hooks/useSearchMedia";
 import { SearchPagination } from "../components/search/SearchPagination/SearchPagination";
-import type { FilterCategories } from "../utils/types";
+import type { FilterCategories, MediaType } from "../utils/types";
 
 export const Route = createFileRoute("/search")({
     component: RouteComponent,
     validateSearch: (search: Record<string, unknown>) => ({
         search: (search.search as string) || "",
         page: Number(search.page as string) || 1,
-        category: (search.category as FilterCategories) || "Movies",
+        category: search.category || "movie",
     }),
 });
 const PageWrapper = styled.div`
@@ -33,7 +33,7 @@ function RouteComponent() {
     const [searchTerm, setSearchTerm] = useState(search || "");
     const [page, setPage] = useState(pageParam);
     const [selectedCategory, setSelectedCategory] =
-        useState<FilterCategories>(categoryParam);
+        useState<MediaType>(categoryParam);
     const { data, isLoading } = useSearchMedia(
         selectedCategory,
         searchTerm,
@@ -41,7 +41,7 @@ function RouteComponent() {
     );
     // console.log(data, "movies data");
     const count = data?.total_results ?? 0;
-    const pageSize = data?.results.length ?? 0;
+    const pageSize = data?.results?.length ?? 0;
 
     useEffect(() => {
         setPage(pageParam);

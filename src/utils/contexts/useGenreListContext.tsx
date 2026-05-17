@@ -3,8 +3,8 @@ import { useGenreListAnime } from "../data-hooks/useGenreListAnime";
 import { GenreListContext } from "./GenreListContext";
 
 export function GenreListProvider({ children }: { children: React.ReactNode }) {
-    const { data } = useGenreList("Movies");
-    const { data: tvShowGenres } = useGenreList("TV Shows");
+    const { data } = useGenreList("movie");
+    const { data: tvShowGenres } = useGenreList("tv");
     const { data: animeGenres } = useGenreListAnime();
     const genres = {
         movie: data?.genres || [],

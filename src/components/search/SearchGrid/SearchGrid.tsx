@@ -27,6 +27,7 @@ export function SearchGrid({
                             data={null}
                             isLoading
                             selectedCategory={selectedCategory}
+                            mediaType={selectedCategory}
                         />
                     ))}
                 </StyledResultsGrid>

@@ -1,4 +1,3 @@
-import { mapToValidMedia } from "../helpers/mapToValidMedia";
 import type { MediaType } from "../types";
 import { useTMDBQuery } from "./useTMDBApi";
 
@@ -10,7 +9,7 @@ export function useAiringNowMedia(mediaType: Omit<MediaType, "Anime">) {
     };
 
     const tmdbData = useTMDBQuery(
-        endpoints[mapToValidMedia(mediaType) as keyof typeof endpoints],
+        endpoints[mediaType as keyof typeof endpoints],
     );
 
     // Conditionally return based on mediaType

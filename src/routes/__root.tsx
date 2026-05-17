@@ -6,9 +6,9 @@ import { Toaster } from "../components/ui/toaster";
 export const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2rem;
     @media (min-width: 768px) {
-        gap: 6rem;
+        gap: 4rem;
     }
 `;
 export const Route = createRootRoute({

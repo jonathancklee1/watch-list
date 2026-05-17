@@ -3,6 +3,7 @@ import { SearchInput } from "../../search/SearchInput/SearchInput";
 import { useState } from "react";
 
 import { StyledHeading, StyledHomeHeroBanner } from "./HomeHeroBanner.styles";
+import { mapMediaTypeToText } from "../../../utils/helpers/mapMediaTypeToText";
 
 function HomeHeroBanner({ category }: HomeHeroBannerType) {
     const [searchValue, setSearchValue] = useState("");
@@ -11,7 +12,7 @@ function HomeHeroBanner({ category }: HomeHeroBannerType) {
             {/* Animate the "watch" so that it typewrites out Movie, Anime, Show" */}
             <StyledHeading>
                 <span>Discover </span>
-                {category ?? "Your Next Watch"}
+                {mapMediaTypeToText(category ?? "movie") ?? "Your Next Watch"}
             </StyledHeading>
             <SearchInput
                 category={category}

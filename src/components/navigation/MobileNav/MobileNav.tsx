@@ -1,5 +1,5 @@
-import { Route as moviesRoute } from "../../../routes/movies.tsx";
-import { Route as tvShowsRoute } from "../../../routes/tvShows.tsx";
+import { Route as moviesRoute } from "../../../routes/movie.tsx";
+import { Route as tvShowsRoute } from "../../../routes/tv.tsx";
 import { Route as animeRoute } from "../../../routes/anime.tsx";
 import { Route as watchListRoute } from "../../../routes/watchList.tsx";
 import { MobileNavWrapper, StyledMobileLink } from "./MobileNav.styles.tsx";

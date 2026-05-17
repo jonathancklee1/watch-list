@@ -7,7 +7,7 @@ export const NavWrapper = styled.nav`
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding-block: 1rem;
+    padding-block: 0.75rem;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -20,6 +20,7 @@ export const NavWrapper = styled.nav`
         border-radius: 15px;
         background-color: var(--background--secondary-color);
         background-opacity: 1;
+        width: 90%;
     }
 `;
 

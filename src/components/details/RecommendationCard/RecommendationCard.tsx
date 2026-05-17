@@ -6,10 +6,11 @@ import { Tooltip } from "../../ui/tooltip";
 import { getPosterImage } from "../../../utils/helpers/getPosterImage";
 import type { CardType } from "../../../utils/types";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
+import { mapToCard } from "../../../utils/helpers/mapToCard";
 
 export function RecommendationCard({ data, mediaType }: CardType) {
     const { handleAddToWatchList } = useWatchListController();
-
+    console.log(data);
     return (
         <StyledCard
             className="glass"
@@ -30,9 +31,22 @@ export function RecommendationCard({ data, mediaType }: CardType) {
                 width={"100%"}
                 overflow={"hidden"}
             >
-                <Text fontWeight={800} lineClamp={2}>
-                    {data.title}
-                </Text>
+                <Flex flexDirection={"column"} gap={".5em"}>
+                    <Text fontWeight={800} lineClamp={2}>
+                        {data.title || data.name}
+                    </Text>
+                    <Text
+                        lineClamp={2}
+                        color={"var(--text--secondary-color)"}
+                        fontSize={"1rem"}
+                    >
+                        {
+                            (data.release_date || data.first_air_date)?.split(
+                                "-",
+                            )[0]
+                        }
+                    </Text>
+                </Flex>
 
                 <Box position={"absolute"} bottom={1} right={1}>
                     <Tooltip
@@ -49,7 +63,7 @@ export function RecommendationCard({ data, mediaType }: CardType) {
                                 e.stopPropagation();
                                 e.preventDefault();
                                 handleAddToWatchList({
-                                    ...data,
+                                    ...mapToCard(data),
                                     mediaType,
                                 });
                             }}

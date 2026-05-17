@@ -15,7 +15,6 @@ import { Button } from "../../Button/Button";
 import type { CardType, WatchStatus } from "../../../utils/types";
 import { useContext } from "react";
 import { GenreListContext } from "../../../utils/contexts/GenreListContext";
-import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 export function WatchListCard({
     data,
@@ -25,8 +24,7 @@ export function WatchListCard({
     watchStatus: WatchStatus;
 }) {
     console.log(data.mediaType);
-    const genreList =
-        useContext(GenreListContext)[mapToValidMedia(data.mediaType)];
+    const genreList = useContext(GenreListContext)[data.mediaType];
     console.log(genreList, data.genres?.[0]);
     const mainGenre =
         genreList?.find((genre) => genre.id == data.genres?.[0])?.name ??
@@ -109,6 +107,7 @@ export function WatchListCard({
                                         >
                                             {watchStatus !== "toWatch" && (
                                                 <Button
+                                                    $secondary
                                                     onClick={() =>
                                                         handleMoveWatchList(
                                                             data,
@@ -124,6 +123,7 @@ export function WatchListCard({
                                             )}
                                             {watchStatus !== "watching" && (
                                                 <Button
+                                                    $secondary
                                                     onClick={() =>
                                                         handleMoveWatchList(
                                                             data,
@@ -140,6 +140,7 @@ export function WatchListCard({
                                             )}
                                             {watchStatus !== "completed" && (
                                                 <Button
+                                                    $secondary
                                                     onClick={() =>
                                                         handleMoveWatchList(
                                                             data,

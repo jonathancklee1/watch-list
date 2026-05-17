@@ -1,6 +1,5 @@
 import { useQueries, type UseQueryResult } from "@tanstack/react-query";
 import type { MediaType } from "../types";
-import { mapToValidMedia } from "../helpers/mapToValidMedia";
 
 export function useTopGenresMedia(
     genreIds: string[],
@@ -12,7 +11,7 @@ export function useTopGenresMedia(
             queryKey: ["tmdb", genreId],
             queryFn: () => {
                 const url = new URL(
-                    `https://api.themoviedb.org/3/discover/${mapToValidMedia(mediaType)}`,
+                    `https://api.themoviedb.org/3/discover/${mediaType}`,
                 );
                 url.searchParams.set("with_genres", genreId);
                 url.searchParams.set("api_key", apikey);

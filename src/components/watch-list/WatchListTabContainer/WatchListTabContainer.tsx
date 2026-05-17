@@ -20,12 +20,20 @@ export function WatchListTabContainer() {
                         key={state.value}
                         value={state.value}
                         justifyContent={"center"}
+                        textWrap={"nowrap"}
                     >
-                        {state.value === "toWatch" && <BiNotepad size={20} />}
-                        {state.value === "watching" && (
-                            <BiSolidBinoculars size={20} />
+                        {state.value === "toWatch" && (
+                            <BiNotepad size={20} style={{ flexShrink: 0 }} />
                         )}
-                        {state.value === "completed" && <BiCheck size={20} />}
+                        {state.value === "watching" && (
+                            <BiSolidBinoculars
+                                size={20}
+                                style={{ flexShrink: 0 }}
+                            />
+                        )}
+                        {state.value === "completed" && (
+                            <BiCheck size={20} style={{ flexShrink: 0 }} />
+                        )}
                         {state.name}
                     </Tabs.Trigger>
                 ))}

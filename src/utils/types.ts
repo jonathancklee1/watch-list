@@ -5,7 +5,7 @@ export type StyledLinkProps = {
     $isLogo?: boolean;
     isActive?: boolean;
 };
-export type MediaType = "Movies" | "TV Shows" | "Anime";
+export type MediaType = "movie" | "tv" | "anime";
 export type HomeHeroBannerType = {
     category?: MediaType;
 };

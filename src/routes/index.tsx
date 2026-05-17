@@ -35,7 +35,7 @@ function RouteComponent() {
                     <MediaCard
                         key={movie?.id}
                         data={mapToCard(movie)}
-                        mediaType={"Movies"}
+                        mediaType={"movie"}
                     />
                 ))) ||
         [];
@@ -53,7 +53,7 @@ function RouteComponent() {
                     <MediaCard
                         key={show?.id}
                         data={mapToCard(show)}
-                        mediaType={"TV Shows"}
+                        mediaType={"tv"}
                     />
                 ))) ||
         [];
@@ -64,20 +64,17 @@ function RouteComponent() {
                 <MediaCard
                     key={anime?.id}
                     data={mapToCard(anime)}
-                    mediaType={"Anime"}
+                    mediaType={"anime"}
                 />
             )) || [];
-    // console.log(popularMovies);
-    // console.log(popularTVShows);
-    // console.log(popularAnime, "popularAnime");
 
     return (
         <PageWrapper className="container">
             <HomeHeroBanner />
             <HomeBannerPicks />
-            <PopularMediaRow mediaType="Movies" items={popularMoviesArray} />
-            <PopularMediaRow mediaType="TV Shows" items={popularTVShowsArray} />
-            <PopularMediaRow mediaType="Anime" items={popularAnimeArray} />
+            <PopularMediaRow mediaType="movie" items={popularMoviesArray} />
+            <PopularMediaRow mediaType="tv" items={popularTVShowsArray} />
+            <PopularMediaRow mediaType="anime" items={popularAnimeArray} />
         </PageWrapper>
     );
 }

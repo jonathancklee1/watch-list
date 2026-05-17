@@ -9,6 +9,7 @@ import { Text } from "@chakra-ui/react";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { useState, type JSX } from "react";
 import { isMobile } from "../../../utils/helpers/isMobile";
+import { mapMediaTypeToText } from "../../../utils/helpers/mapMediaTypeToText";
 
 export function PopularMediaRow({
     mediaType,
@@ -31,7 +32,7 @@ export function PopularMediaRow({
         <StyledRowWrapper>
             <StyledRowHeaderWrapper>
                 <Text fontSize="1.5rem" fontWeight={"bold"}>
-                    Popular {mediaType}
+                    Popular {mapMediaTypeToText(mediaType)}
                 </Text>
                 <Link
                     label="View all"

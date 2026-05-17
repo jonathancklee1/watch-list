@@ -37,7 +37,7 @@ export function DetailsBanner({
                             ? `${detailsData?.episodes} Episodes`
                             : null}
                         {detailsData?.seasons
-                            ? `| ${detailsData?.seasons} Seasons`
+                            ? ` | ${detailsData?.seasons} Seasons`
                             : null}
                     </Text>{" "}
                     <Separator

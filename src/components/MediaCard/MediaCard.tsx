@@ -15,12 +15,11 @@ import { BiPlus } from "react-icons/bi";
 import { EmptyImage } from "../EmptyImage/EmptyImage";
 import { useContext } from "react";
 import { GenreListContext } from "../../utils/contexts/GenreListContext";
-import { mapToValidMedia } from "../../utils/helpers/mapToValidMedia";
 import { Link } from "@tanstack/react-router";
 import { useWatchListController } from "../../utils/controllers/useWatchListController";
 
 export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
-    const genreList = useContext(GenreListContext)[mapToValidMedia(mediaType)];
+    const genreList = useContext(GenreListContext)[mediaType];
     const { handleAddToWatchList } = useWatchListController();
 
     const mainGenre =
@@ -72,7 +71,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                     <Link
                         to="/details/$mediaType/$id"
                         params={{
-                            mediaType: mapToValidMedia(mediaType),
+                            mediaType: mediaType,
                             id: data?.id,
                         }}
                     >

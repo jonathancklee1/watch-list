@@ -4,15 +4,16 @@ import { LuSearch } from "react-icons/lu";
 import { Button } from "../../Button/Button";
 import { StyledInput } from "./SearchInput.styles";
 import { useNavigate } from "@tanstack/react-router";
-import type { FilterCategories } from "../../../utils/types";
+import type { MediaType } from "../../../utils/types";
 import { useState } from "react";
+import { mapMediaTypeToText } from "../../../utils/helpers/mapMediaTypeToText";
 export function SearchInput({
     category,
     subText,
     searchValue,
     setSearchValue,
 }: {
-    category?: FilterCategories;
+    category?: MediaType;
     subText?: string;
     searchValue: string;
     setSearchValue: (value: string) => void;
@@ -29,7 +30,7 @@ export function SearchInput({
                 search: {
                     search: value.trim(),
                     page: 1,
-                    category: category ?? "Movies",
+                    category: category ?? "movie",
                 },
             });
         }
@@ -49,7 +50,7 @@ export function SearchInput({
                 }
             >
                 <StyledInput
-                    placeholder={`Search ${category ?? ""}`}
+                    placeholder={`Search ${mapMediaTypeToText(category) ?? ""}`}
                     w={"full"}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}

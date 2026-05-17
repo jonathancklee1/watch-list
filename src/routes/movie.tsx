@@ -12,14 +12,14 @@ import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
 import { useTopGenresMedia } from "../utils/data-hooks/useTopGenresMedia";
 import { GenreListContext } from "../utils/contexts/GenreListContext";
 
-export const Route = createFileRoute("/movies")({
+export const Route = createFileRoute("/movie")({
     component: RouteComponent,
 });
 
 function RouteComponent() {
-    const { data, isLoading } = useAiringNowMedia("Movies");
+    const { data, isLoading } = useAiringNowMedia("movie");
     const { data: topRatedData, isLoading: isTopRatedLoading } =
-        useTopRatedMedia("Movies");
+        useTopRatedMedia("movie");
 
     const airingNowMovies = data?.results || [];
     const topRatedMovies = topRatedData?.results?.slice(0, 5) || [];
@@ -39,21 +39,21 @@ function RouteComponent() {
     }, [getRandomGenres]);
     const topGenresMedia = useTopGenresMedia(
         genreListState.map((genre) => genre?.id.toString() ?? ""),
-        "Movies",
+        "movie",
     );
     console.log(genreListState, "genreListState");
     return (
         <PageWrapper className="container">
-            <HomeHeroBanner category="Movies" />
+            <HomeHeroBanner category="movie" />
             <AiringNowSection
                 carouselData={airingNowMovies}
                 isLoading={isLoading}
-                mediaType="Movies"
+                mediaType="movie"
             />
             <TopRatedSection
                 cardData={topRatedMovies}
                 isLoading={isTopRatedLoading}
-                mediaType="Movies"
+                mediaType="movie"
             />
             {genreListState.map((genre, index) => (
                 <GenreShowcaseSection
@@ -61,7 +61,7 @@ function RouteComponent() {
                     carouselData={topGenresMedia[index]?.data?.results || []}
                     isLoading={topGenresMedia[index]?.isLoading}
                     genreName={genre?.name}
-                    mediaType="Movies"
+                    mediaType="movie"
                 />
             ))}
         </PageWrapper>

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageWrapper } from "./__root";
-import { Box, Flex, Grid } from "@chakra-ui/react";
+import { Flex, Grid } from "@chakra-ui/react";
 import { useMediaDetails } from "../utils/data-hooks/useDetailsMedia";
 import { useDetailsAnime } from "../utils/data-hooks/useDetailsAnime";
 import { useMediaRecommendations } from "../utils/data-hooks/useRecommendationsMedia";
@@ -8,7 +8,6 @@ import { useRecommendationsAnime } from "../utils/data-hooks/useRecommendationsA
 import { DetailsBanner } from "../components/details/DetailsBanner/DetailsBanner";
 import { DetailsContent } from "../components/details/DetailsContent/DetailsContent";
 import { SimilarRecommendations } from "../components/details/SimilarRecommendations/SimilarRecommendations";
-import { mapToValidMedia } from "../utils/helpers/mapToValidMedia";
 import type { MediaType } from "../utils/types";
 
 export const Route = createFileRoute("/details/$mediaType/$id")({
@@ -35,7 +34,7 @@ function MediaDetailsComponent() {
                       };
                   })
                   .slice(0, 8)
-            : recommendations?.results.slice(0, 8);
+            : recommendations?.results?.slice(0, 8);
     const detailsData =
         mediaType === "anime"
             ? {
@@ -54,7 +53,7 @@ function MediaDetailsComponent() {
                   releaseDate:
                       data?.release_date?.split("-")[0] ||
                       data?.first_air_date?.split("-")[0],
-                  genres: data?.genres.map((genre) => genre.name),
+                  genres: data?.genres.map((genre) => genre.id),
                   episodes: data?.number_of_episodes,
                   seasons: data?.number_of_seasons,
                   runtime: data?.runtime,
@@ -66,9 +65,10 @@ function MediaDetailsComponent() {
     return (
         <PageWrapper
             style={{
-                paddingBottom: "8rem",
+                paddingBottom: "8em",
                 maxWidth: "1200px",
                 marginInline: "auto",
+                paddingTop: "2em",
             }}
         >
             <Flex gap={4} direction={"column"}>

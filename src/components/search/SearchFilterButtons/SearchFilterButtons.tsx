@@ -1,14 +1,15 @@
 import { Button } from "../../Button/Button";
 import { StyledButtonWrapper } from "./SearchFilterButtons.styles";
-import type { FilterCategories } from "../../../utils/types";
+import type { MediaType } from "../../../utils/types";
+import { mapMediaTypeToText } from "../../../utils/helpers/mapMediaTypeToText";
 export function SearchFilterButtons({
     selectedCategory,
     setSelectedCategory,
 }: {
-    selectedCategory: FilterCategories;
-    setSelectedCategory: (category: FilterCategories) => void;
+    selectedCategory: MediaType;
+    setSelectedCategory: (category: MediaType) => void;
 }) {
-    const categories = ["Movies", "TV Shows", "Anime"] as FilterCategories[];
+    const categories = ["movie", "tv", "anime"] as MediaType[];
 
     return (
         <StyledButtonWrapper>
@@ -18,7 +19,7 @@ export function SearchFilterButtons({
                     $secondary={category !== selectedCategory}
                     onClick={() => setSelectedCategory(category)}
                 >
-                    {category}
+                    {mapMediaTypeToText(category)}
                 </Button>
             ))}
         </StyledButtonWrapper>

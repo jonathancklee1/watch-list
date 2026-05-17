@@ -16,14 +16,12 @@ import { BiPlus } from "react-icons/bi";
 import { EmptyImage } from "../../EmptyImage/EmptyImage";
 import { useContext } from "react";
 import { GenreListContext } from "../../../utils/contexts/GenreListContext";
-import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
 import { RatingTag } from "../../RatingTag/RatingTag";
 import { Link } from "@tanstack/react-router";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 
 export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
-    const genreList =
-        useContext(GenreListContext)[mapToValidMedia(selectedCategory)];
+    const genreList = useContext(GenreListContext)[selectedCategory];
     const mainGenre = genreList
         ?.filter((genre) => data?.genres?.includes(genre.id))
         .map((genre) => genre.name)[0];
@@ -34,7 +32,7 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
             <Link
                 to="/details/$mediaType/$id"
                 params={{
-                    mediaType: mapToValidMedia(selectedCategory),
+                    mediaType: selectedCategory,
                     id: data?.id,
                 }}
             >

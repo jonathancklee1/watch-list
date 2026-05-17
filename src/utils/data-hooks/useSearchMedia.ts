@@ -1,10 +1,9 @@
-import { mapToValidMedia } from "../helpers/mapToValidMedia";
 import type { JikanSearchResponse, MediaType } from "../types";
 import { useJikan } from "./useJikan";
 import { useTMDBQuery } from "./useTMDBApi";
 
 export function useSearchMedia(mediaType: MediaType, query: string, page = 1) {
-    const validMediaType = mapToValidMedia(mediaType);
+    const validMediaType = mediaType;
 
     const animeSearch = useJikan(
         validMediaType,
@@ -28,5 +27,5 @@ export function useSearchMedia(mediaType: MediaType, query: string, page = 1) {
         page: page.toString(),
     });
 
-    return mediaType === "Anime" ? animeSearch : tmdbSearch;
+    return mediaType === "anime" ? animeSearch : tmdbSearch;
 }

@@ -53,16 +53,16 @@ function RouteComponent() {
 
     return (
         <PageWrapper className="container">
-            <HomeHeroBanner category="Anime" />
+            <HomeHeroBanner category="anime" />
             <AiringNowSection
                 carouselData={airingNowAnime}
                 isLoading={isLoading}
-                mediaType="Anime"
+                mediaType="anime"
             />
             <TopRatedSection
                 cardData={topRatedAnime}
                 isLoading={isTopRatedLoading}
-                mediaType="Anime"
+                mediaType="anime"
             />
             {genreListState.map((genre, index) => (
                 <GenreShowcaseSection
@@ -72,7 +72,7 @@ function RouteComponent() {
                         topGenresMedia[index]?.isLoading || genresLoading
                     }
                     genreName={genre?.name}
-                    mediaType="Anime"
+                    mediaType="anime"
                 />
             ))}
         </PageWrapper>

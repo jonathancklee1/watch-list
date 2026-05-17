@@ -4,7 +4,6 @@ import { BiPlus } from "react-icons/bi";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../../components/ui/tooltip";
 import type { CardType, MediaType } from "../../../utils/types";
-import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
 import { Link } from "@tanstack/react-router";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 
@@ -27,7 +26,7 @@ export function TopRatedCard({
             <Link
                 to="/details/$mediaType/$id"
                 params={{
-                    mediaType: mapToValidMedia(mediaType),
+                    mediaType: mediaType,
                     id: data?.id,
                 }}
                 style={{
@@ -64,7 +63,7 @@ export function TopRatedCard({
                                 md: isFirst ? "2rem" : "1.5rem",
                             }}
                             lineClamp={3}
-                            overflowX={"hidden"}
+                            overflowY={"hidden"}
                         >
                             {data?.title}
                         </Card.Title>
@@ -74,7 +73,7 @@ export function TopRatedCard({
                                 <Link
                                     to="/details/$mediaType/$id"
                                     params={{
-                                        mediaType: mapToValidMedia(mediaType),
+                                        mediaType: mediaType,
                                         id: data?.id,
                                     }}
                                 >
