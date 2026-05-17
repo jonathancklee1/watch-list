@@ -2,7 +2,6 @@ import { StyledCard, StyledImage } from "./WatchListCard.styles";
 import { Flex, Box, Text, Separator, Popover, Portal } from "@chakra-ui/react";
 import {
     BiCheck,
-    BiCross,
     BiGridVertical,
     BiNotepad,
     BiSolidBinoculars,
@@ -36,7 +35,7 @@ export function WatchListCard({
     return (
         <StyledCard
             className="glass"
-            background={"var(--background--secondary-color)/80"}
+            background={"var(--background--primary-color)"}
         >
             <StyledImage
                 src={data?.image?.src ?? getPosterImage(data?.image?.src ?? "")}

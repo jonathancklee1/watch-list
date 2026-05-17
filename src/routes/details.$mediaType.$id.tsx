@@ -9,6 +9,7 @@ import { DetailsBanner } from "../components/details/DetailsBanner/DetailsBanner
 import { DetailsContent } from "../components/details/DetailsContent/DetailsContent";
 import { SimilarRecommendations } from "../components/details/SimilarRecommendations/SimilarRecommendations";
 import type { MediaType } from "../utils/types";
+import { mapToCard } from "../utils/helpers/mapToCard";
 
 export const Route = createFileRoute("/details/$mediaType/$id")({
     // Load data using the params
@@ -36,32 +37,8 @@ function MediaDetailsComponent() {
                   .slice(0, 8)
             : recommendations?.results?.slice(0, 8);
     const detailsData =
-        mediaType === "anime"
-            ? {
-                  rating: animeDetail?.data?.score,
-                  poster: animeDetail?.data?.images?.webp.large_image_url,
-                  title:
-                      animeDetail?.data?.title_english ||
-                      animeDetail?.data?.title,
-                  overview: animeDetail?.data?.synopsis,
-                  releaseDate: animeDetail?.data?.aired?.from?.split("-")[0],
-                  genres: animeDetail?.data?.genres.map((genre) => genre.name),
-                  episodes: animeDetail?.data?.episodes,
-              }
-            : {
-                  poster: data?.poster_path,
-                  releaseDate:
-                      data?.release_date?.split("-")[0] ||
-                      data?.first_air_date?.split("-")[0],
-                  genres: data?.genres.map((genre) => genre.id),
-                  episodes: data?.number_of_episodes,
-                  seasons: data?.number_of_seasons,
-                  runtime: data?.runtime,
-                  backdrop: data?.backdrop_path,
-                  overview: data?.overview,
-                  title: data?.title || data?.name,
-                  rating: data?.vote_average,
-              };
+        mediaType === "anime" ? mapToCard(animeDetail?.data) : mapToCard(data);
+    console.log(data, animeDetail, mapToCard(data), mapToCard(animeDetail));
     return (
         <PageWrapper
             style={{

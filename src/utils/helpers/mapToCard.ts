@@ -15,7 +15,7 @@ export function mapToCard<TData extends ApiMovieData>(
             alt: data.title,
         },
         backdrop: getPosterImage(data.backdrop_path || ""),
-        description: data.overview,
+        description: data.overview || data.synopsis,
         releaseDate:
             data.release_date?.split("-")[0] ||
             data.first_air_date?.split("-")[0] ||
@@ -27,5 +27,8 @@ export function mapToCard<TData extends ApiMovieData>(
             data.score?.toFixed(1) ||
             0,
         genres: data.genre_ids || data.genres || null,
+        episodes: data.number_of_episodes || data.episodes || null,
+        seasons: data.number_of_seasons || null,
+        runTime: data.runtime || null,
     };
 }

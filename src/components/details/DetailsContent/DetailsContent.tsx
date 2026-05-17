@@ -1,11 +1,7 @@
 import { Flex, Badge, Text } from "@chakra-ui/react";
-import type { DetailDataType } from "../../../utils/types";
+import type { CardType } from "../../../utils/types";
 
-export function DetailsContent({
-    detailsData,
-}: {
-    detailsData: DetailDataType;
-}) {
+export function DetailsContent({ detailsData }: { detailsData: CardType }) {
     return (
         <Flex
             gap={2}
@@ -20,13 +16,13 @@ export function DetailsContent({
             <Flex gap={4} alignItems={"center"} flexWrap={"wrap"}>
                 {detailsData?.genres?.map((genre) => (
                     <Badge
-                        key={genre}
+                        key={genre.id}
                         width={"fit-content"}
                         fontWeight={"bold"}
                         p={".5em"}
                         background={"var(--secondary-color)"}
                     >
-                        {genre}
+                        {genre.name}
                     </Badge>
                 ))}
             </Flex>
@@ -34,7 +30,7 @@ export function DetailsContent({
                 Overview
             </Text>
             <Text color={"var(--text--secondary-color)"}>
-                {detailsData?.overview}
+                {detailsData?.description}
             </Text>
         </Flex>
     );

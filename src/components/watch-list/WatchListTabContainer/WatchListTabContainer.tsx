@@ -1,13 +1,15 @@
-import { EmptyState, Flex, Tabs } from "@chakra-ui/react";
+import { EmptyState, Flex, Grid, Tabs, Text } from "@chakra-ui/react";
+import { isMobile } from "../../../utils/helpers/isMobile";
 
 import { WATCH_LIST_STATE } from "../../../utils/constants";
 import { WatchListCard } from "../WatchListCard/WatchListCard";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
 import { useContext } from "react";
 import { WatchListContext } from "../../../utils/contexts/WatchListContext";
+import { StyledTabContainer } from "./WatchListTabContainer.styles";
 export function WatchListTabContainer() {
-    const { watchList } = useContext(WatchListContext);
-    return (
+    const { watchListState } = useContext(WatchListContext);
+    return isMobile() ? (
         <Tabs.Root defaultValue="toWatch" fitted variant="plain" width={"100%"}>
             <Tabs.List
                 bg="var(--background--secondary-color)"
@@ -41,87 +43,128 @@ export function WatchListTabContainer() {
             </Tabs.List>
 
             <Tabs.Content value="toWatch">
-                <Flex
-                    direction={"column"}
-                    gap={"1em"}
-                    borderRadius={"20px"}
-                    background={"var(--background--secondary-color)"}
-                    p={"1em"}
-                >
-                    {watchList?.toWatch && watchList?.toWatch?.length <= 0 ? (
-                        <EmptyState.Root>
-                            <EmptyState.Content>
-                                <EmptyState.Title textAlign={"center"}>
-                                    Nothing here
-                                </EmptyState.Title>
-                            </EmptyState.Content>
-                        </EmptyState.Root>
+                <StyledTabContainer>
+                    {watchListState?.toWatch &&
+                    watchListState?.toWatch?.length <= 0 ? (
+                        <EmptyWatchList />
                     ) : (
-                        watchList?.toWatch.map((item, index) => (
+                        watchListState?.toWatch.map((item, index) => (
                             <WatchListCard
-                                key={index}
+                                key={JSON.stringify(item) + index}
                                 data={item}
                                 watchStatus={"toWatch"}
                             />
                         ))
                     )}
-                </Flex>
+                </StyledTabContainer>
             </Tabs.Content>
             <Tabs.Content value="watching">
-                <Flex
-                    direction={"column"}
-                    gap={"1em"}
-                    borderRadius={"20px"}
-                    background={"var(--background--secondary-color)"}
-                    p={"1em"}
-                >
-                    {watchList?.watching && watchList?.watching?.length <= 0 ? (
-                        <EmptyState.Root>
-                            <EmptyState.Content>
-                                <EmptyState.Title textAlign={"center"}>
-                                    Nothing here
-                                </EmptyState.Title>
-                            </EmptyState.Content>
-                        </EmptyState.Root>
+                <StyledTabContainer>
+                    {watchListState?.watching &&
+                    watchListState?.watching?.length <= 0 ? (
+                        <EmptyWatchList />
                     ) : (
-                        watchList?.watching.map((item, index) => (
+                        watchListState?.watching.map((item, index) => (
                             <WatchListCard
-                                key={index}
+                                key={JSON.stringify(item) + index}
                                 data={item}
                                 watchStatus={"watching"}
                             />
                         ))
                     )}
-                </Flex>
+                </StyledTabContainer>
             </Tabs.Content>
             <Tabs.Content value="completed">
-                <Flex
-                    direction={"column"}
-                    gap={"1em"}
-                    borderRadius={"20px"}
-                    background={"var(--background--secondary-color)"}
-                    p={"1em"}
-                >
-                    {watchList?.completed &&
-                    watchList?.completed?.length <= 0 ? (
-                        <EmptyState.Root>
-                            <EmptyState.Content>
-                                <EmptyState.Title textAlign={"center"}>
-                                    Nothing here
-                                </EmptyState.Title>
-                            </EmptyState.Content>
-                        </EmptyState.Root>
+                <StyledTabContainer>
+                    {watchListState?.completed &&
+                    watchListState?.completed?.length <= 0 ? (
+                        <EmptyWatchList />
                     ) : (
-                        watchList?.completed.map((item, index) => (
+                        watchListState?.completed.map((item, index) => (
                             <WatchListCard
-                                key={index}
+                                key={JSON.stringify(item) + index}
                                 data={item}
                                 watchStatus={"completed"}
                             />
                         ))
                     )}
-                </Flex>
+                </StyledTabContainer>
             </Tabs.Content>
         </Tabs.Root>
+    ) : (
+        <Grid templateColumns="repeat(3, 1fr)" gap="6">
+            <StyledTabContainer>
+                <Flex alignItems={"center"} gap={".5em"}>
+                    <BiNotepad size={20} />
+                    <Text fontWeight={"bold"} textTransform={"uppercase"}>
+                        To Watch
+                    </Text>
+                </Flex>
+                {watchListState?.toWatch &&
+                watchListState?.toWatch?.length <= 0 ? (
+                    <EmptyWatchList />
+                ) : (
+                    watchListState?.toWatch.map((item, index) => (
+                        <WatchListCard
+                            key={JSON.stringify(item) + index}
+                            data={item}
+                            watchStatus={"toWatch"}
+                        />
+                    ))
+                )}
+            </StyledTabContainer>
+            <StyledTabContainer>
+                <Flex alignItems={"center"} gap={".5em"}>
+                    <BiSolidBinoculars size={20} />
+                    <Text fontWeight={"bold"} textTransform={"uppercase"}>
+                        Watching
+                    </Text>
+                </Flex>
+                {watchListState?.watching &&
+                watchListState?.watching?.length <= 0 ? (
+                    <EmptyWatchList />
+                ) : (
+                    watchListState?.watching.map((item, index) => (
+                        <WatchListCard
+                            key={JSON.stringify(item) + index}
+                            data={item}
+                            watchStatus={"watching"}
+                        />
+                    ))
+                )}
+            </StyledTabContainer>
+            <StyledTabContainer>
+                <Flex alignItems={"center"} gap={".5em"}>
+                    <BiCheck size={20} />
+                    <Text fontWeight={"bold"} textTransform={"uppercase"}>
+                        Completed
+                    </Text>
+                </Flex>
+                {watchListState?.completed &&
+                watchListState?.completed?.length <= 0 ? (
+                    <EmptyWatchList />
+                ) : (
+                    watchListState?.completed.map((item, index) => (
+                        <WatchListCard
+                            key={JSON.stringify(item) + index}
+                            data={item}
+                            watchStatus={"completed"}
+                        />
+                    ))
+                )}
+            </StyledTabContainer>
+        </Grid>
+    );
+}
+
+function EmptyWatchList() {
+    return (
+        <EmptyState.Root style={{ gridColumn: "span 2" }}>
+            <EmptyState.Content>
+                <EmptyState.Title textAlign={"center"}>
+                    Nothing here
+                </EmptyState.Title>
+            </EmptyState.Content>
+        </EmptyState.Root>
     );
 }

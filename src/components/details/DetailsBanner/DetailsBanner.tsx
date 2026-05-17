@@ -7,13 +7,13 @@ import {
     StyledInfoBox,
 } from "./DetailsBanner.styles";
 import { Button } from "../../Button/Button";
-import type { DetailDataType, MediaType } from "../../../utils/types";
+import type { CardType, DetailDataType, MediaType } from "../../../utils/types";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 export function DetailsBanner({
     detailsData,
     mediaType,
 }: {
-    detailsData: DetailDataType;
+    detailsData: CardType;
     mediaType: MediaType;
 }) {
     const { handleAddToWatchList } = useWatchListController();
@@ -22,7 +22,10 @@ export function DetailsBanner({
         <StyledBanner>
             <StyledInfoBox>
                 <RatingTag
-                    rating={detailsData?.rating?.toFixed(1)}
+                    rating={
+                        // detailsData?.rating && detailsData?.rating?.toFixed(1)
+                        detailsData?.rating
+                    }
                     isLoading={false}
                 />
                 <Heading as="h1" fontSize={"2rem"}>
@@ -30,8 +33,8 @@ export function DetailsBanner({
                 </Heading>
                 <Flex gap={"4"} color={"var(--text--secondary-color)"}>
                     <Text>
-                        {detailsData?.runtime
-                            ? `${detailsData?.runtime} mins`
+                        {detailsData?.runTime
+                            ? `${detailsData?.runTime} mins`
                             : null}
                         {detailsData?.episodes
                             ? `${detailsData?.episodes} Episodes`
@@ -64,7 +67,7 @@ export function DetailsBanner({
                 />
             </StyledInfoBox>
             <StyledBackgroundImage
-                src={`${mediaType === "anime" ? detailsData.poster : getPosterImage(detailsData.poster)}`}
+                src={detailsData?.image?.src}
                 alt="Media Image"
             />
         </StyledBanner>

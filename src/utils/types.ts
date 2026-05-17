@@ -36,6 +36,11 @@ export interface ApiMovieData {
     genre_ids?: number[];
     title_english?: string;
     first_air_date?: string;
+    number_of_episodes?: number;
+    number_of_seasons?: number;
+    runtime?: number;
+    synopsis?: string;
+    episodes?: number;
     images?: {
         webp: {
             large_image_url?: string;
@@ -60,10 +65,12 @@ export interface CardType {
     description?: string;
     link?: string;
     rating?: number | string;
-    runTime?: string;
-    genres?: string | number[] | { id: number; name: string }[] | null;
+    genres?: number[] | { id: number; name: string }[] | null;
     watchStatus?: WatchStatus;
     mediaType?: MediaType | string;
+    episodes?: number | null;
+    seasons?: number | null;
+    runTime?: number | null;
 }
 
 export interface StyledButtonProps {
@@ -148,6 +155,14 @@ export interface WatchListStatusType {
 }
 
 export type WatchListContextType = {
-    watchList: WatchListStatusType;
-    setWatchList: Dispatch<SetStateAction<WatchListStatusType>>;
+    watchListState: WatchListStatusType;
+    dispatch: Dispatch<SetStateAction<WatchListAction>>;
 };
+
+// Strict tuple definitions for each action type
+export type AddAction = ["ADD", "toWatch", CardType];
+export type RemoveAction = ["REMOVE", CardType, WatchStatus];
+export type MoveAction = ["MOVE", CardType, WatchStatus, WatchStatus];
+
+// Unified Discriminated Union type for your dispatch function
+export type WatchListAction = AddAction | RemoveAction | MoveAction;

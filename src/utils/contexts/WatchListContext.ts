@@ -7,4 +7,5 @@ export const WatchListContext = createContext<WatchListContextType>({
         watching: [],
         completed: [],
     },
+    dispatch: () => {},
 });
