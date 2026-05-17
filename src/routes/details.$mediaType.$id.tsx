@@ -8,6 +8,8 @@ import { useRecommendationsAnime } from "../utils/data-hooks/useRecommendationsA
 import { DetailsBanner } from "../components/details/DetailsBanner/DetailsBanner";
 import { DetailsContent } from "../components/details/DetailsContent/DetailsContent";
 import { SimilarRecommendations } from "../components/details/SimilarRecommendations/SimilarRecommendations";
+import { mapToValidMedia } from "../utils/helpers/mapToValidMedia";
+import type { MediaType } from "../utils/types";
 
 export const Route = createFileRoute("/details/$mediaType/$id")({
     // Load data using the params
@@ -80,7 +82,7 @@ function MediaDetailsComponent() {
                 >
                     <DetailsBanner
                         detailsData={detailsData}
-                        mediaType={mediaType}
+                        mediaType={mediaType.toLowerCase() as MediaType}
                     />
                     <DetailsContent detailsData={detailsData} />
                     <SimilarRecommendations

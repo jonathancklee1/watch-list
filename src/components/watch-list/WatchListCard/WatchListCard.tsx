@@ -1,34 +1,40 @@
 import { StyledCard, StyledImage } from "./WatchListCard.styles";
-import {
-    Flex,
-    Box,
-    Text,
-    Separator,
-    Input,
-    Popover,
-    Portal,
-} from "@chakra-ui/react";
+import { Flex, Box, Text, Separator, Popover, Portal } from "@chakra-ui/react";
 import {
     BiCheck,
+    BiCross,
     BiGridVertical,
     BiNotepad,
     BiSolidBinoculars,
+    BiX,
 } from "react-icons/bi";
 import { getPosterImage } from "../../../utils/helpers/getPosterImage";
 
 import { RatingTag } from "../../RatingTag/RatingTag";
 import { Button } from "../../Button/Button";
-import type { CardType } from "../../../utils/types";
+import type { CardType, WatchStatus } from "../../../utils/types";
 import { useContext } from "react";
-import { GenreListContext } from "../../../utils/context/GenreListContext";
+import { GenreListContext } from "../../../utils/contexts/GenreListContext";
 import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
-export function WatchListCard({ data }: { data: CardType }) {
+import { useWatchListController } from "../../../utils/controllers/useWatchListController";
+export function WatchListCard({
+    data,
+    watchStatus,
+}: {
+    data: CardType;
+    watchStatus: WatchStatus;
+}) {
+    console.log(data.mediaType);
     const genreList =
         useContext(GenreListContext)[mapToValidMedia(data.mediaType)];
-    const mainGenre = genreList
-        ?.filter((genre) => data?.genres?.includes(genre.id))
-        .map((genre) => genre.name)[0];
+    console.log(genreList, data.genres?.[0]);
+    const mainGenre =
+        genreList?.find((genre) => genre.id == data.genres?.[0])?.name ??
+        data.genres?.[0].name;
+
     console.log(data);
+    const { handleMoveWatchList, handleDeleteFromWatchList } =
+        useWatchListController();
     return (
         <StyledCard
             className="glass"
@@ -54,14 +60,19 @@ export function WatchListCard({ data }: { data: CardType }) {
                         gap={2}
                         marginTop={".5em"}
                     >
-                        <Text fontWeight={800} lineClamp={2}>
-                            {mainGenre}
+                        <Text fontWeight={800} lineClamp={2} maxW={"10ch"}>
+                            {mainGenre ?? "-"}
                         </Text>
                         <Separator
                             orientation="vertical"
                             border={"1px solid var(--text--secondary-color)"}
                         />
-                        <Text fontWeight={800} lineClamp={2}>
+                        <Text
+                            fontWeight={800}
+                            lineClamp={2}
+                            display={"grid"}
+                            placeItems={"center"}
+                        >
                             {data.releaseDate?.split("-")[0]}
                         </Text>
                     </Flex>
@@ -96,30 +107,62 @@ export function WatchListCard({ data }: { data: CardType }) {
                                             direction={"column"}
                                             w={"fit-content"}
                                         >
-                                            {data.watchStatus !==
-                                                "to-watch" && (
-                                                <Button>
+                                            {watchStatus !== "toWatch" && (
+                                                <Button
+                                                    onClick={() =>
+                                                        handleMoveWatchList(
+                                                            data,
+                                                            watchStatus,
+                                                            "toWatch",
+                                                        )
+                                                    }
+                                                >
                                                     <BiNotepad size={20} />
                                                     Move to To Watch
                                                     {/* Add icon here */}
                                                 </Button>
                                             )}
-                                            {data.watchStatus !==
-                                                "watching" && (
-                                                <Button>
+                                            {watchStatus !== "watching" && (
+                                                <Button
+                                                    onClick={() =>
+                                                        handleMoveWatchList(
+                                                            data,
+                                                            watchStatus,
+                                                            "watching",
+                                                        )
+                                                    }
+                                                >
                                                     <BiSolidBinoculars
                                                         size={20}
                                                     />
                                                     Move to Watching
                                                 </Button>
                                             )}
-                                            {data.watchStatus !==
-                                                "completed" && (
-                                                <Button>
+                                            {watchStatus !== "completed" && (
+                                                <Button
+                                                    onClick={() =>
+                                                        handleMoveWatchList(
+                                                            data,
+                                                            watchStatus,
+                                                            "completed",
+                                                        )
+                                                    }
+                                                >
                                                     <BiCheck size={20} />
                                                     Move to Completed
                                                 </Button>
                                             )}
+                                            <Button
+                                                onClick={() =>
+                                                    handleDeleteFromWatchList(
+                                                        data,
+                                                        watchStatus,
+                                                    )
+                                                }
+                                            >
+                                                <BiX size={20} />
+                                                Remove from List
+                                            </Button>
                                         </Flex>
                                     </Popover.Body>
                                 </Popover.Content>

@@ -4,24 +4,11 @@ import { WATCH_LIST_STATE } from "../../../utils/constants";
 import { WatchListCard } from "../WatchListCard/WatchListCard";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
 import { useContext } from "react";
-import { WatchListContext } from "../../../utils/context/WatchListContext";
+import { WatchListContext } from "../../../utils/contexts/WatchListContext";
 export function WatchListTabContainer() {
-    const data = {
-        title: "Avatar: The Way of Water",
-        posterImage: "",
-        genres: [{ name: "Drama" }],
-        rating: "6.777",
-        releaseDate: "2019",
-        watchStatus: "to-watch",
-    };
-    const { watchList, setWatchList } = useContext(WatchListContext);
+    const { watchList } = useContext(WatchListContext);
     return (
-        <Tabs.Root
-            defaultValue="to-watch"
-            fitted
-            variant="plain"
-            width={"100%"}
-        >
+        <Tabs.Root defaultValue="toWatch" fitted variant="plain" width={"100%"}>
             <Tabs.List
                 bg="var(--background--secondary-color)"
                 rounded="l3"
@@ -34,7 +21,7 @@ export function WatchListTabContainer() {
                         value={state.value}
                         justifyContent={"center"}
                     >
-                        {state.value === "to-watch" && <BiNotepad size={20} />}
+                        {state.value === "toWatch" && <BiNotepad size={20} />}
                         {state.value === "watching" && (
                             <BiSolidBinoculars size={20} />
                         )}
@@ -45,7 +32,7 @@ export function WatchListTabContainer() {
                 <Tabs.Indicator rounded="l2" />
             </Tabs.List>
 
-            <Tabs.Content value="to-watch">
+            <Tabs.Content value="toWatch">
                 <Flex
                     direction={"column"}
                     gap={"1em"}
@@ -63,7 +50,11 @@ export function WatchListTabContainer() {
                         </EmptyState.Root>
                     ) : (
                         watchList?.toWatch.map((item, index) => (
-                            <WatchListCard key={index} data={item} />
+                            <WatchListCard
+                                key={index}
+                                data={item}
+                                watchStatus={"toWatch"}
+                            />
                         ))
                     )}
                 </Flex>
@@ -86,7 +77,11 @@ export function WatchListTabContainer() {
                         </EmptyState.Root>
                     ) : (
                         watchList?.watching.map((item, index) => (
-                            <WatchListCard key={index} data={item} />
+                            <WatchListCard
+                                key={index}
+                                data={item}
+                                watchStatus={"watching"}
+                            />
                         ))
                     )}
                 </Flex>
@@ -110,7 +105,11 @@ export function WatchListTabContainer() {
                         </EmptyState.Root>
                     ) : (
                         watchList?.completed.map((item, index) => (
-                            <WatchListCard key={index} data={item} />
+                            <WatchListCard
+                                key={index}
+                                data={item}
+                                watchStatus={"completed"}
+                            />
                         ))
                     )}
                 </Flex>

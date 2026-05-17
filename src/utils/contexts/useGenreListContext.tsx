@@ -1,4 +1,4 @@
-import { useGenreList } from "../../utils/data-hooks/useGenreList";
+import { useGenreList } from "../data-hooks/useGenreList";
 import { useGenreListAnime } from "../data-hooks/useGenreListAnime";
 import { GenreListContext } from "./GenreListContext";
 

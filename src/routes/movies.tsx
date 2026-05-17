@@ -10,7 +10,7 @@ import { GenreShowcaseSection } from "../components/genre-showcase/GenreShowcase
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
 import { useTopGenresMedia } from "../utils/data-hooks/useTopGenresMedia";
-import { GenreListContext } from "../utils/context/GenreListContext";
+import { GenreListContext } from "../utils/contexts/GenreListContext";
 
 export const Route = createFileRoute("/movies")({
     component: RouteComponent,

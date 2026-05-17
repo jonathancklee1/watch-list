@@ -6,8 +6,7 @@ import { Tooltip } from "../../../components/ui/tooltip";
 import type { CardType, MediaType } from "../../../utils/types";
 import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
 import { Link } from "@tanstack/react-router";
-import { useContext } from "react";
-import { WatchListContext } from "../../../utils/context/WatchListContext";
+import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 
 export function TopRatedCard({
     data,
@@ -22,8 +21,7 @@ export function TopRatedCard({
 }) {
     // console.log(data, "data");
     const isFirst = ranking === 1;
-    const { setWatchList } = useContext(WatchListContext);
-
+    const { handleAddToWatchList } = useWatchListController();
     return (
         <StyledCard $isFirst={isFirst}>
             <Link
@@ -106,14 +104,9 @@ export function TopRatedCard({
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
-                                        setWatchList((prev) => {
-                                            return {
-                                                ...prev,
-                                                toWatch: [
-                                                    ...prev.toWatch,
-                                                    { ...data, mediaType },
-                                                ],
-                                            };
+                                        handleAddToWatchList({
+                                            ...data,
+                                            mediaType,
                                         });
                                     }}
                                 >

@@ -9,7 +9,7 @@ import { useAiringNowMedia } from "../utils/data-hooks/useAiringNowMedia";
 import { PageWrapper } from "./__root";
 import { useTopGenresMedia } from "../utils/data-hooks/useTopGenresMedia";
 import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
-import { GenreListContext } from "../utils/context/GenreListContext";
+import { GenreListContext } from "../utils/contexts/GenreListContext";
 
 export const Route = createFileRoute("/tvShows")({
     component: RouteComponent,

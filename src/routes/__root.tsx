@@ -2,6 +2,7 @@ import { createRootRoute, Outlet } from "@tanstack/react-router";
 import Nav from "../components/navigation/Nav/Nav";
 import { MobileNav } from "../components/navigation/MobileNav/MobileNav";
 import styled from "styled-components";
+import { Toaster } from "../components/ui/toaster";
 export const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -16,6 +17,7 @@ export const Route = createRootRoute({
             <Nav />
             <Outlet /> {/* This is where child routes render */}
             <MobileNav />
+            <Toaster />
         </>
     ),
 });

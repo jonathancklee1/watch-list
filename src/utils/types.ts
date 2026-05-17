@@ -139,7 +139,7 @@ export type DetailDataType = {
       }
 );
 
-export type WatchStatus = "to-watch" | "watching" | "completed";
+export type WatchStatus = "toWatch" | "watching" | "completed";
 
 export interface WatchListStatusType {
     toWatch: CardType[];
@@ -148,6 +148,6 @@ export interface WatchListStatusType {
 }
 
 export type WatchListContextType = {
-    watchList?: WatchListStatusType;
-    setWatchList?: Dispatch<SetStateAction<WatchListStatusType>>;
+    watchList: WatchListStatusType;
+    setWatchList: Dispatch<SetStateAction<WatchListStatusType>>;
 };

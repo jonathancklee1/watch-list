@@ -4,12 +4,11 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../ui/tooltip";
 import { getPosterImage } from "../../../utils/helpers/getPosterImage";
-import { useContext } from "react";
-import { WatchListContext } from "../../../utils/context/WatchListContext";
+import type { CardType } from "../../../utils/types";
+import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 
-export function RecommendationCard({ data, mediaType }) {
-    console.log(data);
-    const { setWatchList } = useContext(WatchListContext);
+export function RecommendationCard({ data, mediaType }: CardType) {
+    const { handleAddToWatchList } = useWatchListController();
 
     return (
         <StyledCard
@@ -49,14 +48,9 @@ export function RecommendationCard({ data, mediaType }) {
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                setWatchList((prev) => {
-                                    return {
-                                        ...prev,
-                                        toWatch: [
-                                            ...prev.toWatch,
-                                            { ...data, mediaType },
-                                        ],
-                                    };
+                                handleAddToWatchList({
+                                    ...data,
+                                    mediaType,
                                 });
                             }}
                         >

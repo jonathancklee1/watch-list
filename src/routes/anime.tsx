@@ -10,7 +10,7 @@ import { useTopRatedAnime } from "../utils/data-hooks/useTopRatedAnime";
 import { PageWrapper } from "./__root";
 
 import { useAiringNowAnime } from "../utils/data-hooks/useAiringNowAnime";
-import { GenreListContext } from "../utils/context/GenreListContext";
+import { GenreListContext } from "../utils/contexts/GenreListContext";
 export const Route = createFileRoute("/anime")({
     component: RouteComponent,
 });

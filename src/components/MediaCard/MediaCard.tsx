@@ -1,4 +1,4 @@
-import type { CardProps } from "../../utils/types";
+import type { CardProps, CardType } from "../../utils/types";
 import { Card, Tag, Text } from "@chakra-ui/react";
 import { Button } from "../Button/Button";
 import {
@@ -14,14 +14,14 @@ import { BiPlus } from "react-icons/bi";
 
 import { EmptyImage } from "../EmptyImage/EmptyImage";
 import { useContext } from "react";
-import { GenreListContext } from "../../utils/context/GenreListContext";
+import { GenreListContext } from "../../utils/contexts/GenreListContext";
 import { mapToValidMedia } from "../../utils/helpers/mapToValidMedia";
 import { Link } from "@tanstack/react-router";
-import { WatchListContext } from "../../utils/context/WatchListContext";
+import { useWatchListController } from "../../utils/controllers/useWatchListController";
 
 export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
     const genreList = useContext(GenreListContext)[mapToValidMedia(mediaType)];
-    const { setWatchList } = useContext(WatchListContext);
+    const { handleAddToWatchList } = useWatchListController();
 
     const mainGenre =
         mediaType === "Anime"
@@ -47,6 +47,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                     zIndex={10}
                     justifyContent={"end"}
                     pb="0"
+                    px={"1em"}
                 >
                     {tagText && (
                         <StyledTag>
@@ -67,7 +68,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                         </StyledDescription>
                     )}
                 </Card.Body>
-                <Card.Footer gap="2" zIndex={10} mt={"1rem"}>
+                <Card.Footer gap="2" zIndex={10} mt={"1rem"} px={"1em"}>
                     <Link
                         to="/details/$mediaType/$id"
                         params={{
@@ -96,14 +97,9 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                setWatchList((prev) => {
-                                    return {
-                                        ...prev,
-                                        toWatch: [
-                                            ...prev.toWatch,
-                                            { ...data, mediaType },
-                                        ],
-                                    };
+                                handleAddToWatchList({
+                                    ...data,
+                                    mediaType,
                                 });
                             }}
                         >

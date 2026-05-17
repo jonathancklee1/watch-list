@@ -13,7 +13,6 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         window.localStorage.setItem("watchList", JSON.stringify(watchList));
     }, [watchList]);
-    console.log(watchList, initialValue, setWatchList);
     return (
         <WatchListContext.Provider value={{ watchList, setWatchList }}>
             {children}

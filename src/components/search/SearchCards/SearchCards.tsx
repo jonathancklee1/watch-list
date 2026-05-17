@@ -15,11 +15,11 @@ import { BiPlus } from "react-icons/bi";
 
 import { EmptyImage } from "../../EmptyImage/EmptyImage";
 import { useContext } from "react";
-import { GenreListContext } from "../../../utils/context/GenreListContext";
+import { GenreListContext } from "../../../utils/contexts/GenreListContext";
 import { mapToValidMedia } from "../../../utils/helpers/mapToValidMedia";
 import { RatingTag } from "../../RatingTag/RatingTag";
 import { Link } from "@tanstack/react-router";
-import { WatchListContext } from "../../../utils/context/WatchListContext";
+import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 
 export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
     const genreList =
@@ -27,7 +27,7 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
     const mainGenre = genreList
         ?.filter((genre) => data?.genres?.includes(genre.id))
         .map((genre) => genre.name)[0];
-    const { setWatchList } = useContext(WatchListContext);
+    const { handleAddToWatchList } = useWatchListController();
 
     return (
         <StyledCard>
@@ -55,17 +55,9 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                setWatchList((prev) => {
-                                    return {
-                                        ...prev,
-                                        toWatch: [
-                                            ...prev.toWatch,
-                                            {
-                                                ...data,
-                                                mediaType: selectedCategory,
-                                            },
-                                        ],
-                                    };
+                                handleAddToWatchList({
+                                    ...data,
+                                    mediaType: selectedCategory,
                                 });
                             }}
                         >

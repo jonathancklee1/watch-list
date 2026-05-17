@@ -7,14 +7,17 @@ import {
     StyledInfoBox,
 } from "./DetailsBanner.styles";
 import { Button } from "../../Button/Button";
-import type { DetailDataType } from "../../../utils/types";
+import type { DetailDataType, MediaType } from "../../../utils/types";
+import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 export function DetailsBanner({
     detailsData,
     mediaType,
 }: {
     detailsData: DetailDataType;
-    mediaType: string;
+    mediaType: MediaType;
 }) {
+    const { handleAddToWatchList } = useWatchListController();
+
     return (
         <StyledBanner>
             <StyledInfoBox>
@@ -47,7 +50,18 @@ export function DetailsBanner({
                             : "N/A"}
                     </Text>
                 </Flex>
-                <Button label="Add to Watchlist" $secondary />
+                <Button
+                    label="Add to Watchlist"
+                    $secondary
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        handleAddToWatchList({
+                            ...detailsData,
+                            mediaType: mediaType,
+                        });
+                    }}
+                />
             </StyledInfoBox>
             <StyledBackgroundImage
                 src={`${mediaType === "anime" ? detailsData.poster : getPosterImage(detailsData.poster)}`}

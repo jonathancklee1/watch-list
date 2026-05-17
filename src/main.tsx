@@ -9,8 +9,8 @@ import { Provider } from "./components/ui/provider";
 const router = createRouter({ routeTree });
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { GenreListProvider } from "./utils/context/useGenreListContext";
-import { WatchListProvider } from "./utils/context/useWatchListContext";
+import { GenreListProvider } from "./utils/contexts/useGenreListContext";
+import { WatchListProvider } from "./utils/contexts/useWatchListContext";
 
 // Register things for typesafety
 declare module "@tanstack/react-router" {
