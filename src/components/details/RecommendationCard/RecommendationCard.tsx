@@ -7,48 +7,57 @@ import { getPosterImage } from "../../../utils/helpers/getPosterImage";
 import type { CardType } from "../../../utils/types";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
+import { Link } from "@tanstack/react-router";
 
 export function RecommendationCard({ data, mediaType }: CardType) {
     const { handleAddToWatchList } = useWatchListController();
     console.log(data);
     return (
-        <StyledCard
-            className="glass"
-            background={"var(--background--secondary-color)/80"}
+        <Link
+            to="/details/$mediaType/$id"
+            params={{
+                mediaType: mediaType,
+                id: data?.id,
+            }}
         >
-            <StyledImage
-                src={
-                    data?.images?.webp.large_image_url ??
-                    getPosterImage(data?.poster_path)
-                }
-                alt={data.title}
-            />
-            <Flex
-                flexGrow={1}
-                h={"100%"}
+            <StyledCard
+                className="glass"
+                background={"var(--background--secondary-color)/80"}
                 position={"relative"}
-                alignItems={"center"}
-                width={"100%"}
-                overflow={"hidden"}
             >
-                <Flex flexDirection={"column"} gap={".5em"}>
-                    <Text fontWeight={800} lineClamp={2}>
-                        {data.title || data.name}
-                    </Text>
-                    <Text
-                        lineClamp={2}
-                        color={"var(--text--secondary-color)"}
-                        fontSize={"1rem"}
-                    >
-                        {
-                            (data.release_date || data.first_air_date)?.split(
-                                "-",
-                            )[0]
-                        }
-                    </Text>
+                <StyledImage
+                    src={
+                        data?.images?.webp.large_image_url ??
+                        getPosterImage(data?.poster_path)
+                    }
+                    alt={data.title}
+                />
+                <Flex
+                    flexGrow={1}
+                    h={"100%"}
+                    position={"relative"}
+                    alignItems={"center"}
+                    width={"100%"}
+                    overflow={"hidden"}
+                >
+                    <Flex flexDirection={"column"} gap={".5em"}>
+                        <Text fontWeight={800} lineClamp={2}>
+                            {data.title || data.name}
+                        </Text>
+                        <Text
+                            lineClamp={2}
+                            color={"var(--text--secondary-color)"}
+                            fontSize={"1rem"}
+                        >
+                            {
+                                (
+                                    data.release_date || data.first_air_date
+                                )?.split("-")[0]
+                            }
+                        </Text>
+                    </Flex>
                 </Flex>
-
-                <Box position={"absolute"} bottom={1} right={1}>
+                <Box position={"absolute"} bottom={"16px"} right={"16px"}>
                     <Tooltip
                         content="Add to watchlist"
                         positioning={{ placement: "top" }}
@@ -75,7 +84,7 @@ export function RecommendationCard({ data, mediaType }: CardType) {
                         </Button>
                     </Tooltip>
                 </Box>
-            </Flex>
-        </StyledCard>
+            </StyledCard>
+        </Link>
     );
 }

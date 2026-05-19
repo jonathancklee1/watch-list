@@ -39,9 +39,9 @@ function RouteComponent() {
         searchTerm,
         page,
     );
-    // console.log(data, "movies data");
+    const pageItemCount = selectedCategory === "anime" ? 25 : 20;
     const count = data?.total_results ?? 0;
-    const pageSize = data?.results?.length ?? 0;
+    const pageSize = pageItemCount ?? 0;
 
     useEffect(() => {
         setPage(pageParam);

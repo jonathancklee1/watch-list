@@ -57,7 +57,7 @@ export function WatchListCard({
                         gap={2}
                         marginTop={".5em"}
                     >
-                        <Text fontWeight={800} lineClamp={2} maxW={"10ch"}>
+                        <Text fontWeight={800} lineClamp={2} w={"fit-content"}>
                             {mainGenre ?? "-"}
                         </Text>
                         <Separator

@@ -4,12 +4,20 @@ import { isMobile } from "../../../utils/helpers/isMobile";
 import { WATCH_LIST_STATE } from "../../../utils/constants";
 import { WatchListCard } from "../WatchListCard/WatchListCard";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { WatchListContext } from "../../../utils/contexts/WatchListContext";
 import { StyledTabContainer } from "./WatchListTabContainer.styles";
 export function WatchListTabContainer() {
     const { watchListState } = useContext(WatchListContext);
-    return isMobile() ? (
+    const [isMobileState, setIsMobileState] = useState(isMobile());
+    window.addEventListener("resize", () => {
+        if (isMobile(1024)) {
+            setIsMobileState(true);
+        } else {
+            setIsMobileState(false);
+        }
+    });
+    return isMobileState ? (
         <Tabs.Root defaultValue="toWatch" fitted variant="plain" width={"100%"}>
             <Tabs.List
                 bg="var(--background--secondary-color)"

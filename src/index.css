@@ -20,6 +20,22 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--background--primary-color);
     color: var(--text--primary-color);
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: var(--background--primary-color);
+        border-radius: 15px;
+    }
+    ::-webkit-scrollbar-thumb {
+        border-radius: 15px;
+        cursor: pointer;
+        background: var(--secondary-color);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+    }
 }
 
 a {

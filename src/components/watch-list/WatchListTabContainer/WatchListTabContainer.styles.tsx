@@ -14,5 +14,6 @@ export const StyledTabContainer = styled(Box)`
     @media (min-width: 1024px) {
         display: flex;
         padding: 1.5em;
+        height: fit-content;
     }
 `;
