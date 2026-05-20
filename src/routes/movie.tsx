@@ -1,13 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useContext, useMemo } from "react";
 import HomeHeroBanner from "../components/home/HomeHeroBanner/HomeHeroBanner";
 import { AiringNowSection } from "../components/media-page/AiringNowSection/AiringNowSection";
 import { PageWrapper } from "./__root";
 import { useAiringNowMedia } from "../utils/data-hooks/useAiringNowMedia";
 import { TopRatedSection } from "../components/top-rated/TopRatedSection/TopRatedSection";
-
 import { GenreShowcaseSection } from "../components/genre-showcase/GenreShowcaseSection/GenreShowcaseSection";
-
-import { useContext, useEffect, useMemo, useState } from "react";
 import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
 import { useTopGenresMedia } from "../utils/data-hooks/useTopGenresMedia";
 import { GenreListContext } from "../utils/contexts/GenreListContext";
@@ -26,22 +24,19 @@ function RouteComponent() {
 
     const genreList = useContext(GenreListContext).movie;
 
-    const [genreListState, setGenreListState] = useState(genreList);
-    const getRandomGenres = useMemo(() => {
-        return (count: number) => {
-            if (genreList.length === 0) return [];
-            const shuffled = [...genreList].sort(() => Math.random() - 0.5);
-            return shuffled.slice(0, count);
-        };
-    }, [genreList]);
-    useEffect(() => {
-        setGenreListState(getRandomGenres(3));
-    }, [getRandomGenres]);
-    const topGenresMedia = useTopGenresMedia(
-        genreListState.map((genre) => genre?.id.toString() ?? ""),
-        "movie",
+    const selectedGenres = useMemo(() => {
+        if (!genreList || genreList.length === 0) return [];
+        const shuffled = [...genreList].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, 3);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [genreList.length]);
+
+    const genreIds = useMemo(
+        () => selectedGenres.map((genre) => genre?.id?.toString() ?? ""),
+        [selectedGenres],
     );
-    console.log(genreListState, "genreListState");
+    const topGenresMedia = useTopGenresMedia(genreIds, "movie");
+
     return (
         <PageWrapper className="container">
             <HomeHeroBanner category="movie" />
@@ -55,7 +50,7 @@ function RouteComponent() {
                 isLoading={isTopRatedLoading}
                 mediaType="movie"
             />
-            {genreListState.map((genre, index) => (
+            {selectedGenres.map((genre, index) => (
                 <GenreShowcaseSection
                     key={genre?.id ?? index}
                     carouselData={topGenresMedia[index]?.data?.results || []}

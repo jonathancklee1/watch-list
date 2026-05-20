@@ -20,7 +20,7 @@ export const NavWrapper = styled.nav`
         border-radius: 15px;
         background-color: var(--background--secondary-color);
         background-opacity: 1;
-        width: 90%;
+        width: 95%;
     }
 `;
 

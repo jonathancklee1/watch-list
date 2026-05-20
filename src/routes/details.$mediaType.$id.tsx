@@ -18,10 +18,13 @@ export const Route = createFileRoute("/details/$mediaType/$id")({
 
 function MediaDetailsComponent() {
     const { mediaType, id } = Route.useParams();
-    const { data } = useMediaDetails(mediaType, id);
-    const { data: animeDetail } = useDetailsAnime(id);
-    const { data: animeRecommendations } = useRecommendationsAnime(id);
-    const { data: recommendations } = useMediaRecommendations(mediaType, id);
+    const { data, isLoading } = useMediaDetails(mediaType, id);
+    const { data: animeDetail, isLoading: isAnimeLoading } =
+        useDetailsAnime(id);
+    const { data: animeRecommendations, isLoading: isAnimeRecLoading } =
+        useRecommendationsAnime(id);
+    const { data: recommendations, isLoading: isRecMediaLoading } =
+        useMediaRecommendations(mediaType, id);
     // console.log(mediaType, id, "mediaType, id");
 
     const recommendationData =
@@ -38,11 +41,14 @@ function MediaDetailsComponent() {
             : recommendations?.results?.slice(0, 8);
     const detailsData =
         mediaType === "anime" ? mapToCard(animeDetail?.data) : mapToCard(data);
-    console.log(data, animeDetail, mapToCard(data), mapToCard(animeDetail));
+
+    const contentLoading = mediaType === "anime" ? isAnimeLoading : isLoading;
+    const recLoading =
+        mediaType === "anime" ? isRecMediaLoading : isAnimeRecLoading;
     return (
         <PageWrapper
             style={{
-                paddingBottom: "8em",
+                paddingBottom: "5em",
                 maxWidth: "1200px",
                 marginInline: "auto",
                 paddingTop: "2em",
@@ -60,11 +66,16 @@ function MediaDetailsComponent() {
                     <DetailsBanner
                         detailsData={detailsData}
                         mediaType={mediaType.toLowerCase() as MediaType}
+                        isLoading={contentLoading}
                     />
-                    <DetailsContent detailsData={detailsData} />
+                    <DetailsContent
+                        detailsData={detailsData}
+                        isLoading={contentLoading}
+                    />
                     <SimilarRecommendations
                         recommendationData={recommendationData}
                         mediaType={mediaType}
+                        isLoading={recLoading}
                     />
                 </Grid>
             </Flex>

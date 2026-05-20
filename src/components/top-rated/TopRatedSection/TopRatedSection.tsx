@@ -1,4 +1,4 @@
-import { Flex, Grid, Heading } from "@chakra-ui/react";
+import { Flex, Grid, Heading, Spinner } from "@chakra-ui/react";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { TopRatedCard } from "../TopRatedCard/TopRatedCard";
 import { StyledDiv } from "./TopRatedSection.styles";
@@ -30,27 +30,31 @@ export function TopRatedSection({
                     Top Rated
                 </Heading>
             </Flex>
-            <Grid
-                templateColumns={{
-                    base: "repeat(2, 1fr)",
-                    md: "repeat(3, 1fr)",
-                    lg: "repeat(4, 1fr)",
-                }}
-                templateRows={{
-                    lg: "repeat(2, auto)",
-                }}
-                gap={4}
-            >
-                {cardData?.map((item, index) => (
-                    <TopRatedCard
-                        key={item?.id}
-                        data={mapToCard(item)}
-                        isLoading={isLoading}
-                        ranking={index + 1}
-                        mediaType={mediaType}
-                    />
-                ))}
-            </Grid>
+            {isLoading ? (
+                <Spinner size="sm" mx={"auto"} />
+            ) : (
+                <Grid
+                    templateColumns={{
+                        base: "repeat(2, 1fr)",
+                        md: "repeat(3, 1fr)",
+                        lg: "repeat(4, 1fr)",
+                    }}
+                    templateRows={{
+                        lg: "repeat(2, auto)",
+                    }}
+                    gap={4}
+                >
+                    {cardData?.map((item, index) => (
+                        <TopRatedCard
+                            key={item?.id}
+                            data={mapToCard(item)}
+                            isLoading={isLoading}
+                            ranking={index + 1}
+                            mediaType={mediaType}
+                        />
+                    ))}
+                </Grid>
+            )}
         </StyledDiv>
     );
 }

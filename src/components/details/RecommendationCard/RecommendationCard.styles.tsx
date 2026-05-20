@@ -8,6 +8,13 @@ export const StyledCard = styled(Box)`
     padding: 0.75rem;
     background-color: var(--background--primary-color-80);
     border-radius: 15px;
+    transition: all 0.3s ease;
+    &:hover {
+        transform: scale(1.025);
+        p {
+            text-decoration: underline;
+        }
+    }
 `;
 export const StyledImage = styled(Image)`
     object-fit: cover;

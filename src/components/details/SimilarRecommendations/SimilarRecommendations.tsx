@@ -1,4 +1,11 @@
-import { Flex, Heading, Separator, Box, EmptyState } from "@chakra-ui/react";
+import {
+    Flex,
+    Heading,
+    Separator,
+    Box,
+    EmptyState,
+    Spinner,
+} from "@chakra-ui/react";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
@@ -10,9 +17,11 @@ import { RecommendationCard } from "../RecommendationCard/RecommendationCard";
 export function SimilarRecommendations({
     recommendationData,
     mediaType,
+    isLoading,
 }: {
     recommendationData: RecommendationData[];
     mediaType: string;
+    isLoading: boolean;
 }) {
     const [isMobileState, setIsMobileState] = useState(isMobile());
     window.addEventListener("resize", () => {
@@ -41,6 +50,18 @@ export function SimilarRecommendations({
                         />
                     </StyledHeadingWrapper>
                     <Box px={"1em"}>
+                        {isLoading && (
+                            <Flex
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                h={"300px"}
+                            >
+                                <Spinner size="xl" />
+                            </Flex>
+                        )}
+                        {recommendationData?.length === 0 && (
+                            <EmptyRecommendations />
+                        )}
                         <CardCarousel
                             slidesPerPage={1.5}
                             items={recommendationData?.map((item) => {
@@ -70,7 +91,7 @@ export function SimilarRecommendations({
                     <Heading
                         as={"h2"}
                         fontSize={"1.25rem"}
-                        color={"var(--secondary-color)"}
+                        color={"var(--text--primary-color)"}
                         fontWeight={"bold"}
                     >
                         Similar Recommendations
@@ -80,24 +101,22 @@ export function SimilarRecommendations({
                         gap="1em"
                         overflowY={"auto"}
                         h={"550px"}
+                        overflowX={"hidden"}
                     >
+                        {isLoading && (
+                            <Flex
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                h={"300px"}
+                            >
+                                <Spinner size="xl" />
+                            </Flex>
+                        )}
                         {recommendationData?.length === 0 && (
-                            <EmptyState.Root>
-                                <EmptyState.Content>
-                                    <EmptyState.Title textAlign={"center"}>
-                                        No Recommendations
-                                    </EmptyState.Title>
-                                </EmptyState.Content>
-                            </EmptyState.Root>
+                            <EmptyRecommendations />
                         )}
                         {recommendationData?.map((item) => {
                             return (
-                                // <MediaCard
-                                //     key={item?.id}
-                                //     data={mapToCard(newItem)}
-                                //     isLoading={false}
-                                //     mediaType={mediaType}
-                                // />
                                 <RecommendationCard
                                     key={item?.id}
                                     data={item}
@@ -109,5 +128,17 @@ export function SimilarRecommendations({
                 </Flex>
             )}
         </>
+    );
+}
+
+function EmptyRecommendations() {
+    return (
+        <EmptyState.Root>
+            <EmptyState.Content>
+                <EmptyState.Title textAlign={"center"}>
+                    No Recommendations
+                </EmptyState.Title>
+            </EmptyState.Content>
+        </EmptyState.Root>
     );
 }

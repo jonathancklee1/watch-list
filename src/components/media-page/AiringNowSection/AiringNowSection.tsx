@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { Flex, Heading, Spinner } from "@chakra-ui/react";
 import { StyledDiv } from "./AiringNowSection.styles";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
@@ -43,17 +43,21 @@ export function AiringNowSection({
                     Airing Now
                 </Heading>
             </Flex>
-            <CardCarousel
-                slidesPerPage={mobileSlidesNumber}
-                items={carouselData?.map((item) => (
-                    <MediaCard
-                        key={item?.id}
-                        data={mapToCard(item)}
-                        isLoading={isLoading}
-                        mediaType={mediaType}
-                    />
-                ))}
-            />
+            {isLoading ? (
+                <Spinner size="sm" mx={"auto"} />
+            ) : (
+                <CardCarousel
+                    slidesPerPage={mobileSlidesNumber}
+                    items={carouselData?.map((item) => (
+                        <MediaCard
+                            key={item?.id}
+                            data={mapToCard(item)}
+                            isLoading={isLoading}
+                            mediaType={mediaType}
+                        />
+                    ))}
+                />
+            )}
         </StyledDiv>
     );
 }

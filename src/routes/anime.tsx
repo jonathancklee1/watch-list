@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import HomeHeroBanner from "../components/home/HomeHeroBanner/HomeHeroBanner";
-import { useState, useEffect, useContext, useCallback, useMemo } from "react";
+import { useContext, useMemo, useState, useEffect } from "react";
 import { GenreShowcaseSection } from "../components/genre-showcase/GenreShowcaseSection/GenreShowcaseSection";
 import { AiringNowSection } from "../components/media-page/AiringNowSection/AiringNowSection";
 import { TopRatedSection } from "../components/top-rated/TopRatedSection/TopRatedSection";
@@ -11,9 +11,11 @@ import { PageWrapper } from "./__root";
 
 import { useAiringNowAnime } from "../utils/data-hooks/useAiringNowAnime";
 import { GenreListContext } from "../utils/contexts/GenreListContext";
+
 export const Route = createFileRoute("/anime")({
     component: RouteComponent,
 });
+
 function RouteComponent() {
     const { data, isLoading } = useAiringNowAnime();
     const { data: topRatedData, isLoading: isTopRatedLoading } =
@@ -23,33 +25,32 @@ function RouteComponent() {
     const topRatedAnime = topRatedData?.data?.slice(0, 5) || [];
 
     const genreList = useContext(GenreListContext).anime;
-    const [genresLoading, setGenresLoading] = useState(true);
-    const [debouncedGenreIds, setDebouncedGenreIds] = useState<string[]>([]);
-    const [genreListState, setGenreListState] =
-        useState<typeof genreList>(genreList);
+
+    const selectedGenres = useMemo(() => {
+        if (!genreList || genreList.length === 0) return [];
+        const shuffled = [...genreList].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, 3);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [genreList.length]);
+
+    const [delayedIds, setDelayedIds] = useState<string[]>([]);
+    const [isApiWaiting, setIsApiWaiting] = useState(true);
+
     useEffect(() => {
-        setGenreListState(
-            genreList.sort(() => Math.random() - 0.5).slice(0, 3) || [],
-        );
-    }, [genreList]);
-    const getRandomGenres = useMemo(() => {
-        return (count: number) => {
-            if (genreList.length === 0) return [];
-            const shuffled = [...genreList].sort(() => Math.random() - 0.5);
-            return shuffled.slice(0, count);
-        };
-    }, [genreList]);
-    const topGenresMedia = useTopGenresAnime(debouncedGenreIds);
-    useEffect(() => {
+        if (selectedGenres.length === 0) return;
+
         const timeout = setTimeout(() => {
-            setDebouncedGenreIds(
-                genreListState.map((genre) => genre?.mal_id?.toString() ?? ""),
+            const ids = selectedGenres.map(
+                (genre) => genre?.mal_id?.toString() ?? "",
             );
-            setGenresLoading(false);
-        }, 3000);
+            setDelayedIds(ids);
+            setIsApiWaiting(false);
+        }, 3000); // 3-second rate limit protection
 
         return () => clearTimeout(timeout);
-    }, [getRandomGenres, genreListState]);
+    }, [selectedGenres]);
+
+    const topGenresMedia = useTopGenresAnime(delayedIds);
 
     return (
         <PageWrapper className="container">
@@ -64,17 +65,20 @@ function RouteComponent() {
                 isLoading={isTopRatedLoading}
                 mediaType="anime"
             />
-            {genreListState.map((genre, index) => (
-                <GenreShowcaseSection
-                    key={genre?.mal_id ?? index}
-                    carouselData={topGenresMedia[index]?.data?.data || []}
-                    isLoading={
-                        topGenresMedia[index]?.isLoading || genresLoading
-                    }
-                    genreName={genre?.name}
-                    mediaType="anime"
-                />
-            ))}
+            {selectedGenres.map((genre, index) => {
+                const isSectionLoading =
+                    isApiWaiting || (topGenresMedia[index]?.isLoading ?? true);
+
+                return (
+                    <GenreShowcaseSection
+                        key={genre?.mal_id ?? index}
+                        carouselData={topGenresMedia[index]?.data?.data || []}
+                        isLoading={isSectionLoading}
+                        genreName={genre?.name}
+                        mediaType="anime"
+                    />
+                );
+            })}
         </PageWrapper>
     );
 }
