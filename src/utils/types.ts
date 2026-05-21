@@ -162,7 +162,7 @@ export type WatchListContextType = {
 // Strict tuple definitions for each action type
 export type AddAction = ["ADD", "toWatch", CardType];
 export type RemoveAction = ["REMOVE", CardType, WatchStatus];
-export type MoveAction = ["MOVE", CardType, WatchStatus, WatchStatus];
+export type MoveAction = ["MOVE", CardType, WatchStatus, WatchStatus, number?];
 
 // Unified Discriminated Union type for your dispatch function
 export type WatchListAction = AddAction | RemoveAction | MoveAction;

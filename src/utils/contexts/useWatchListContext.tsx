@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { WatchListContext } from "./WatchListContext";
 import type { WatchListStatusType } from "../types";
+import { move } from "@dnd-kit/helpers";
 
 export function WatchListProvider({ children }: { children: React.ReactNode }) {
     const initialValue = JSON.parse(
@@ -23,14 +24,43 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
                             (item) => item !== action[1],
                         ),
                     };
-                case "MOVE": //[MOVE, data, "toWatch", "watching"]
+                case "MOVE":
+                    const [, item, sourceKey, targetKey, insertIndex] = action;
+
+                    // 1. Remove the item from the source list
+                    const updatedSourceList = state[sourceKey].filter(
+                        (i) => i.id !== item.id,
+                    );
+
+                    // 2. IMPORTANT: Remove it from the target list FIRST to prevent double rendering
+                    const cleanTargetList = state[targetKey].filter(
+                        (i) => i.id !== item.id,
+                    );
+
+                    // 3. Slice and insert into the cleaned list
+                    const updatedTargetList =
+                        insertIndex !== undefined
+                            ? [
+                                  ...cleanTargetList.slice(0, insertIndex),
+                                  item,
+                                  ...cleanTargetList.slice(insertIndex),
+                              ]
+                            : [...cleanTargetList, item];
+
                     return {
                         ...state,
-                        [action[2]]: state[action[2]]?.filter(
-                            (item) => item !== action[1],
-                        ),
-                        [action[3]]: [...state[action[3]], action[1]],
+                        [sourceKey]: updatedSourceList,
+                        [targetKey]: updatedTargetList,
                     };
+                case "DRAG": {
+                    const event = action[1];
+                    if (!event) return state;
+
+                    return {
+                        ...state,
+                        ...move(state, event),
+                    };
+                }
                 default:
                     console.error("Invalid action");
                     return state;

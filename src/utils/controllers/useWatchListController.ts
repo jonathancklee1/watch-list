@@ -11,7 +11,7 @@ export function useWatchListController() {
         console.log("Add", data);
         try {
             dispatch(["ADD", "toWatch", data]);
-            enqueueToast("Added to To Watch", "success");
+            enqueueToast("Added to 'To Watch'", "success");
         } catch {
             enqueueToast("Failed to add to watch list", "error");
         }
@@ -30,13 +30,30 @@ export function useWatchListController() {
         data: CardType,
         from: WatchStatus,
         to: WatchStatus,
+        index?: number,
     ) {
         console.log("Move", data);
+        const mappedFrom = from === "toWatch" ? "To Watch" : from;
+        const mappedTo = to === "toWatch" ? "To Watch" : to;
         try {
-            dispatch(["MOVE", data, from, to]);
-            enqueueToast(`Moved from ${from} to ${to}`, "success");
+            dispatch(["MOVE", data, from, to, index]);
+            enqueueToast(
+                `Moved from ${mappedFrom.toUpperCase()} to ${mappedTo.toUpperCase()}`,
+                "success",
+            );
         } catch {
-            enqueueToast(`Failed to move from ${from} to ${to}`, "error");
+            enqueueToast(
+                `Failed to move from ${mappedFrom.toUpperCase()} to ${mappedTo.toUpperCase()}`,
+                "error",
+            );
+        }
+    }
+    function handleDragWatchList(event: any) {
+        try {
+            dispatch(["DRAG", event]);
+            enqueueToast(`Dragged from $event} to ${event}`, "success");
+        } catch {
+            enqueueToast(`Failed to move from $event} to ${event}`, "error");
         }
     }
 
@@ -45,5 +62,6 @@ export function useWatchListController() {
         handleAddToWatchList,
         handleDeleteFromWatchList,
         handleMoveWatchList,
+        handleDragWatchList,
     };
 }

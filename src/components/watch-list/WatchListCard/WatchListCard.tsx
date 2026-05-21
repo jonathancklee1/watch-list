@@ -15,27 +15,42 @@ import type { CardType, WatchStatus } from "../../../utils/types";
 import { useContext } from "react";
 import { GenreListContext } from "../../../utils/contexts/GenreListContext";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
+import { useSortable } from "@dnd-kit/react/sortable";
+
 export function WatchListCard({
     data,
     watchStatus,
+    index,
+    column,
+    id,
 }: {
     data: CardType;
     watchStatus: WatchStatus;
+    index: number;
+    column: string;
+    id: string;
 }) {
-    console.log(data.mediaType);
     const genreList = useContext(GenreListContext)[data.mediaType];
-    console.log(genreList, data.genres?.[0]);
     const mainGenre =
         genreList?.find((genre) => genre.id == data.genres?.[0])?.name ??
         data.genres?.[0].name;
 
-    console.log(data);
     const { handleMoveWatchList, handleDeleteFromWatchList } =
         useWatchListController();
+    const { ref, isDragging } = useSortable({
+        id,
+        index,
+        type: "item",
+        accept: "item",
+        group: column,
+    });
+
     return (
         <StyledCard
+            ref={ref}
             className="glass"
             background={"var(--background--primary-color)"}
+            data-dragging={isDragging}
         >
             <StyledImage
                 src={data?.image?.src ?? getPosterImage(data?.image?.src ?? "")}
@@ -56,6 +71,7 @@ export function WatchListCard({
                         color={"var(--text--secondary-color)"}
                         gap={2}
                         marginTop={".5em"}
+                        fontSize={".9rem"}
                     >
                         <Text fontWeight={800} lineClamp={2} w={"fit-content"}>
                             {mainGenre ?? "-"}
@@ -75,7 +91,7 @@ export function WatchListCard({
                     </Flex>
                 </Box>
                 <RatingTag
-                    rating={Number(data?.rating).toFixed(1).toString()}
+                    rating={Number(data?.rating)}
                     isLoading={false}
                     style={{}}
                 />

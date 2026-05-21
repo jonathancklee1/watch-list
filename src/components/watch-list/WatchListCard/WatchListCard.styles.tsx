@@ -8,6 +8,7 @@ export const StyledCard = styled(Box)`
     padding: 0.75rem;
     background-color: var(--background--primary-color-80);
     border-radius: 15px;
+    cursor: grab;
 `;
 export const StyledImage = styled(Image)`
     object-fit: cover;
