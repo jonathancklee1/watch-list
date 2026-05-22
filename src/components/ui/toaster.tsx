@@ -25,7 +25,19 @@ export const Toaster = () => {
                 }}
             >
                 {(toast) => (
-                    <Toast.Root width="fit-content">
+                    <Toast.Root
+                        width="fit-content"
+                        background={
+                            toast.type === "info"
+                                ? "var(--info-color)"
+                                : toast.type === "error"
+                                  ? "var(--error-color)"
+                                  : toast.type === "success"
+                                    ? "var(--success-color)"
+                                    : ""
+                        }
+                        color="var(--text-color)"
+                    >
                         {toast.type === "loading" ? (
                             <Spinner size="sm" color="blue.solid" />
                         ) : (

@@ -1,11 +1,13 @@
 import { Badge, Box, Card } from "@chakra-ui/react";
 import { StyledBody, StyledCard, StyledImage } from "./TopRatedCard.styles";
-import { BiPlus } from "react-icons/bi";
+import { BiCheck, BiPlus } from "react-icons/bi";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../../components/ui/tooltip";
 import type { CardType, MediaType } from "../../../utils/types";
 import { Link } from "@tanstack/react-router";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
+import { useIsInWatchList } from "../../../utils/hooks/useIsInWatchList";
+import { enqueueToast } from "../../../utils/helpers/enqueueToast";
 
 export function TopRatedCard({
     data,
@@ -21,6 +23,7 @@ export function TopRatedCard({
     // console.log(data, "data");
     const isFirst = ranking === 1;
     const { handleAddToWatchList } = useWatchListController();
+    const isInWatchList = useIsInWatchList(data);
     return (
         <StyledCard $isFirst={isFirst}>
             <Link
@@ -103,16 +106,30 @@ export function TopRatedCard({
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
+                                        if (isInWatchList) {
+                                            enqueueToast(
+                                                "Already in watchlist",
+                                                "info",
+                                            );
+                                            return;
+                                        }
                                         handleAddToWatchList({
                                             ...data,
                                             mediaType,
                                         });
                                     }}
                                 >
-                                    <BiPlus
-                                        color="var(--text--primary-color)"
-                                        strokeWidth={"1.5"}
-                                    />
+                                    {isInWatchList ? (
+                                        <BiCheck
+                                            color="var(--text--primary-color)"
+                                            strokeWidth={"1.5"}
+                                        />
+                                    ) : (
+                                        <BiPlus
+                                            color="var(--text--primary-color)"
+                                            strokeWidth={"1.5"}
+                                        />
+                                    )}
                                 </Button>
                             </Tooltip>
                         </Card.Footer>

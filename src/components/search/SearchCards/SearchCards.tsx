@@ -11,7 +11,7 @@ import {
     StyledImageWrapper,
     StyledCardFooter,
 } from "./SearchCards.styles";
-import { BiPlus } from "react-icons/bi";
+import { BiCheck, BiPlus } from "react-icons/bi";
 
 import { EmptyImage } from "../../EmptyImage/EmptyImage";
 import { useContext } from "react";
@@ -19,6 +19,8 @@ import { GenreListContext } from "../../../utils/contexts/GenreListContext";
 import { RatingTag } from "../../RatingTag/RatingTag";
 import { Link } from "@tanstack/react-router";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
+import { useIsInWatchList } from "../../../utils/hooks/useIsInWatchList";
+import { enqueueToast } from "../../../utils/helpers/enqueueToast";
 
 export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
     const genreList = useContext(GenreListContext)[selectedCategory];
@@ -26,6 +28,7 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
         ?.filter((genre) => data?.genres?.includes(genre.id))
         .map((genre) => genre.name)[0];
     const { handleAddToWatchList } = useWatchListController();
+    const isInWatchList = useIsInWatchList(data);
 
     return (
         <StyledCard>
@@ -53,16 +56,30 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
+                                if (isInWatchList) {
+                                    enqueueToast(
+                                        "Already in watchlist",
+                                        "info",
+                                    );
+                                    return;
+                                }
                                 handleAddToWatchList({
                                     ...data,
                                     mediaType: selectedCategory,
                                 });
                             }}
                         >
-                            <BiPlus
-                                color="var(--text--primary-color)"
-                                strokeWidth={"1.5"}
-                            />
+                            {isInWatchList ? (
+                                <BiCheck
+                                    color="var(--text--primary-color)"
+                                    strokeWidth={"1.5"}
+                                />
+                            ) : (
+                                <BiPlus
+                                    color="var(--text--primary-color)"
+                                    strokeWidth={"1.5"}
+                                />
+                            )}
                         </Button>
                     </Tooltip>
                     {isLoading ? (

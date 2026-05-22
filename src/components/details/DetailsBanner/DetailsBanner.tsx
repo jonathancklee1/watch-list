@@ -9,6 +9,8 @@ import {
 import { Button } from "../../Button/Button";
 import type { CardType, MediaType } from "../../../utils/types";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
+import { useIsInWatchList } from "../../../utils/hooks/useIsInWatchList";
+import { enqueueToast } from "../../../utils/helpers/enqueueToast";
 export function DetailsBanner({
     detailsData,
     mediaType,
@@ -19,6 +21,8 @@ export function DetailsBanner({
     isLoading: boolean;
 }) {
     const { handleAddToWatchList } = useWatchListController();
+    console.log(detailsData, "detailsData");
+    const isInWatchList = useIsInWatchList(detailsData);
 
     return (
         <StyledBanner>
@@ -62,12 +66,21 @@ export function DetailsBanner({
                         </>
                     )}
                 </Flex>
+
                 <Button
-                    label="Add to Watchlist"
+                    label={
+                        isInWatchList
+                            ? "✓ Already in Watchlist"
+                            : "Add to Watchlist"
+                    }
                     $secondary
                     onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();
+                        if (isInWatchList) {
+                            enqueueToast("Already in watchlist", "info");
+                            return;
+                        }
                         handleAddToWatchList({
                             ...detailsData,
                             mediaType: mediaType,

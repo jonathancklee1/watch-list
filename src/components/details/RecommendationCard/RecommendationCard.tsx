@@ -1,4 +1,4 @@
-import { BiPlus } from "react-icons/bi";
+import { BiCheck, BiPlus } from "react-icons/bi";
 import { StyledCard, StyledImage } from "./RecommendationCard.styles";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
@@ -8,10 +8,14 @@ import type { CardType } from "../../../utils/types";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { Link } from "@tanstack/react-router";
+import { enqueueToast } from "../../../utils/helpers/enqueueToast";
+import { useIsInWatchList } from "../../../utils/hooks/useIsInWatchList";
 
 export function RecommendationCard({ data, mediaType }: CardType) {
     const { handleAddToWatchList } = useWatchListController();
-    console.log(data);
+
+    const isInWatchList = useIsInWatchList(data);
+
     return (
         <Link
             to="/details/$mediaType/$id"
@@ -71,16 +75,30 @@ export function RecommendationCard({ data, mediaType }: CardType) {
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
+                                if (isInWatchList) {
+                                    enqueueToast(
+                                        "Already in watchlist",
+                                        "info",
+                                    );
+                                    return;
+                                }
                                 handleAddToWatchList({
                                     ...mapToCard(data),
                                     mediaType,
                                 });
                             }}
                         >
-                            <BiPlus
-                                color="var(--text--primary-color)"
-                                strokeWidth={"1.5"}
-                            />
+                            {isInWatchList ? (
+                                <BiCheck
+                                    color="var(--text--primary-color)"
+                                    strokeWidth={"1.5"}
+                                />
+                            ) : (
+                                <BiPlus
+                                    color="var(--text--primary-color)"
+                                    strokeWidth={"1.5"}
+                                />
+                            )}
                         </Button>
                     </Tooltip>
                 </Box>

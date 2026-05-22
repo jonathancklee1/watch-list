@@ -54,7 +54,7 @@ export interface ApiMovieData {
 }
 
 export interface CardType {
-    id?: number;
+    id: number;
     title?: string;
     name?: string;
     image?: Image;
@@ -67,7 +67,7 @@ export interface CardType {
     rating?: number | string;
     genres?: number[] | { id: number; name: string }[] | null;
     watchStatus?: WatchStatus;
-    mediaType?: MediaType | string;
+    mediaType: MediaType;
     episodes?: number | null;
     seasons?: number | null;
     runTime?: number | null;

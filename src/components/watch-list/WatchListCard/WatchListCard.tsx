@@ -16,6 +16,7 @@ import { useContext } from "react";
 import { GenreListContext } from "../../../utils/contexts/GenreListContext";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 import { useSortable } from "@dnd-kit/react/sortable";
+import { Link } from "@tanstack/react-router";
 
 export function WatchListCard({
     data,
@@ -64,9 +65,24 @@ export function WatchListCard({
                 justifyContent={"space-between"}
             >
                 <Box>
-                    <Text fontWeight={800} lineClamp={2} fontSize={"1.2rem"}>
-                        {data.title}
-                    </Text>
+                    <Link
+                        to="/details/$mediaType/$id"
+                        params={{
+                            mediaType: data.mediaType,
+                            id: data.id,
+                        }}
+                    >
+                        <Text
+                            fontWeight={800}
+                            lineClamp={2}
+                            fontSize={"1.2rem"}
+                            _hover={{
+                                textDecoration: "underline",
+                            }}
+                        >
+                            {data.title}
+                        </Text>
+                    </Link>
                     <Flex
                         color={"var(--text--secondary-color)"}
                         gap={2}
