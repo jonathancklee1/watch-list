@@ -17,4 +17,10 @@ export const StyledImage = styled(Image)`
     object-position: 50% 25%;
     aspect-ratio: 2/3;
     max-width: 100px;
+    @media (min-width: 768px) {
+        max-width: 150px;
+    }
+    @media (min-width: 1024px) {
+        max-width: 100px;
+    }
 `;

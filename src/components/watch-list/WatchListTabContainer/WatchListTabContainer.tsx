@@ -6,19 +6,14 @@ import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
 import { useContext, useState } from "react";
 import { WatchListContext } from "../../../utils/contexts/WatchListContext";
 import { WatchListColumn } from "../WatchListColumn/WatchListColumn";
-import {
-    DragDropProvider,
-    KeyboardSensor,
-    PointerSensor,
-} from "@dnd-kit/react";
-import { useWatchListController } from "../../../utils/controllers/useWatchListController";
+import { DragDropProvider } from "@dnd-kit/react";
+
 import { move } from "@dnd-kit/helpers";
-import { isSortable } from "@dnd-kit/react/sortable";
+import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 
 export function WatchListTabContainer() {
     const { watchListState, dispatch } = useContext(WatchListContext);
-    const { handleMoveWatchList, handleDragWatchList } =
-        useWatchListController();
+    const { handleDragWatchList } = useWatchListController();
     console.log(watchListState);
     const [isMobileState, setIsMobileState] = useState(isMobile());
     window.addEventListener("resize", () => {
@@ -87,12 +82,13 @@ export function WatchListTabContainer() {
         </Tabs.Root>
     ) : (
         <DragDropProvider
-            // plugins={(defaults) =>
-            //     defaults.filter(
-            //         (plugin) => plugin.name !== "OptimisticSortingPlugin",
-            //     )
-            // }
-            // sensors={[PointerSensor, KeyboardSensor]}
+            onDragOver={(event) => {
+                const { source, target } = event.operation;
+                // Triggers the state move array recalculations during transit flight
+                if (target && source?.group !== target.group) {
+                    handleDragWatchList(event);
+                }
+            }}
             onDragEnd={(event) => {
                 if (event.canceled || event.operation.canceled) return;
                 event.nativeEvent?.preventDefault();

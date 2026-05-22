@@ -1,9 +1,13 @@
-import { StyledTabContainer } from "./WatchListColumn.styles";
+import {
+    StyledCardWrapperContainer,
+    StyledTabContainer,
+} from "./WatchListColumn.styles";
 import { EmptyState, Flex, Text } from "@chakra-ui/react";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
 import { WatchListCard } from "../WatchListCard/WatchListCard";
 import { useDroppable } from "@dnd-kit/react";
 import type { CardType, WatchStatus } from "../../../utils/types";
+import { CollisionPriority } from "@dnd-kit/abstract";
 
 export function WatchListColumn({
     columnData,
@@ -14,15 +18,18 @@ export function WatchListColumn({
     name: string;
     id: WatchStatus;
 }) {
+    console.log(id);
+
     const { ref } = useDroppable({
         id,
         type: "column",
-        accept: "item",
+        accept: "card",
+        collisionPriority: CollisionPriority.Low,
     });
 
     return (
         <StyledTabContainer ref={ref}>
-            {/* Header section remains identical */}
+            {/* Header Content */}
             <Flex alignItems={"center"} gap={".5em"} mb="1em">
                 {id === "completed" ? (
                     <BiCheck size={20} />
@@ -41,7 +48,8 @@ export function WatchListColumn({
                 flexDirection="column"
                 gap="12px"
                 flexGrow={1}
-                minHeight="300px"
+                minHeight="150px"
+                width="100%"
             >
                 {columnData && columnData.length > 0 ? (
                     columnData.map((item, index) => (
@@ -64,9 +72,11 @@ export function WatchListColumn({
 
 function EmptyWatchList() {
     return (
-        <EmptyState.Root style={{ margin: "auto", padding: "20px 0" }}>
+        <EmptyState.Root
+            style={{ margin: "auto", padding: "24px 0", pointerEvents: "none" }}
+        >
             <EmptyState.Content>
-                <EmptyState.Title textAlign={"center"} color="gray.500">
+                <EmptyState.Title textAlign={"center"} color="gray.400">
                     Nothing here
                 </EmptyState.Title>
             </EmptyState.Content>

@@ -11,6 +11,9 @@ importers:
       '@chakra-ui/react':
         specifier: ^3.34.0
         version: 3.34.0(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@dnd-kit/abstract':
+        specifier: ^0.4.0
+        version: 0.4.0
       '@dnd-kit/helpers':
         specifier: ^0.4.0
         version: 0.4.0

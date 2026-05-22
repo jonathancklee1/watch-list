@@ -26,34 +26,11 @@ export function useWatchListController() {
         }
     }
 
-    function handleMoveWatchList(
-        data: CardType,
-        from: WatchStatus,
-        to: WatchStatus,
-        index?: number,
-    ) {
-        console.log("Move", data);
-        const mappedFrom = from === "toWatch" ? "To Watch" : from;
-        const mappedTo = to === "toWatch" ? "To Watch" : to;
-        try {
-            dispatch(["MOVE", data, from, to, index]);
-            enqueueToast(
-                `Moved from ${mappedFrom.toUpperCase()} to ${mappedTo.toUpperCase()}`,
-                "success",
-            );
-        } catch {
-            enqueueToast(
-                `Failed to move from ${mappedFrom.toUpperCase()} to ${mappedTo.toUpperCase()}`,
-                "error",
-            );
-        }
-    }
     function handleDragWatchList(event: any) {
         try {
             dispatch(["DRAG", event]);
-            enqueueToast(`Dragged from $event} to ${event}`, "success");
-        } catch {
-            enqueueToast(`Failed to move from $event} to ${event}`, "error");
+        } catch (error) {
+            console.error("Failed to drag watch list" + error);
         }
     }
 
@@ -61,7 +38,6 @@ export function useWatchListController() {
         watchListState,
         handleAddToWatchList,
         handleDeleteFromWatchList,
-        handleMoveWatchList,
         handleDragWatchList,
     };
 }

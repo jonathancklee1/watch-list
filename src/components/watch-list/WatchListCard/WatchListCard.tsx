@@ -37,11 +37,11 @@ export function WatchListCard({
 
     const { handleMoveWatchList, handleDeleteFromWatchList } =
         useWatchListController();
+    console.log(id, index, column);
     const { ref, isDragging } = useSortable({
         id,
         index,
-        type: "item",
-        accept: "item",
+        type: "card",
         group: column,
     });
 
