@@ -4,5 +4,5 @@ export function useTrendingMedia(
     mediaType: "movie" | "tv",
     timeWindow: "day" | "week" = "day",
 ) {
-    return useTMDBQuery(`trending/${mediaType}/${timeWindow}`);
+    return useTMDBQuery(`trending/${mediaType}/${timeWindow}?adult=false`);
 }

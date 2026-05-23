@@ -3,8 +3,8 @@ import { useTMDBQuery } from "./useTMDBApi";
 
 export function useAiringNowMedia(mediaType: Omit<MediaType, "Anime">) {
     const endpoints = {
-        movie: "movie/now_playing",
-        tv: "tv/on_the_air",
+        movie: "movie/now_playing?adult=false",
+        tv: "tv/on_the_air?adult=false",
         // anime: "seasons/now",
     };
 

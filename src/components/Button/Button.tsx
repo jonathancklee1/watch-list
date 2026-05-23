@@ -4,7 +4,7 @@ import type { ButtonProps as ChakraButtonProps } from "@chakra-ui/react";
 
 type ButtonProps = {
     label?: string;
-    href?: string;
+    href?: string | null;
 } & ChakraButtonProps &
     StyledButtonProps;
 export function Button({

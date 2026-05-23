@@ -10,6 +10,7 @@ export function useSearchMedia(mediaType: MediaType, query: string, page = 1) {
         {
             q: query,
             page: page.toString(),
+            sfw: "true",
         },
         {
             select: (data) => {
@@ -25,6 +26,7 @@ export function useSearchMedia(mediaType: MediaType, query: string, page = 1) {
     const tmdbSearch = useTMDBQuery(`search/${validMediaType}`, {
         query,
         page: page.toString(),
+        include_adult: "false",
     });
 
     return mediaType === "anime" ? animeSearch : tmdbSearch;

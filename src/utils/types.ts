@@ -51,6 +51,10 @@ export interface ApiMovieData {
     };
     genres?: { id: number; name: string }[];
     score: number;
+    homepage?: string;
+    trailer: {
+        embed_url?: string;
+    };
 }
 
 export interface CardType {
@@ -67,10 +71,11 @@ export interface CardType {
     rating?: number | string;
     genres?: number[] | { id: number; name: string }[] | null;
     watchStatus?: WatchStatus;
-    mediaType: MediaType;
+    mediaType?: MediaType;
     episodes?: number | null;
     seasons?: number | null;
     runTime?: number | null;
+    externalLink?: string | null;
 }
 
 export interface StyledButtonProps {

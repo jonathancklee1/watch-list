@@ -65,8 +65,6 @@ export function TopRatedCard({
                                 base: isFirst ? "1.5rem" : "1rem",
                                 md: isFirst ? "2rem" : "1.5rem",
                             }}
-                            lineClamp={3}
-                            overflowY={"hidden"}
                         >
                             {data?.title}
                         </Card.Title>

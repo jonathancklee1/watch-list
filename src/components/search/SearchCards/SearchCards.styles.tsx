@@ -1,4 +1,4 @@
-import { Card, Tag, Image } from "@chakra-ui/react";
+import { Card, Image } from "@chakra-ui/react";
 import styled from "styled-components";
 
 export const StyledImage = styled(Image)`

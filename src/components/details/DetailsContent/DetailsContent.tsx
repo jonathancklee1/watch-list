@@ -23,17 +23,23 @@ export function DetailsContent({
                 <Spinner size="sm" mx={"auto"} />
             ) : (
                 <Flex gap={4} alignItems={"center"} flexWrap={"wrap"}>
-                    {detailsData?.genres?.map((genre) => (
-                        <Badge
-                            key={genre.id}
-                            width={"fit-content"}
-                            fontWeight={"bold"}
-                            p={".5em"}
-                            background={"var(--secondary-color)"}
-                        >
-                            {genre.name}
-                        </Badge>
-                    ))}
+                    {detailsData?.genres && detailsData?.genres?.length > 0 ? (
+                        detailsData?.genres?.map((genre) => (
+                            <Badge
+                                key={genre.id}
+                                width={"fit-content"}
+                                fontWeight={"bold"}
+                                p={".5em"}
+                                background={"var(--secondary-color)"}
+                            >
+                                {genre.name}
+                            </Badge>
+                        ))
+                    ) : (
+                        <Text color={"var(--text--secondary-color)"}>
+                            No Genres
+                        </Text>
+                    )}
                 </Flex>
             )}
 
@@ -50,7 +56,7 @@ export function DetailsContent({
                     border={"1px solid var( --text--tertiary-color)"}
                 >
                     <Text color={"var(--text--secondary-color)"}>
-                        {detailsData?.description}
+                        {detailsData?.description ?? "No Overview"}
                     </Text>
                 </Box>
             )}

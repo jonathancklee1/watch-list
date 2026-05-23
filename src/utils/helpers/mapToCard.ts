@@ -1,11 +1,12 @@
-import type { ApiMovieData, CardType } from "../../utils/types";
+import type { ApiMovieData, CardType, MediaType } from "../../utils/types";
 import { getPosterImage } from "./getPosterImage";
 export function mapToCard<TData extends ApiMovieData>(
     data: TData,
+    mediaType?: MediaType,
 ): CardType | null {
     if (!data) return null;
     return {
-        id: data.id || data.mal_id,
+        id: data.id || data.mal_id || 0,
         title: data.title_english || data.title || data.name,
         image: {
             src: data.poster_path
@@ -30,5 +31,7 @@ export function mapToCard<TData extends ApiMovieData>(
         episodes: data.number_of_episodes || data.episodes || null,
         seasons: data.number_of_seasons || null,
         runTime: data.runtime || null,
+        mediaType: mediaType,
+        externalLink: data.trailer?.embed_url || data.homepage || null,
     };
 }

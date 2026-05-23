@@ -72,27 +72,39 @@ export function DetailsBanner({
                         </>
                     )}
                 </Flex>
-
-                <Button
-                    label={
-                        isInWatchList
-                            ? "✓ Already in Watchlist"
-                            : "Add to Watchlist"
-                    }
-                    $secondary
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        if (isInWatchList) {
-                            enqueueToast("Already in watchlist", "info");
-                            return;
+                <Flex gap={"16px"}>
+                    {detailsData?.externalLink && (
+                        <Button
+                            label={
+                                mediaType === "anime"
+                                    ? "Watch Trailer"
+                                    : "Visit Homepage"
+                            }
+                            $secondary
+                            href={detailsData?.externalLink}
+                        />
+                    )}
+                    <Button
+                        label={
+                            isInWatchList
+                                ? "✓ Already in Watchlist"
+                                : "Add to Watchlist"
                         }
-                        handleAddToWatchList({
-                            ...detailsData,
-                            mediaType: mediaType,
-                        });
-                    }}
-                />
+                        $primary
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            if (isInWatchList) {
+                                enqueueToast("Already in watchlist", "info");
+                                return;
+                            }
+                            handleAddToWatchList({
+                                ...detailsData,
+                                mediaType: mediaType,
+                            });
+                        }}
+                    />
+                </Flex>
             </StyledInfoBox>
             {isLoading ? (
                 <Skeleton height="100%" width="100%" />

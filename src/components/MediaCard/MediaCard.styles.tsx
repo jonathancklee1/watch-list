@@ -15,11 +15,6 @@ export const StyledTitle = styled(Card.Title)`
     font-weight: bold;
     color: var(--text-color);
     font-size: 1.125rem;
-    line-clamp: 2;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow-y: hidden;
     @media (min-width: 768px) {
         font-size: 1.75rem;
     }
