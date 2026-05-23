@@ -4,6 +4,7 @@ import { RatingTag } from "../../RatingTag/RatingTag";
 import {
     StyledBackgroundImage,
     StyledBanner,
+    StyledImageWrapper,
     StyledInfoBox,
 } from "./DetailsBanner.styles";
 import { Button } from "../../Button/Button";
@@ -43,7 +44,7 @@ export function DetailsBanner({
                         <Skeleton width="100%" />
                     ) : (
                         <>
-                            <Text>
+                            <Text fontWeight={"600"}>
                                 {detailsData?.runTime
                                     ? `${detailsData?.runTime} mins`
                                     : null}
@@ -51,18 +52,23 @@ export function DetailsBanner({
                                     ? `${detailsData?.episodes} Episodes`
                                     : null}
                                 {detailsData?.seasons
-                                    ? ` | ${detailsData?.seasons} Seasons`
+                                    ? ` ${detailsData?.seasons} Seasons`
                                     : null}
                             </Text>{" "}
-                            <Separator
-                                orientation={"vertical"}
-                                borderColor={"var(--primary-color)"}
-                            />
-                            <Text>
-                                {detailsData?.releaseDate
-                                    ? detailsData?.releaseDate
-                                    : "N/A"}
-                            </Text>
+                            {detailsData?.releaseDate && (
+                                <>
+                                    <Separator
+                                        orientation={"vertical"}
+                                        borderColor={"var(--primary-color)"}
+                                        borderWidth={"1.5px"}
+                                    />
+                                    <Text fontWeight={"600"}>
+                                        {detailsData?.releaseDate
+                                            ? detailsData?.releaseDate
+                                            : "N/A"}
+                                    </Text>{" "}
+                                </>
+                            )}
                         </>
                     )}
                 </Flex>
@@ -91,10 +97,12 @@ export function DetailsBanner({
             {isLoading ? (
                 <Skeleton height="100%" width="100%" />
             ) : (
-                <StyledBackgroundImage
-                    src={detailsData?.image?.src}
-                    alt="Media Image"
-                />
+                <StyledImageWrapper>
+                    <StyledBackgroundImage
+                        src={detailsData?.image?.src}
+                        alt="Media Image"
+                    />
+                </StyledImageWrapper>
             )}
         </StyledBanner>
     );

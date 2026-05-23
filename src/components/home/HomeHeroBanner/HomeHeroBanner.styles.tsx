@@ -20,7 +20,7 @@ export const StyledHeading = styled(Heading)`
     text-align: center;
     color: var(--primary-color);
     span {
-        color: var(--text-color);
+        color: var(--text--primary-color);
     }
     @media (min-width: 768px) {
         font-size: 3rem;

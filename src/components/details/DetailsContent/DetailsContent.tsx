@@ -1,4 +1,4 @@
-import { Flex, Badge, Text, Skeleton, Spinner } from "@chakra-ui/react";
+import { Flex, Badge, Text, Skeleton, Spinner, Box } from "@chakra-ui/react";
 import type { CardType } from "../../../utils/types";
 
 export function DetailsContent({
@@ -43,9 +43,16 @@ export function DetailsContent({
             {isLoading ? (
                 <Skeleton width="60%" height={"6rem"} />
             ) : (
-                <Text color={"var(--text--secondary-color)"}>
-                    {detailsData?.description}
-                </Text>
+                <Box
+                    p={"1.5em"}
+                    background={"var(--background--secondary-color)"}
+                    borderRadius={"15px"}
+                    border={"1px solid var( --text--tertiary-color)"}
+                >
+                    <Text color={"var(--text--secondary-color)"}>
+                        {detailsData?.description}
+                    </Text>
+                </Box>
             )}
         </Flex>
     );

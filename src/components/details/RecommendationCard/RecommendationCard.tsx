@@ -63,7 +63,11 @@ export function RecommendationCard({ data, mediaType }: CardType) {
                 </Flex>
                 <Box position={"absolute"} bottom={"16px"} right={"16px"}>
                     <Tooltip
-                        content="Add to watchlist"
+                        content={
+                            isInWatchList
+                                ? "Already in watchlist"
+                                : "Add to watchlist"
+                        }
                         positioning={{ placement: "top" }}
                         showArrow
                     >

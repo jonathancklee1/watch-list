@@ -11,12 +11,22 @@ export const StyledInfoBox = styled(Flex)`
     padding-bottom: 1.5em;
 `;
 export const StyledBackgroundImage = styled(Image)`
-    z-index: -1;
     object-fit: cover;
     aspect-ratio: 3/4;
     position: relative;
+    width: 100%;
+    object-position: 60% 50%;
+    @media (min-width: 768px) {
+        aspect-ratio: 9/14;
+    }
+`;
 
-    filter: brightness(0.6);
+export const StyledImageWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    z-index: -1;
+
     &::after {
         content: "";
         position: absolute;
@@ -27,10 +37,11 @@ export const StyledBackgroundImage = styled(Image)`
             rgba(0, 0, 0, 0.5) 50%,
             rgba(0, 0, 0, 0) 100%
         );
-        z-index: 1; /* Add a higher z-index value to ensure the pseudo-element is on top */
-        border: 1px solid red; /* Add a border to the pseudo-element for visibility */
+        z-index: 2; /* Sits on top of the image */
+        pointer-events: none; /* Allows clicking through the overlay */
     }
 `;
+
 export const StyledBanner = styled(Flex)`
     gap: 4em;
     flex-direction: column;

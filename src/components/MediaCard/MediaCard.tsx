@@ -88,7 +88,11 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                         />
                     </Link>
                     <Tooltip
-                        content="Add to watchlist"
+                        content={
+                            isInWatchList
+                                ? "Already in watchlist"
+                                : "Add to watchlist"
+                        }
                         positioning={{ placement: "top" }}
                         showArrow
                     >

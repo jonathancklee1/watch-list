@@ -4,22 +4,19 @@ import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { MediaCard } from "../../MediaCard/MediaCard";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { Grid } from "@chakra-ui/react";
-import { TMDB_IMAGE_URL } from "../../../utils/constants";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
+import { useTrendingAnime } from "../../../utils/data-hooks/useTrendingAnime";
 
 export function HomeBannerPicks() {
     const [isMobileState, setIsMobileState] = useState(isMobile());
     const { data: trendingMovies, isLoading } = useTrendingMedia("movie");
+    const { data: trendingShows } = useTrendingMedia("tv");
+    const { data: trendingAnime } = useTrendingAnime();
     const trendingArray = [
         trendingMovies?.results[0],
-        trendingMovies?.results[1],
-        trendingMovies?.results[2],
-    ].map((item) => {
-        return {
-            ...item,
-            poster_path: `${TMDB_IMAGE_URL}${item?.poster_path} `,
-        };
-    });
+        trendingShows?.results[0],
+        trendingAnime?.data[0],
+    ].map((item) => mapToCard(item));
     const mobileSlidesNumber = 1;
     window.addEventListener("resize", () => {
         if (isMobile()) {
@@ -40,10 +37,10 @@ export function HomeBannerPicks() {
                         >
                             <MediaCard
                                 key={item?.id}
-                                data={mapToCard(item)}
+                                data={item}
                                 isLoading={isLoading}
                                 tagText="Trending"
-                                mediaType="Movies"
+                                mediaType="movie"
                             />
                         </Suspense>
                     ))}
@@ -57,10 +54,10 @@ export function HomeBannerPicks() {
                         >
                             <MediaCard
                                 key={item?.id}
-                                data={mapToCard(item)}
+                                data={item}
                                 isLoading={isLoading}
                                 tagText="Trending"
-                                mediaType="Movies"
+                                mediaType="movie"
                             />
                         </Suspense>
                     ))}

@@ -41,7 +41,11 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
             >
                 <StyledImageWrapper>
                     <Tooltip
-                        content="Add to watchlist"
+                        content={
+                            isInWatchList
+                                ? "Already in watchlist"
+                                : "Add to watchlist"
+                        }
                         positioning={{ placement: "top" }}
                         showArrow
                     >
@@ -121,7 +125,7 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
                             {isLoading ? (
                                 <Skeleton height="5" width="80px" />
                             ) : (
-                                (data?.releaseDate ?? "null") +
+                                (data?.releaseDate ?? "Unknown") +
                                 " " +
                                 "|" +
                                 " " +

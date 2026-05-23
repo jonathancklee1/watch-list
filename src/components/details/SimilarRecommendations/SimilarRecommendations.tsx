@@ -1,10 +1,10 @@
 import {
     Flex,
-    Heading,
     Separator,
     Box,
     EmptyState,
     Spinner,
+    Text,
 } from "@chakra-ui/react";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
@@ -36,13 +36,12 @@ export function SimilarRecommendations({
             {isMobileState ? (
                 <>
                     <StyledHeadingWrapper>
-                        <Heading
-                            as={"h2"}
+                        <Text
                             fontSize={"1.5rem"}
                             color={"var(--text--primary-color)"}
                         >
                             Similar Recommendations
-                        </Heading>
+                        </Text>
                         <Separator
                             variant="solid"
                             width={"100%"}
@@ -88,20 +87,20 @@ export function SimilarRecommendations({
                     className="glass"
                     mr={"1em"}
                 >
-                    <Heading
-                        as={"h2"}
+                    <Text
                         fontSize={"1.25rem"}
                         color={"var(--text--primary-color)"}
                         fontWeight={"bold"}
                     >
                         Similar Recommendations
-                    </Heading>
+                    </Text>
                     <Flex
                         flexDirection={"column"}
                         gap="1em"
                         overflowY={"auto"}
                         h={"550px"}
                         overflowX={"hidden"}
+                        paddingRight={"6px"}
                     >
                         {isLoading && (
                             <Flex
