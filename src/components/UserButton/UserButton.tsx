@@ -5,13 +5,19 @@ import { StyledUserButton } from "./UserButton.styles";
 import { AuthContext } from "../../utils/contexts/AuthContext";
 import { Image, Popover, Portal, Text } from "@chakra-ui/react";
 import { enqueueToast } from "../../utils/helpers/enqueueToast";
+import { useNavigate } from "@tanstack/react-router";
 
 function UserButton() {
+    const navigate = useNavigate();
+    const [pendingAuth, setPendingAuth] = useState(false);
     async function signIn() {
         try {
+            setPendingAuth(true);
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
             });
+            setPendingAuth(false);
+            navigate({ to: "/" });
             if (error) throw error;
         } catch (error) {
             enqueueToast("Failed to sign in", "error");
@@ -19,9 +25,10 @@ function UserButton() {
         }
     }
 
-    function signOut() {
+    async function signOut() {
         try {
-            supabase.auth.signOut();
+            await supabase.auth.signOut();
+            navigate({ to: "/" });
             enqueueToast("Signed out successfully!", "success");
         } catch (error) {
             enqueueToast("Failed to sign out", "error");
@@ -80,7 +87,12 @@ function UserButton() {
         );
 
     return (
-        <Button label="Sign In With Google" $primary onClick={signIn}></Button>
+        <Button
+            label="Sign In With Google"
+            $primary
+            onClick={signIn}
+            disabled={pendingAuth}
+        ></Button>
     );
 }
 

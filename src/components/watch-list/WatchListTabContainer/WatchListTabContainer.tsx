@@ -10,11 +10,13 @@ import { DragDropProvider } from "@dnd-kit/react";
 
 import { move } from "@dnd-kit/helpers";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
+import { AuthContext } from "../../../utils/contexts/AuthContext";
+import { supabase } from "../../../utils/helpers/supabase";
 
 export function WatchListTabContainer() {
-    const { watchListState, dispatch } = useContext(WatchListContext);
+    const { watchListState } = useContext(WatchListContext);
     const { handleDragWatchList } = useWatchListController();
-    console.log(watchListState);
+    const { user } = useContext(AuthContext);
     const [isMobileState, setIsMobileState] = useState(isMobile());
     window.addEventListener("resize", () => {
         if (isMobile(1024)) {
@@ -89,14 +91,23 @@ export function WatchListTabContainer() {
                     handleDragWatchList(event);
                 }
             }}
-            onDragEnd={(event) => {
+            onDragEnd={async (event) => {
                 if (event.canceled || event.operation.canceled) return;
                 event.nativeEvent?.preventDefault();
-
-                window.localStorage.setItem(
-                    "watchList",
-                    JSON.stringify(move(watchListState, event)),
-                );
+                if (user) {
+                    await supabase.from("User Watch List").upsert(
+                        {
+                            user_id: user.id,
+                            watch_list: move(watchListState, event),
+                        },
+                        { onConflict: "user_id" },
+                    );
+                } else {
+                    window.localStorage.setItem(
+                        "watchList",
+                        JSON.stringify(move(watchListState, event)),
+                    );
+                }
             }}
         >
             <Grid templateColumns="repeat(3, 1fr)" gap="6">

@@ -1,43 +1,49 @@
-import { useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { WatchListContext } from "./WatchListContext";
 import type { WatchListStatusType } from "../types";
 import { move } from "@dnd-kit/helpers";
+import { AuthContext } from "./AuthContext";
+import { supabase } from "../helpers/supabase";
+import { enqueueToast } from "../helpers/enqueueToast";
+
+// Clean fallback schema
+const emptyDefaultState: WatchListStatusType = {
+    toWatch: [],
+    watching: [],
+    completed: [],
+};
 
 export function WatchListProvider({ children }: { children: React.ReactNode }) {
-    const initialValue = JSON.parse(
-        window.localStorage.getItem("watchList") ||
-            '{"toWatch":[],"watching":[],"completed":[]}',
-    );
+    const { user } = useContext(AuthContext);
 
     const [watchListState, dispatch] = useReducer(
         (state: WatchListStatusType, action) => {
             switch (action[0]) {
-                case "ADD": //[ADD, "toWatch", data]
+                case "SET_LIST":
+                    return action[1] || emptyDefaultState;
+
+                case "ADD":
                     return {
                         ...state,
                         [action[1]]: [...state[action[1]], action[2]],
                     };
-                case "REMOVE": //[REMOVE, data, "toWatch"]
+
+                case "REMOVE":
                     return {
                         ...state,
                         [action[2]]: state[action[2]]?.filter(
                             (item) => item !== action[1],
                         ),
                     };
-                case "MOVE":
-                    const [, item, sourceKey, targetKey, insertIndex] = action;
 
-                    // 1. Remove the item from the source list
+                case "MOVE": {
+                    const [, item, sourceKey, targetKey, insertIndex] = action;
                     const updatedSourceList = state[sourceKey].filter(
                         (i) => i.id !== item.id,
                     );
-
-                    // 2. IMPORTANT: Remove it from the target list FIRST to prevent double rendering
                     const cleanTargetList = state[targetKey].filter(
                         (i) => i.id !== item.id,
                     );
-
-                    // 3. Slice and insert into the cleaned list
                     const updatedTargetList =
                         insertIndex !== undefined
                             ? [
@@ -52,28 +58,90 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
                         [sourceKey]: updatedSourceList,
                         [targetKey]: updatedTargetList,
                     };
+                }
                 case "DRAG": {
                     const event = action[1];
                     if (!event) return state;
-
                     return {
                         ...state,
                         ...move(state, event),
                     };
                 }
+
                 default:
                     console.error("Invalid action");
                     return state;
             }
         },
-        initialValue,
+        emptyDefaultState,
     );
+
     useEffect(() => {
-        window.localStorage.setItem(
-            "watchList",
-            JSON.stringify(watchListState),
-        );
+        async function loadInitialData() {
+            if (user) {
+                try {
+                    const { data } = await supabase
+                        .from("User Watch List")
+                        .select("watch_list")
+                        .eq("user_id", user.id)
+                        .maybeSingle();
+
+                    if (data?.watch_list) {
+                        dispatch(["SET_LIST", data.watch_list]);
+                    } else {
+                        dispatch(["SET_LIST", emptyDefaultState]);
+                    }
+                } catch (err) {
+                    console.error(
+                        "Error loading watch list from database:",
+                        err,
+                    );
+                    enqueueToast("Failed to load watch list", "error");
+                }
+            } else {
+                const localData = window.localStorage.getItem("watchList");
+                dispatch([
+                    "SET_LIST",
+                    localData ? JSON.parse(localData) : emptyDefaultState,
+                ]);
+            }
+        }
+
+        loadInitialData();
+    }, [user]);
+
+    useEffect(() => {
+        if (watchListState === emptyDefaultState) return;
+        async function syncData() {
+            try {
+                if (user) {
+                    console.log("Upserting to Supabase:", watchListState);
+
+                    const { error } = await supabase
+                        .from("User Watch List")
+                        .upsert(
+                            { user_id: user.id, watch_list: watchListState },
+                            { onConflict: "user_id" },
+                        );
+
+                    if (error) {
+                        throw error;
+                    }
+                } else {
+                    window.localStorage.setItem(
+                        "watchList",
+                        JSON.stringify(watchListState),
+                    );
+                }
+            } catch (error) {
+                console.error(error);
+                enqueueToast("Failed to sync watch list", "error");
+            }
+        }
+
+        syncData();
     }, [watchListState]);
+
     return (
         <WatchListContext.Provider value={{ watchListState, dispatch }}>
             {children}
