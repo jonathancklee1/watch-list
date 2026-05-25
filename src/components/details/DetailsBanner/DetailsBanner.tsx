@@ -22,7 +22,6 @@ export function DetailsBanner({
     isLoading: boolean;
 }) {
     const { handleAddToWatchList } = useWatchListController();
-    console.log(detailsData, "detailsData");
     const isInWatchList = useIsInWatchList(detailsData);
 
     return (

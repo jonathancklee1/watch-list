@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { WatchListContext } from "../contexts/WatchListContext";
 import type { CardType, WatchStatus } from "../types";
 import { enqueueToast } from "../helpers/enqueueToast";
+import type { DragOverEvent } from "@dnd-kit/react";
 
 export function useWatchListController() {
     const { watchListState, dispatch } = useContext(WatchListContext);
@@ -26,11 +27,33 @@ export function useWatchListController() {
         }
     }
 
-    function handleDragWatchList(event: any) {
+    function handleDragWatchList(event: DragOverEvent) {
         try {
             dispatch(["DRAG", event]);
         } catch (error) {
             console.error("Failed to drag watch list" + error);
+        }
+    }
+    function handleMoveWatchList(
+        data: CardType,
+        from: WatchStatus,
+        to: WatchStatus,
+        index?: number,
+    ) {
+        console.log("Move", data);
+        const mappedFrom = from === "toWatch" ? "To Watch" : from;
+        const mappedTo = to === "toWatch" ? "To Watch" : to;
+        try {
+            dispatch(["MOVE", data, from, to, index]);
+            enqueueToast(
+                `Moved from ${mappedFrom.toUpperCase()} to ${mappedTo.toUpperCase()}`,
+                "success",
+            );
+        } catch {
+            enqueueToast(
+                `Failed to move from ${mappedFrom.toUpperCase()} to ${mappedTo.toUpperCase()}`,
+                "error",
+            );
         }
     }
 
@@ -39,5 +62,6 @@ export function useWatchListController() {
         handleAddToWatchList,
         handleDeleteFromWatchList,
         handleDragWatchList,
+        handleMoveWatchList,
     };
 }

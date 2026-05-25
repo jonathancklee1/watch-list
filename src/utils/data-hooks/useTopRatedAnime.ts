@@ -1,7 +1,8 @@
+import type { ApiAnimeData } from "../types";
 import { useJikan } from "./useJikan";
 
 export function useTopRatedAnime() {
-    const jikanData = useJikan("top/anime?sfw=true");
+    const { data, isLoading } = useJikan("top/anime?sfw=true");
 
-    return jikanData;
+    return { data, isLoading } as { data: ApiAnimeData; isLoading: boolean };
 }

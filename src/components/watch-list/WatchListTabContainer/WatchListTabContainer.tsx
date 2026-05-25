@@ -12,6 +12,7 @@ import { move } from "@dnd-kit/helpers";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 import { AuthContext } from "../../../utils/contexts/AuthContext";
 import { supabase } from "../../../utils/helpers/supabase";
+import type { WatchStatus } from "../../../utils/types";
 
 export function WatchListTabContainer() {
     const { watchListState } = useContext(WatchListContext);
@@ -75,9 +76,9 @@ export function WatchListTabContainer() {
             {WATCHLIST_COLUMNS.map((column) => (
                 <Tabs.Content key={column.id} value={column.id}>
                     <WatchListColumn
-                        columnData={watchListState[column.id]}
+                        columnData={watchListState[column.id as WatchStatus]}
                         name={column.name}
-                        id={column.id}
+                        id={column.id as WatchStatus}
                     />
                 </Tabs.Content>
             ))}
@@ -85,9 +86,8 @@ export function WatchListTabContainer() {
     ) : (
         <DragDropProvider
             onDragOver={(event) => {
-                const { source, target } = event.operation;
-                // Triggers the state move array recalculations during transit flight
-                if (target && source?.group !== target.group) {
+                const { target } = event.operation;
+                if (target) {
                     handleDragWatchList(event);
                 }
             }}
@@ -115,7 +115,7 @@ export function WatchListTabContainer() {
                     <WatchListColumn
                         columnData={watchListState[column.id]}
                         name={column.name}
-                        id={column.id}
+                        id={column.id as WatchStatus}
                         key={column.id}
                     />
                 ))}

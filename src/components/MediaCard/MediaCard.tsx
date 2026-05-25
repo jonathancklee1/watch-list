@@ -1,4 +1,4 @@
-import type { CardProps, CardType } from "../../utils/types";
+import type { CardProps, MediaType } from "../../utils/types";
 import { Card, Tag, Text } from "@chakra-ui/react";
 import { Button } from "../Button/Button";
 import {
@@ -21,14 +21,18 @@ import { useIsInWatchList } from "../../utils/hooks/useIsInWatchList";
 import { enqueueToast } from "../../utils/helpers/enqueueToast";
 
 export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
-    const genreList = useContext(GenreListContext)[mediaType];
+    const genreContextData = useContext(GenreListContext);
+    const genreList = genreContextData[mediaType as MediaType];
     const { handleAddToWatchList } = useWatchListController();
 
     const mainGenre =
         mediaType === "Anime"
-            ? data?.genres?.[0]?.name
+            ? data?.genres?.filter(
+                  (genre): genre is { id: number; name: string } =>
+                      typeof genre !== "number",
+              )?.[0]?.name
             : genreList
-                  ?.filter((genre) => data?.genres?.includes(genre.id))
+                  ?.filter((genre) => data?.genres?.includes(genre.id ?? 0))
                   .map((genre) => genre.name)[0];
 
     const isInWatchList = useIsInWatchList(data);
@@ -76,8 +80,8 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                     <Link
                         to="/details/$mediaType/$id"
                         params={{
-                            mediaType: mediaType,
-                            id: data?.id,
+                            mediaType: mediaType as string,
+                            id: data?.id?.toString() ?? "",
                         }}
                     >
                         <Button
@@ -114,7 +118,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                                 }
                                 handleAddToWatchList({
                                     ...data,
-                                    mediaType,
+                                    mediaType: mediaType as MediaType,
                                 });
                             }}
                         >

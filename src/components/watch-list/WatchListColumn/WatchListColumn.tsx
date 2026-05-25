@@ -1,7 +1,4 @@
-import {
-    StyledCardWrapperContainer,
-    StyledTabContainer,
-} from "./WatchListColumn.styles";
+import { StyledTabContainer } from "./WatchListColumn.styles";
 import { EmptyState, Flex, Text } from "@chakra-ui/react";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
 import { WatchListCard } from "../WatchListCard/WatchListCard";

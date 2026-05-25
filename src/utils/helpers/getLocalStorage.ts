@@ -27,6 +27,7 @@ const useLocalStorageHelper = <TData>(key: string, initialValue?: TData) => {
 
     useEffect(() => {
         // Update the localStorage value whenever the storedValue changes
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setValue(storedValue);
     }, [key, setValue, storedValue]);
 

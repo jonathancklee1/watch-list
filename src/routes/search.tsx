@@ -7,7 +7,7 @@ import { SearchGrid } from "../components/search/SearchGrid/SearchGrid";
 import { useEffect, useState } from "react";
 import { useSearchMedia } from "../utils/data-hooks/useSearchMedia";
 import { SearchPagination } from "../components/search/SearchPagination/SearchPagination";
-import type { FilterCategories, MediaType } from "../utils/types";
+import type { MediaType } from "../utils/types";
 
 export const Route = createFileRoute("/search")({
     component: RouteComponent,
@@ -32,8 +32,9 @@ function RouteComponent() {
     const navigate = Route.useNavigate();
     const [searchTerm, setSearchTerm] = useState(search || "");
     const [page, setPage] = useState(pageParam);
-    const [selectedCategory, setSelectedCategory] =
-        useState<MediaType>(categoryParam);
+    const [selectedCategory, setSelectedCategory] = useState<MediaType>(
+        categoryParam as MediaType,
+    );
     const { data, isLoading } = useSearchMedia(
         selectedCategory,
         searchTerm,
@@ -44,10 +45,12 @@ function RouteComponent() {
     const pageSize = pageItemCount ?? 0;
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPage(pageParam);
     }, [pageParam]);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPage(1);
         navigate({
             search: (prev) => ({ ...prev, page: 1 }),
@@ -76,8 +79,6 @@ function RouteComponent() {
                     count={count}
                     pageSize={pageSize}
                     page={page}
-                    setPage={setPage}
-                    route={Route}
                 />
             )}
         </PageWrapper>

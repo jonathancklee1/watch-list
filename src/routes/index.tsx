@@ -9,6 +9,7 @@ import { useJikan } from "../utils/data-hooks/useJikan";
 
 import { TMDB_IMAGE_URL } from "../utils/constants";
 import { PageWrapper } from "./__root";
+import type { ApiAnimeData } from "../utils/types";
 
 export const Route = createFileRoute("/")({
     component: RouteComponent,
@@ -17,10 +18,12 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
     const { data: popularMovies } = usePopularMedia("movie");
     const { data: popularTVShows } = usePopularMedia("tv");
-    const { data: popularAnime } = useJikan("top/anime", { page: "1" });
+    const { data: popularAnime } = useJikan<ApiAnimeData>("top/anime", {
+        page: "1",
+    });
     type MovieType = (typeof popularMovies.results)[0];
     type ShowType = (typeof popularTVShows.results)[0];
-    type AnimeType = (typeof popularAnime.results)[0];
+    type AnimeType = (typeof popularAnime.data)[0];
     const popularMoviesArray =
         (popularMovies?.results &&
             popularMovies?.results

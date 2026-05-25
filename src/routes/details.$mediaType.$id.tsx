@@ -17,7 +17,10 @@ export const Route = createFileRoute("/details/$mediaType/$id")({
 });
 
 function MediaDetailsComponent() {
-    const { mediaType, id } = Route.useParams();
+    const { mediaType, id } = Route.useParams() as {
+        mediaType: Omit<MediaType, "anime">;
+        id: string;
+    };
     const { data, isLoading } = useMediaDetails(mediaType, id);
     const { data: animeDetail, isLoading: isAnimeLoading } =
         useDetailsAnime(id);
@@ -25,8 +28,7 @@ function MediaDetailsComponent() {
         useRecommendationsAnime(id);
     const { data: recommendations, isLoading: isRecMediaLoading } =
         useMediaRecommendations(mediaType, id);
-    // console.log(mediaType, id, "mediaType, id");
-
+    console.log(recommendations);
     const recommendationData =
         mediaType == "anime"
             ? animeRecommendations?.data
@@ -34,11 +36,21 @@ function MediaDetailsComponent() {
                       return {
                           id: rec.entry.mal_id,
                           title: rec.entry.title,
-                          images: rec.entry.images,
+                          images: {
+                              src: rec.entry.images.webp.image_url,
+                          },
                       };
                   })
                   .slice(0, 8)
-            : recommendations?.results?.slice(0, 8);
+            : recommendations?.results?.slice(0, 8).map((rec) => {
+                  return {
+                      id: rec?.id,
+                      title: rec?.title,
+                      images: {
+                          src: rec?.poster_path,
+                      },
+                  };
+              });
     const detailsData =
         mediaType === "anime"
             ? {

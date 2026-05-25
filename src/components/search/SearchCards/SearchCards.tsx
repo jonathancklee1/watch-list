@@ -1,4 +1,4 @@
-import type { CardProps } from "../../../utils/types";
+import type { CardProps, MediaType } from "../../../utils/types";
 import { Box, Skeleton } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../../components/ui/tooltip";
@@ -23,7 +23,8 @@ import { useIsInWatchList } from "../../../utils/hooks/useIsInWatchList";
 import { enqueueToast } from "../../../utils/helpers/enqueueToast";
 
 export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
-    const genreList = useContext(GenreListContext)[selectedCategory];
+    const genreContextData = useContext(GenreListContext);
+    const genreList = genreContextData[selectedCategory as MediaType];
     const mainGenre = genreList
         ?.filter((genre) => data?.genres?.includes(genre.id))
         .map((genre) => genre.name)[0];
@@ -35,8 +36,8 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
             <Link
                 to="/details/$mediaType/$id"
                 params={{
-                    mediaType: selectedCategory,
-                    id: data?.id,
+                    mediaType: selectedCategory ?? "movie",
+                    id: data?.id?.toString() ?? "",
                 }}
             >
                 <StyledImageWrapper>
@@ -130,7 +131,14 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
                                 "|" +
                                 " " +
                                 (mainGenre ??
-                                    data?.genres?.[0]?.name ??
+                                    data?.genres?.filter(
+                                        (
+                                            genre,
+                                        ): genre is {
+                                            id: number;
+                                            name: string;
+                                        } => typeof genre !== "number",
+                                    )?.[0]?.name ??
                                     "Unknown")
                             )}
                         </StyledDescription>

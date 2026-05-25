@@ -29,18 +29,20 @@ export function WatchListCard({
     watchStatus: WatchStatus;
     index: number;
     column: string;
-    id: string;
+    id?: number;
 }) {
-    const genreList = useContext(GenreListContext)[data.mediaType];
+    const genreList = useContext(GenreListContext)[data.mediaType ?? "movie"];
     const mainGenre =
         genreList?.find((genre) => genre.id == data.genres?.[0])?.name ??
-        data.genres?.[0].name;
+        data.genres?.filter(
+            (genre): genre is { id: number; name: string } =>
+                typeof genre !== "number",
+        )?.[0]?.name;
 
     const { handleMoveWatchList, handleDeleteFromWatchList } =
         useWatchListController();
-    console.log(id, index, column);
     const { ref, isDragging } = useSortable({
-        id,
+        id: id ?? 0,
         index,
         type: "card",
         group: column,
@@ -68,8 +70,8 @@ export function WatchListCard({
                     <Link
                         to="/details/$mediaType/$id"
                         params={{
-                            mediaType: data.mediaType,
-                            id: data.id,
+                            mediaType: data.mediaType ?? "movie",
+                            id: data.id?.toString() ?? "",
                         }}
                     >
                         <Text

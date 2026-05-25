@@ -9,7 +9,6 @@ export function SearchPagination({
     count,
     pageSize,
     page,
-    route,
 }: SearchPaginationProps) {
     const [isMobileState, setIsMobileState] = useState(isMobile());
     window.addEventListener("resize", () => {
@@ -30,7 +29,7 @@ export function SearchPagination({
             <ButtonGroup size="sm">
                 <Pagination.PrevTrigger asChild>
                     <Link
-                        from={route.fullPath}
+                        from={"/search"}
                         search={(old) => ({ ...old, page: page - 1 })}
                     >
                         <Button $secondary disabled={page === 1}>
@@ -44,7 +43,7 @@ export function SearchPagination({
                     <Pagination.Items
                         render={(pageItem) => (
                             <Link
-                                from={route.fullPath}
+                                from={"/search"}
                                 search={(old) => ({
                                     ...old,
                                     page: pageItem.value,
@@ -60,7 +59,7 @@ export function SearchPagination({
 
                 <Pagination.NextTrigger asChild>
                     <Link
-                        from={route.fullPath}
+                        from={"/search"}
                         search={(old) => ({ ...old, page: page + 1 })}
                     >
                         <Button $secondary disabled={page * pageSize >= count}>

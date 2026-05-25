@@ -33,17 +33,20 @@ export function DetailsContent({
             ) : (
                 <Flex gap={4} alignItems={"center"} flexWrap={"wrap"}>
                     {detailsData?.genres && detailsData?.genres?.length > 0 ? (
-                        detailsData?.genres?.map((genre) => (
-                            <Badge
-                                key={genre.id}
-                                width={"fit-content"}
-                                fontWeight={"bold"}
-                                p={".5em"}
-                                background={"var(--secondary-color)"}
-                            >
-                                {genre.name}
-                            </Badge>
-                        ))
+                        detailsData?.genres?.map((genre) => {
+                            if (typeof genre === "number") return null;
+                            return (
+                                <Badge
+                                    key={genre.id}
+                                    width={"fit-content"}
+                                    fontWeight={"bold"}
+                                    p={".5em"}
+                                    background={"var(--secondary-color)"}
+                                >
+                                    {genre.name}
+                                </Badge>
+                            );
+                        })
                     ) : (
                         <Text color={"var(--text--secondary-color)"}>
                             No Genres

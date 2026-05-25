@@ -4,16 +4,25 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../ui/tooltip";
 import { getPosterImage } from "../../../utils/helpers/getPosterImage";
-import type { CardType } from "../../../utils/types";
+import type {
+    CardType,
+    MediaType,
+    RecommendationData,
+} from "../../../utils/types";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { Link } from "@tanstack/react-router";
 import { enqueueToast } from "../../../utils/helpers/enqueueToast";
 import { useIsInWatchList } from "../../../utils/hooks/useIsInWatchList";
 
-export function RecommendationCard({ data, mediaType }: CardType) {
+export function RecommendationCard({
+    data,
+    mediaType,
+}: {
+    data: RecommendationData | CardType;
+    mediaType: MediaType;
+}) {
     const { handleAddToWatchList } = useWatchListController();
-
     const isInWatchList = useIsInWatchList(data);
 
     return (
@@ -21,7 +30,7 @@ export function RecommendationCard({ data, mediaType }: CardType) {
             to="/details/$mediaType/$id"
             params={{
                 mediaType: mediaType,
-                id: data?.id,
+                id: data?.id?.toString() ?? "",
             }}
         >
             <StyledCard
@@ -31,8 +40,9 @@ export function RecommendationCard({ data, mediaType }: CardType) {
             >
                 <StyledImage
                     src={
-                        data?.images?.webp.large_image_url ??
-                        getPosterImage(data?.poster_path)
+                        mediaType == "anime"
+                            ? data?.images?.src
+                            : getPosterImage(data?.images?.src ?? "")
                     }
                     alt={data.title}
                 />
@@ -46,7 +56,7 @@ export function RecommendationCard({ data, mediaType }: CardType) {
                 >
                     <Flex flexDirection={"column"} gap={".5em"}>
                         <Text fontWeight={800} lineClamp={2}>
-                            {data.title || data.name}
+                            {data.title || "-"}
                         </Text>
                         <Text
                             lineClamp={2}

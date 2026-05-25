@@ -25,7 +25,7 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
                 case "ADD":
                     return {
                         ...state,
-                        [action[1]]: [...state[action[1]], action[2]],
+                        [action[1]]: [...(state[action[1]] || []), action[2]],
                     };
 
                 case "REMOVE":
@@ -38,20 +38,24 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
 
                 case "MOVE": {
                     const [, item, sourceKey, targetKey, insertIndex] = action;
-                    const updatedSourceList = state[sourceKey].filter(
+                    const updatedSourceList = state[sourceKey]?.filter(
                         (i) => i.id !== item.id,
                     );
-                    const cleanTargetList = state[targetKey].filter(
+                    const cleanTargetList = state[targetKey]?.filter(
                         (i) => i.id !== item.id,
                     );
                     const updatedTargetList =
                         insertIndex !== undefined
                             ? [
-                                  ...cleanTargetList.slice(0, insertIndex),
+                                  cleanTargetList && {
+                                      ...cleanTargetList?.slice(0, insertIndex),
+                                  },
                                   item,
-                                  ...cleanTargetList.slice(insertIndex),
+                                  cleanTargetList && {
+                                      ...cleanTargetList?.slice(insertIndex),
+                                  },
                               ]
-                            : [...cleanTargetList, item];
+                            : [...(cleanTargetList || []), item];
 
                     return {
                         ...state,

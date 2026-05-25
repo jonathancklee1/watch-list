@@ -10,7 +10,7 @@ import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { MediaCard } from "../../MediaCard/MediaCard";
-import type { RecommendationData } from "../../../utils/types";
+import type { MediaType, RecommendationData } from "../../../utils/types";
 import { StyledHeadingWrapper } from "./SimilarRecommendations.styles";
 import { useState } from "react";
 import { RecommendationCard } from "../RecommendationCard/RecommendationCard";
@@ -20,7 +20,7 @@ export function SimilarRecommendations({
     isLoading,
 }: {
     recommendationData: RecommendationData[];
-    mediaType: string;
+    mediaType: MediaType | Omit<MediaType, "anime">;
     isLoading: boolean;
 }) {
     const [isMobileState, setIsMobileState] = useState(isMobile());

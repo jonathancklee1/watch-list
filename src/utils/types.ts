@@ -1,4 +1,3 @@
-import type { Route } from "@tanstack/react-router";
 import type { Dispatch, SetStateAction } from "react";
 
 export type StyledLinkProps = {
@@ -19,7 +18,7 @@ export type CardProps = {
     isLoading?: boolean;
     tagText?: string;
     selectedCategory?: MediaType;
-    mediaType: MediaType | string;
+    mediaType: MediaType | Omit<MediaType, "anime"> | string;
 };
 
 export interface ApiMovieData {
@@ -45,6 +44,7 @@ export interface ApiMovieData {
         webp: {
             large_image_url?: string;
         };
+        src?: string;
     };
     aired?: {
         from?: string;
@@ -59,6 +59,46 @@ export interface ApiMovieData {
     producers: { name: string }[];
     production_companies: { name: string; logo_path: string }[];
 }
+export interface ApiAnimeData {
+    data: {
+        id?: number;
+        mal_id?: number;
+        title?: string;
+        name?: string;
+        image?: string;
+        overview?: string;
+        release_date?: string;
+        poster_path?: string;
+        backdrop_path?: string;
+        vote_average?: number;
+        genre_ids?: number[];
+        title_english?: string;
+        first_air_date?: string;
+        number_of_episodes?: number;
+        number_of_seasons?: number;
+        runtime?: number;
+        synopsis?: string;
+        episodes?: number;
+        images?: {
+            webp: {
+                large_image_url?: string;
+            };
+        };
+        aired?: {
+            from?: string;
+        };
+        genres?: { id: number; name: string }[];
+        score: number;
+        homepage?: string;
+        trailer: {
+            embed_url?: string;
+        };
+        networks: Partial<Networks>[];
+        producers: { name: string }[];
+        production_companies: { name: string; logo_path: string }[];
+    }[];
+}
+
 interface Networks {
     id: number;
     logo_path: string;
@@ -66,15 +106,15 @@ interface Networks {
     origin_country: string;
     url: string;
 }
-export interface DetailsDataType extends CardType {
+export type DetailsDataType = CardType & {
     networks: Partial<Networks>[];
     producers: {
         name: string;
-        logo_path?: string; // The '?' makes this property optional
+        logo_path?: string;
     }[];
-}
+};
 export interface CardType {
-    id: number;
+    id?: number;
     title?: string;
     name?: string;
     image?: Image;
@@ -85,15 +125,13 @@ export interface CardType {
     description?: string;
     link?: string;
     rating?: number | string;
-    genres?: number[] | { id: number; name: string }[] | null;
+    genres?: ({ id: number; name: string } | number)[] | null;
     watchStatus?: WatchStatus;
     mediaType?: MediaType;
     episodes?: number | null;
     seasons?: number | null;
     runTime?: number | null;
     externalLink?: string | null;
-    networks?: Partial<Networks>[];
-    producers?: string[] | null;
 }
 
 export interface StyledButtonProps {
@@ -107,7 +145,6 @@ export type SearchPaginationProps = {
     count: number;
     pageSize: number;
     page: number;
-    route: Route;
 };
 
 export interface JikanSearchResponse {
@@ -119,14 +156,19 @@ export interface JikanSearchResponse {
     };
 }
 
-export interface GenreContextType {
-    movie: { id: number; name: string }[];
-    tv: { id: number; name: string }[];
-    anime: { mal_id: number; name: string; count: number; url: string }[];
-}
+export type GenreContextType = Record<
+    MediaType,
+    {
+        id?: number;
+        mal_id?: number;
+        name: string;
+        count: number;
+        url: string;
+    }[]
+>;
 
 export interface RecommendationData {
-    id: string;
+    id?: number;
     title: string;
     images: Image;
 }
@@ -175,6 +217,7 @@ export interface WatchListStatusType {
     toWatch: CardType[];
     watching: CardType[];
     completed: CardType[];
+    [key: string]: CardType[] | undefined;
 }
 
 export type WatchListContextType = {

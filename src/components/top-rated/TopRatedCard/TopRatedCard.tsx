@@ -30,7 +30,7 @@ export function TopRatedCard({
                 to="/details/$mediaType/$id"
                 params={{
                     mediaType: mediaType,
-                    id: data?.id,
+                    id: data?.id?.toString() || "",
                 }}
                 style={{
                     flexGrow: 1,
@@ -75,7 +75,7 @@ export function TopRatedCard({
                                     to="/details/$mediaType/$id"
                                     params={{
                                         mediaType: mediaType,
-                                        id: data?.id,
+                                        id: data?.id?.toString() || "",
                                     }}
                                 >
                                     <Button

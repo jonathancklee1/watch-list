@@ -5,13 +5,17 @@ import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { MediaCard } from "../../MediaCard/MediaCard";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { useState } from "react";
-import type { MediaType } from "../../../utils/types";
+import type {
+    ApiAnimeData,
+    ApiMovieData,
+    MediaType,
+} from "../../../utils/types";
 export function AiringNowSection({
     carouselData,
     isLoading,
     mediaType,
 }: {
-    carouselData: [];
+    carouselData: ApiMovieData[] | ApiAnimeData[];
     isLoading?: boolean;
     mediaType: MediaType;
 }) {

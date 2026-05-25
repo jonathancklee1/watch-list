@@ -50,7 +50,7 @@ export function SearchInput({
                 }
             >
                 <StyledInput
-                    placeholder={`Search ${mapMediaTypeToText(category) ?? ""}`}
+                    placeholder={`Search ${mapMediaTypeToText(category ?? "movie")}`}
                     w={"full"}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}

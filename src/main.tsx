@@ -8,17 +8,15 @@ import { Provider } from "./components/ui/provider";
 // Set up a Router instance
 const router = createRouter({
     routeTree,
-    defaultPreload: "intent", // Preloads data on link hover/focus
+    defaultPreload: "intent",
     defaultStaleTime: 5000,
 });
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GenreListProvider } from "./utils/contexts/useGenreListContext";
 import { WatchListProvider } from "./utils/contexts/useWatchListContext";
-import { AuthContext } from "./utils/contexts/AuthContext";
 import { AuthProvider } from "./utils/contexts/useAuthContext";
 
-// Register things for typesafety
 declare module "@tanstack/react-router" {
     interface Register {
         router: typeof router;
