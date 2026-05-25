@@ -55,8 +55,24 @@ export interface ApiMovieData {
     trailer: {
         embed_url?: string;
     };
+    networks: Partial<Networks>[];
+    producers: { name: string }[];
+    production_companies: { name: string; logo_path: string }[];
 }
-
+interface Networks {
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+    url: string;
+}
+export interface DetailsDataType extends CardType {
+    networks: Partial<Networks>[];
+    producers: {
+        name: string;
+        logo_path?: string; // The '?' makes this property optional
+    }[];
+}
 export interface CardType {
     id: number;
     title?: string;
@@ -76,6 +92,8 @@ export interface CardType {
     seasons?: number | null;
     runTime?: number | null;
     externalLink?: string | null;
+    networks?: Partial<Networks>[];
+    producers?: string[] | null;
 }
 
 export interface StyledButtonProps {

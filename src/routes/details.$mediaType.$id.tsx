@@ -40,7 +40,17 @@ function MediaDetailsComponent() {
                   .slice(0, 8)
             : recommendations?.results?.slice(0, 8);
     const detailsData =
-        mediaType === "anime" ? mapToCard(animeDetail?.data) : mapToCard(data);
+        mediaType === "anime"
+            ? {
+                  ...mapToCard(animeDetail?.data),
+                  networks: animeDetail?.data?.networks,
+                  producers: animeDetail?.data?.producers,
+              }
+            : {
+                  ...mapToCard(data),
+                  networks: data?.networks,
+                  producers: data?.production_companies,
+              };
 
     const contentLoading = mediaType === "anime" ? isAnimeLoading : isLoading;
     const recLoading =
