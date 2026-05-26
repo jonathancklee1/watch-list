@@ -9,6 +9,7 @@ import { GenreShowcaseSection } from "../components/genre-showcase/GenreShowcase
 import { useTopRatedMedia } from "../utils/data-hooks/useTopRatedMedia";
 import { useTopGenresMedia } from "../utils/data-hooks/useTopGenresMedia";
 import { GenreListContext } from "../utils/contexts/GenreListContext";
+import type { ApiData } from "../utils/types";
 
 export const Route = createFileRoute("/movie")({
     component: RouteComponent,
@@ -26,6 +27,7 @@ function RouteComponent() {
 
     const selectedGenres = useMemo(() => {
         if (!genreList || genreList.length === 0) return [];
+        // eslint-disable-next-line react-hooks/purity
         const shuffled = [...genreList].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, 3);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +37,10 @@ function RouteComponent() {
         () => selectedGenres.map((genre) => genre?.id?.toString() ?? ""),
         [selectedGenres],
     );
-    const topGenresMedia = useTopGenresMedia(genreIds, "movie");
+    const topGenresMedia = useTopGenresMedia(genreIds, "movie") as {
+        data: { results: ApiData[] } | null;
+        isLoading: boolean;
+    }[];
 
     return (
         <PageWrapper className="container">

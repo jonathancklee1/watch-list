@@ -15,8 +15,6 @@ export function WatchListColumn({
     name: string;
     id: WatchStatus;
 }) {
-    console.log(id);
-
     const { ref } = useDroppable({
         id,
         type: "column",

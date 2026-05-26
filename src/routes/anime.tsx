@@ -11,6 +11,7 @@ import { PageWrapper } from "./__root";
 
 import { useAiringNowAnime } from "../utils/data-hooks/useAiringNowAnime";
 import { GenreListContext } from "../utils/contexts/GenreListContext";
+import type { ApiData } from "../utils/types";
 
 export const Route = createFileRoute("/anime")({
     component: RouteComponent,
@@ -28,6 +29,7 @@ function RouteComponent() {
 
     const selectedGenres = useMemo(() => {
         if (!genreList || genreList.length === 0) return [];
+        // eslint-disable-next-line react-hooks/purity
         const shuffled = [...genreList].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, 3);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,7 +52,10 @@ function RouteComponent() {
         return () => clearTimeout(timeout);
     }, [selectedGenres]);
 
-    const topGenresMedia = useTopGenresAnime(delayedIds);
+    const topGenresMedia = useTopGenresAnime(delayedIds) as {
+        data: { data: ApiData[] } | null;
+        isLoading: boolean;
+    }[];
 
     return (
         <PageWrapper className="container">

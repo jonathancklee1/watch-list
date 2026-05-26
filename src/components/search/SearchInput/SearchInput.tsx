@@ -20,7 +20,6 @@ export function SearchInput({
 }) {
     const navigate = useNavigate();
     const [value, setValue] = useState(searchValue ?? "");
-    // console.log(value);
 
     const handleSearch = () => {
         if (value.trim()) {

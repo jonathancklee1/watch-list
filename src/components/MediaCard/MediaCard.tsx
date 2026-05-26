@@ -76,7 +76,13 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                         </StyledDescription>
                     )}
                 </Card.Body>
-                <Card.Footer gap="2" zIndex={10} mt={"1rem"} px={"1em"}>
+                <Card.Footer
+                    gap="2"
+                    zIndex={10}
+                    mt={"1rem"}
+                    px={"1em"}
+                    justifyContent={"space-between"}
+                >
                     <Link
                         to="/details/$mediaType/$id"
                         params={{
@@ -86,6 +92,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                     >
                         <Button
                             label={isLoading ? "Loading..." : "View Details"}
+                            $secondary
                             style={{
                                 flexGrow: 1,
                             }}
@@ -105,7 +112,6 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                             zIndex={2}
                             disabled={isLoading}
                             p={"1"}
-                            $secondary
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
@@ -124,7 +130,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                         >
                             {isInWatchList ? (
                                 <BiCheck
-                                    color="var(--text--primary-color)"
+                                    color="var(--success-color)"
                                     strokeWidth={"1.5"}
                                 />
                             ) : (

@@ -1,4 +1,5 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { DragOverEvent } from "@dnd-kit/react";
+import type { Dispatch } from "react";
 
 export type StyledLinkProps = {
     $isLogo?: boolean;
@@ -21,7 +22,12 @@ export type CardProps = {
     mediaType: MediaType | Omit<MediaType, "anime"> | string;
 };
 
-export interface ApiMovieData {
+export type ApiMovieData = ApiData;
+export interface ApiAnimeData {
+    data: ApiData[];
+}
+
+export interface ApiData {
     id?: number;
     mal_id?: number;
     title?: string;
@@ -40,63 +46,36 @@ export interface ApiMovieData {
     runtime?: number;
     synopsis?: string;
     episodes?: number;
-    images?: {
-        webp: {
-            large_image_url?: string;
-        };
-        src?: string;
-    };
+    images?:
+        | {
+              webp: {
+                  large_image_url?: string;
+              };
+          }
+        | Image;
     aired?: {
         from?: string;
     };
     genres?: { id: number; name: string }[];
     score: number;
     homepage?: string;
-    trailer: {
+    trailer?: {
         embed_url?: string;
     };
-    networks: Partial<Networks>[];
-    producers: { name: string }[];
-    production_companies: { name: string; logo_path: string }[];
+    networks?: Partial<Networks>[];
+    producers?: { name: string }[];
+    production_companies?: { name: string; logo_path?: string }[];
 }
-export interface ApiAnimeData {
-    data: {
-        id?: number;
-        mal_id?: number;
-        title?: string;
-        name?: string;
-        image?: string;
-        overview?: string;
-        release_date?: string;
-        poster_path?: string;
-        backdrop_path?: string;
-        vote_average?: number;
-        genre_ids?: number[];
-        title_english?: string;
-        first_air_date?: string;
-        number_of_episodes?: number;
-        number_of_seasons?: number;
-        runtime?: number;
-        synopsis?: string;
-        episodes?: number;
-        images?: {
-            webp: {
-                large_image_url?: string;
-            };
+export interface AnimeRecommendationItem {
+    mal_id: number;
+    title: string;
+    url: string;
+    votes: number;
+    images?: {
+        webp: {
+            image_url?: string;
         };
-        aired?: {
-            from?: string;
-        };
-        genres?: { id: number; name: string }[];
-        score: number;
-        homepage?: string;
-        trailer: {
-            embed_url?: string;
-        };
-        networks: Partial<Networks>[];
-        producers: { name: string }[];
-        production_companies: { name: string; logo_path: string }[];
-    }[];
+    };
 }
 
 interface Networks {
@@ -161,9 +140,9 @@ export type GenreContextType = Record<
     {
         id?: number;
         mal_id?: number;
-        name: string;
-        count: number;
-        url: string;
+        name?: string;
+        count?: number;
+        url?: string;
     }[]
 >;
 
@@ -171,6 +150,7 @@ export interface RecommendationData {
     id?: number;
     title: string;
     images: Image;
+    airDate?: string;
 }
 
 export type DetailDataType = {
@@ -213,22 +193,24 @@ export type DetailDataType = {
 
 export type WatchStatus = "toWatch" | "watching" | "completed";
 
-export interface WatchListStatusType {
-    toWatch: CardType[];
-    watching: CardType[];
-    completed: CardType[];
-    [key: string]: CardType[] | undefined;
-}
+export type WatchListStatusType = Record<WatchStatus, CardType[]>;
 
 export type WatchListContextType = {
     watchListState: WatchListStatusType;
-    dispatch: Dispatch<SetStateAction<WatchListAction>>;
+    dispatch: Dispatch<WatchListAction>;
 };
 
 // Strict tuple definitions for each action type
 export type AddAction = ["ADD", "toWatch", CardType];
 export type RemoveAction = ["REMOVE", CardType, WatchStatus];
 export type MoveAction = ["MOVE", CardType, WatchStatus, WatchStatus, number?];
+export type DragAction = ["DRAG", DragOverEvent];
+export type SetListAction = ["SET_LIST", WatchListStatusType];
 
 // Unified Discriminated Union type for your dispatch function
-export type WatchListAction = AddAction | RemoveAction | MoveAction;
+export type WatchListAction =
+    | AddAction
+    | RemoveAction
+    | MoveAction
+    | DragAction
+    | SetListAction;

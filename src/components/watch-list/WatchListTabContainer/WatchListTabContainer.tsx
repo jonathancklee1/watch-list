@@ -8,6 +8,7 @@ import { WatchListContext } from "../../../utils/contexts/WatchListContext";
 import { WatchListColumn } from "../WatchListColumn/WatchListColumn";
 import { DragDropProvider } from "@dnd-kit/react";
 
+import type { UniqueIdentifier } from "@dnd-kit/abstract";
 import { move } from "@dnd-kit/helpers";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 import { AuthContext } from "../../../utils/contexts/AuthContext";
@@ -27,7 +28,7 @@ export function WatchListTabContainer() {
         }
     });
 
-    const WATCHLIST_COLUMNS = [
+    const WATCHLIST_COLUMNS: { name: string; id: WatchStatus }[] = [
         {
             name: "To Watch",
             id: "toWatch",
@@ -98,14 +99,28 @@ export function WatchListTabContainer() {
                     await supabase.from("User Watch List").upsert(
                         {
                             user_id: user.id,
-                            watch_list: move(watchListState, event),
+                            watch_list: move(
+                                watchListState as Record<
+                                    UniqueIdentifier,
+                                    { id: UniqueIdentifier }[]
+                                >,
+                                event,
+                            ),
                         },
                         { onConflict: "user_id" },
                     );
                 } else {
                     window.localStorage.setItem(
                         "watchList",
-                        JSON.stringify(move(watchListState, event)),
+                        JSON.stringify(
+                            move(
+                                watchListState as Record<
+                                    UniqueIdentifier,
+                                    { id: UniqueIdentifier }[]
+                                >,
+                                event,
+                            ),
+                        ),
                     );
                 }
             }}

@@ -11,7 +11,12 @@ export function SearchTermText({
         <StyledDiv>
             <Text fontSize=".75rem" color="var(--text--tertiary-color)">
                 FOUND{" "}
-                <span style={{ color: "var(--text--secondary-color)" }}>
+                <span
+                    style={{
+                        color: "var(--text--secondary-color)",
+                        fontWeight: "bold",
+                    }}
+                >
                     {resultsNumber ?? 0}
                 </span>{" "}
                 SEARCH RESULTS FOR

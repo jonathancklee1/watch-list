@@ -14,7 +14,7 @@ export function GenreShowcaseSection({
 }: {
     carouselData: ApiMovieData[];
     isLoading?: boolean;
-    genreName: string;
+    genreName?: string;
     mediaType: MediaType;
 }) {
     const [mobileSlidesNumber, setMobileSlidesNumber] = useState(
@@ -51,11 +51,10 @@ export function GenreShowcaseSection({
                 <CardCarousel
                     slidesPerPage={mobileSlidesNumber}
                     items={carouselData?.map((item) => {
-                        const { overview, ...newItem } = item;
                         return (
                             <MediaCard
                                 key={item?.id}
-                                data={mapToCard(newItem)}
+                                data={mapToCard(item)}
                                 isLoading={isLoading}
                                 mediaType={mediaType}
                             />

@@ -5,17 +5,20 @@ export function mapToCard<TData extends ApiMovieData>(
     mediaType?: MediaType,
 ): CardType | null {
     if (!data) return null;
+    const imageSrc = data.poster_path
+        ? getPosterImage(data.poster_path)
+        : data.images && "src" in data.images && data.images.src
+          ? data.images.src
+          : data.images && "webp" in data.images
+            ? (data.images.webp?.large_image_url ?? "")
+            : "";
+
     return {
         id: data.id || data.mal_id || 0,
         title: data.title_english || data.title || data.name,
         image: {
-            src: data.poster_path
-                ? getPosterImage(data.poster_path)
-                : data?.images?.webp?.large_image_url
-                  ? data.images.webp.large_image_url
-                  : data?.images?.src || "",
-
-            alt: data.title,
+            src: imageSrc,
+            alt: data.title || data.name || "",
         },
         backdrop: getPosterImage(data.backdrop_path || ""),
         description: data.overview || data.synopsis,

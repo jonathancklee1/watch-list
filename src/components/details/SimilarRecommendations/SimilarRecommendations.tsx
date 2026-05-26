@@ -19,7 +19,7 @@ export function SimilarRecommendations({
     mediaType,
     isLoading,
 }: {
-    recommendationData: RecommendationData[];
+    recommendationData?: RecommendationData[];
     mediaType: MediaType | Omit<MediaType, "anime">;
     isLoading: boolean;
 }) {
@@ -63,17 +63,18 @@ export function SimilarRecommendations({
                         )}
                         <CardCarousel
                             slidesPerPage={1.5}
-                            items={recommendationData?.map((item) => {
-                                const { overview, ...newItem } = item;
-                                return (
-                                    <MediaCard
-                                        key={item?.id}
-                                        data={mapToCard(newItem)}
-                                        isLoading={false}
-                                        mediaType={mediaType}
-                                    />
-                                );
-                            })}
+                            items={
+                                recommendationData?.map((item) => {
+                                    return (
+                                        <MediaCard
+                                            key={item?.id}
+                                            data={mapToCard(item)}
+                                            isLoading={false}
+                                            mediaType={mediaType}
+                                        />
+                                    );
+                                }) ?? []
+                            }
                             enableControls
                         />
                     </Box>

@@ -8,7 +8,12 @@ import { useRecommendationsAnime } from "../utils/data-hooks/useRecommendationsA
 import { DetailsBanner } from "../components/details/DetailsBanner/DetailsBanner";
 import { DetailsContent } from "../components/details/DetailsContent/DetailsContent";
 import { SimilarRecommendations } from "../components/details/SimilarRecommendations/SimilarRecommendations";
-import type { MediaType } from "../utils/types";
+import type {
+    AnimeRecommendationItem,
+    ApiData,
+    ApiMovieData,
+    MediaType,
+} from "../utils/types";
 import { mapToCard } from "../utils/helpers/mapToCard";
 
 export const Route = createFileRoute("/details/$mediaType/$id")({
@@ -22,12 +27,25 @@ function MediaDetailsComponent() {
         id: string;
     };
     const { data, isLoading } = useMediaDetails(mediaType, id);
-    const { data: animeDetail, isLoading: isAnimeLoading } =
-        useDetailsAnime(id);
+    const { data: animeDetail, isLoading: isAnimeLoading } = useDetailsAnime(
+        id,
+    ) as {
+        data: {
+            data: ApiData;
+        };
+
+        isLoading: boolean;
+    };
     const { data: animeRecommendations, isLoading: isAnimeRecLoading } =
-        useRecommendationsAnime(id);
+        useRecommendationsAnime(id) as {
+            data: { data: { entry: AnimeRecommendationItem }[] } | null;
+            isLoading: boolean;
+        };
     const { data: recommendations, isLoading: isRecMediaLoading } =
-        useMediaRecommendations(mediaType, id);
+        useMediaRecommendations(mediaType, id) as {
+            data: { results: ApiMovieData[] } | null;
+            isLoading: boolean;
+        };
     console.log(recommendations);
     const recommendationData =
         mediaType == "anime"
@@ -37,7 +55,7 @@ function MediaDetailsComponent() {
                           id: rec.entry.mal_id,
                           title: rec.entry.title,
                           images: {
-                              src: rec.entry.images.webp.image_url,
+                              src: rec.entry.images?.webp.image_url,
                           },
                       };
                   })
@@ -45,10 +63,11 @@ function MediaDetailsComponent() {
             : recommendations?.results?.slice(0, 8).map((rec) => {
                   return {
                       id: rec?.id,
-                      title: rec?.title,
+                      title: rec?.title ?? rec?.name ?? "",
                       images: {
                           src: rec?.poster_path,
                       },
+                      airDate: rec?.first_air_date,
                   };
               });
     const detailsData =

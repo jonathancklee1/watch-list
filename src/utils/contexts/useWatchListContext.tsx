@@ -1,6 +1,7 @@
 import { useContext, useEffect, useReducer } from "react";
 import { WatchListContext } from "./WatchListContext";
-import type { WatchListStatusType } from "../types";
+import type { WatchListAction, WatchListStatusType } from "../types";
+import type { UniqueIdentifier } from "@dnd-kit/abstract";
 import { move } from "@dnd-kit/helpers";
 import { AuthContext } from "./AuthContext";
 import { supabase } from "../helpers/supabase";
@@ -17,7 +18,7 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
     const { user } = useContext(AuthContext);
 
     const [watchListState, dispatch] = useReducer(
-        (state: WatchListStatusType, action) => {
+        (state: WatchListStatusType, action: WatchListAction) => {
             switch (action[0]) {
                 case "SET_LIST":
                     return action[1] || emptyDefaultState;
@@ -68,7 +69,13 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
                     if (!event) return state;
                     return {
                         ...state,
-                        ...move(state, event),
+                        ...move(
+                            state as Record<
+                                UniqueIdentifier,
+                                { id: UniqueIdentifier }[]
+                            >,
+                            event,
+                        ),
                     };
                 }
 

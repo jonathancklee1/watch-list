@@ -4,11 +4,7 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { Button } from "../../Button/Button";
 import { Tooltip } from "../../ui/tooltip";
 import { getPosterImage } from "../../../utils/helpers/getPosterImage";
-import type {
-    CardType,
-    MediaType,
-    RecommendationData,
-} from "../../../utils/types";
+import type { MediaType, RecommendationData } from "../../../utils/types";
 import { useWatchListController } from "../../../utils/controllers/useWatchListController";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { Link } from "@tanstack/react-router";
@@ -19,8 +15,8 @@ export function RecommendationCard({
     data,
     mediaType,
 }: {
-    data: RecommendationData | CardType;
-    mediaType: MediaType;
+    data: RecommendationData;
+    mediaType: MediaType | Omit<MediaType, "anime">;
 }) {
     const { handleAddToWatchList } = useWatchListController();
     const isInWatchList = useIsInWatchList(data);
@@ -29,7 +25,7 @@ export function RecommendationCard({
         <Link
             to="/details/$mediaType/$id"
             params={{
-                mediaType: mediaType,
+                mediaType: mediaType.toString(),
                 id: data?.id?.toString() ?? "",
             }}
         >
@@ -63,11 +59,7 @@ export function RecommendationCard({
                             color={"var(--text--secondary-color)"}
                             fontSize={"1rem"}
                         >
-                            {
-                                (
-                                    data.release_date || data.first_air_date
-                                )?.split("-")[0]
-                            }
+                            {data.airDate?.split("-")[0]}
                         </Text>
                     </Flex>
                 </Flex>
@@ -85,7 +77,6 @@ export function RecommendationCard({
                             label={"Add"}
                             zIndex={2}
                             p={"1"}
-                            $secondary
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
@@ -96,15 +87,12 @@ export function RecommendationCard({
                                     );
                                     return;
                                 }
-                                handleAddToWatchList({
-                                    ...mapToCard(data),
-                                    mediaType,
-                                });
+                                handleAddToWatchList(mapToCard(data)!);
                             }}
                         >
                             {isInWatchList ? (
                                 <BiCheck
-                                    color="var(--text--primary-color)"
+                                    color="var(--success-color)"
                                     strokeWidth={"1.5"}
                                 />
                             ) : (

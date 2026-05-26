@@ -32,6 +32,7 @@ export function WatchListCard({
     id?: number;
 }) {
     const genreList = useContext(GenreListContext)[data.mediaType ?? "movie"];
+    console.log(data, "data in card");
     const mainGenre =
         genreList?.find((genre) => genre.id == data.genres?.[0])?.name ??
         data.genres?.filter(
@@ -56,7 +57,11 @@ export function WatchListCard({
             data-dragging={isDragging}
         >
             <StyledImage
-                src={data?.image?.src ?? getPosterImage(data?.image?.src ?? "")}
+                src={
+                    data.mediaType == "anime"
+                        ? data.image?.src
+                        : getPosterImage(data?.image?.src ?? "")
+                }
                 alt={data.title}
             />
             <Flex
@@ -151,7 +156,6 @@ export function WatchListCard({
                                                 >
                                                     <BiNotepad size={20} />
                                                     Move to To Watch
-                                                    {/* Add icon here */}
                                                 </Button>
                                             )}
                                             {watchStatus !== "watching" && (

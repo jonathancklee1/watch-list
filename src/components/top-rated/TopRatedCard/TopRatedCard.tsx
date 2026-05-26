@@ -69,7 +69,11 @@ export function TopRatedCard({
                             {data?.title}
                         </Card.Title>
 
-                        <Card.Footer p={0} gap={".75em"}>
+                        <Card.Footer
+                            p={0}
+                            gap={".75em"}
+                            justifyContent={"space-between"}
+                        >
                             {isFirst && (
                                 <Link
                                     to="/details/$mediaType/$id"
@@ -79,6 +83,7 @@ export function TopRatedCard({
                                     }}
                                 >
                                     <Button
+                                        $secondary
                                         label={
                                             isLoading
                                                 ? "Loading..."
@@ -104,7 +109,6 @@ export function TopRatedCard({
                                     zIndex={10}
                                     disabled={isLoading}
                                     p={"1"}
-                                    $secondary
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -123,7 +127,7 @@ export function TopRatedCard({
                                 >
                                     {isInWatchList ? (
                                         <BiCheck
-                                            color="var(--text--primary-color)"
+                                            color="var(--success-color)"
                                             strokeWidth={"1.5"}
                                         />
                                     ) : (

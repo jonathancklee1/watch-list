@@ -26,7 +26,7 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
     const genreContextData = useContext(GenreListContext);
     const genreList = genreContextData[selectedCategory as MediaType];
     const mainGenre = genreList
-        ?.filter((genre) => data?.genres?.includes(genre.id))
+        ?.filter((genre) => data?.genres?.includes(genre.id ?? 0))
         .map((genre) => genre.name)[0];
     const { handleAddToWatchList } = useWatchListController();
     const isInWatchList = useIsInWatchList(data);
@@ -76,7 +76,7 @@ export function SearchCards({ data, isLoading, selectedCategory }: CardProps) {
                         >
                             {isInWatchList ? (
                                 <BiCheck
-                                    color="var(--text--primary-color)"
+                                    color="var(--success-color)"
                                     strokeWidth={"1.5"}
                                 />
                             ) : (

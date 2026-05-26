@@ -12,7 +12,7 @@ function HomeHeroBanner({ category }: HomeHeroBannerType) {
             {/* Animate the "watch" so that it typewrites out Movie, Anime, Show" */}
             <StyledHeading>
                 <span>Discover </span>
-                {mapMediaTypeToText(category) ?? "Your Next Watch"}
+                {category ? mapMediaTypeToText(category) : "Your Next Watch"}
             </StyledHeading>
             <SearchInput
                 category={category}

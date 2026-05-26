@@ -6,12 +6,16 @@ import { isMobile } from "../../../utils/helpers/isMobile";
 import { Grid } from "@chakra-ui/react";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { useTrendingAnime } from "../../../utils/data-hooks/useTrendingAnime";
+import type { ApiAnimeData } from "../../../utils/types";
 
 export function HomeBannerPicks() {
     const [isMobileState, setIsMobileState] = useState(isMobile());
     const { data: trendingMovies, isLoading } = useTrendingMedia("movie");
     const { data: trendingShows } = useTrendingMedia("tv");
-    const { data: trendingAnime } = useTrendingAnime();
+    const { data: trendingAnime } = useTrendingAnime() as {
+        data: ApiAnimeData;
+        isLoading: boolean;
+    };
     const trendingArray = [
         trendingMovies?.results[0],
         trendingShows?.results[0],
