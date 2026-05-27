@@ -66,16 +66,31 @@ export function WatchListTabContainer() {
                         textWrap={"nowrap"}
                     >
                         {state.value === "toWatch" && (
-                            <BiNotepad size={20} style={{ flexShrink: 0 }} />
+                            <BiNotepad
+                                size={20}
+                                style={{
+                                    flexShrink: 0,
+                                    color: "var(--primary-color)",
+                                }}
+                            />
                         )}
                         {state.value === "watching" && (
                             <BiSolidBinoculars
                                 size={20}
-                                style={{ flexShrink: 0 }}
+                                style={{
+                                    flexShrink: 0,
+                                    color: "var(--primary-color)",
+                                }}
                             />
                         )}
                         {state.value === "completed" && (
-                            <BiCheck size={20} style={{ flexShrink: 0 }} />
+                            <BiCheck
+                                size={20}
+                                style={{
+                                    flexShrink: 0,
+                                    color: "var(--primary-color)",
+                                }}
+                            />
                         )}
                         {state.name}
                     </Tabs.Trigger>

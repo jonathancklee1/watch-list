@@ -59,7 +59,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                 >
                     {tagText && (
                         <StyledTag>
-                            <Tag.Label>{tagText}</Tag.Label>
+                            <Tag.Label fontSize={".75rem"}>{tagText}</Tag.Label>
                         </StyledTag>
                     )}
                     <StyledTitle>

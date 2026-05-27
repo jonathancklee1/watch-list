@@ -27,11 +27,11 @@ export function WatchListColumn({
             {/* Header Content */}
             <Flex alignItems={"center"} gap={".5em"} mb="1em">
                 {id === "completed" ? (
-                    <BiCheck size={20} />
+                    <BiCheck size={20} color="var(--primary-color)" />
                 ) : id === "toWatch" ? (
-                    <BiSolidBinoculars size={20} />
+                    <BiSolidBinoculars size={20} color="var(--primary-color)" />
                 ) : (
-                    <BiNotepad size={20} />
+                    <BiNotepad size={20} color="var(--primary-color)" />
                 )}
 
                 <Text fontWeight={"bold"} textTransform={"uppercase"}>

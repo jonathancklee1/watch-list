@@ -12,7 +12,7 @@
     --background--primary-color: #0f0f0f;
     --background--primary-color-80: #0f0f0f80;
     --background--secondary-color: #1c1b1b;
-    --text--primary-color: #f3f0ef;
+    --text--primary-color: #ffffff;
     --text--secondary-color: #feb47b;
     --text--tertiary-color: #929090;
     --button--primary-color: #fc6500;
@@ -26,10 +26,20 @@
         var(--gradient-start) 0%,
         var(--gradient-end) 100%
     );
+    --gradient--primary-card: linear-gradient(
+        90deg,
+        var(--gradient-start) 0%,
+        var(--gradient-end) 100%
+    );
 }
 body {
     font-family: "Oswald", sans-serif;
-    background-color: var(--background--primary-color);
+    background: #854222;
+    background: radial-gradient(
+        circle,
+        rgb(3, 9, 44) 0%,
+        rgba(15, 15, 15, 1) 100%
+    );
     color: var(--text--primary-color);
 
     ::-webkit-scrollbar {

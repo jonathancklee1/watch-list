@@ -7,6 +7,8 @@ import { Grid } from "@chakra-ui/react";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { useTrendingAnime } from "../../../utils/data-hooks/useTrendingAnime";
 import type { ApiAnimeData, MediaType } from "../../../utils/types";
+import { m, motion } from "motion/react";
+import FadeInUpComponent from "../../FadeInUpComponent";
 
 export function HomeBannerPicks() {
     const [isMobileState, setIsMobileState] = useState(isMobile());
@@ -36,7 +38,7 @@ export function HomeBannerPicks() {
         };
     }, []);
     return (
-        <>
+        <FadeInUpComponent>
             {isMobileState ? (
                 <CardCarousel
                     slidesPerPage={mobileSlidesNumber}
@@ -74,6 +76,6 @@ export function HomeBannerPicks() {
                     ))}
                 </Grid>
             )}
-        </>
+        </FadeInUpComponent>
     );
 }

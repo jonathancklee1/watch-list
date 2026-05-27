@@ -10,6 +10,7 @@ import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { useEffect, useState, type JSX } from "react";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapMediaTypeToText } from "../../../utils/helpers/mapMediaTypeToText";
+import FadeInUpComponent from "../../FadeInUpComponent";
 
 export function PopularMediaRow({
     mediaType,
@@ -37,34 +38,36 @@ export function PopularMediaRow({
         };
     }, []);
     return (
-        <StyledRowWrapper>
-            <StyledRowHeaderWrapper>
-                <Text fontSize="1.5rem" fontWeight={"bold"}>
-                    Popular {mapMediaTypeToText(mediaType)}
-                </Text>
-                <Link
-                    label="View all"
-                    href={`/${mediaType}`}
-                    icon={<BiChevronRight />}
+        <FadeInUpComponent>
+            <StyledRowWrapper>
+                <StyledRowHeaderWrapper>
+                    <Text fontSize="1.5rem" fontWeight={"bold"}>
+                        Popular {mapMediaTypeToText(mediaType)}
+                    </Text>
+                    <Link
+                        label="View all"
+                        href={`/${mediaType}`}
+                        icon={<BiChevronRight />}
+                    />
+                </StyledRowHeaderWrapper>
+                {items.length === 0 && (
+                    <Text
+                        fontSize={"1rem"}
+                        color={"var(--text--secondary-color)"}
+                        text-align={"center"}
+                        fontWeight={"bold"}
+                        mx="auto"
+                        my="4"
+                    >
+                        No popular {mediaType} available.
+                    </Text>
+                )}
+                <CardCarousel
+                    items={items}
+                    slidesPerPage={visibleSlidesNumber}
+                    enableControls
                 />
-            </StyledRowHeaderWrapper>
-            {items.length === 0 && (
-                <Text
-                    fontSize={"1rem"}
-                    color={"var(--text--secondary-color)"}
-                    text-align={"center"}
-                    fontWeight={"bold"}
-                    mx="auto"
-                    my="4"
-                >
-                    No popular {mediaType} available.
-                </Text>
-            )}
-            <CardCarousel
-                items={items}
-                slidesPerPage={visibleSlidesNumber}
-                enableControls
-            />
-        </StyledRowWrapper>
+            </StyledRowWrapper>
+        </FadeInUpComponent>
     );
 }

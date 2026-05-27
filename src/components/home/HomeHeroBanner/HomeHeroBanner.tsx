@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { StyledHeading, StyledHomeHeroBanner } from "./HomeHeroBanner.styles";
 import { mapMediaTypeToText } from "../../../utils/helpers/mapMediaTypeToText";
+import FadeInUpComponent from "../../FadeInUpComponent";
 
 function HomeHeroBanner({ category }: HomeHeroBannerType) {
     const [searchValue, setSearchValue] = useState("");
@@ -12,11 +13,13 @@ function HomeHeroBanner({ category }: HomeHeroBannerType) {
             {/* Animate the "watch" so that it typewrites out Movie, Anime, Show" */}
             <StyledHeading>
                 <span>Discover </span>
-                <span>
-                    {category
-                        ? mapMediaTypeToText(category)
-                        : "Your Next Watch"}
-                </span>
+                <FadeInUpComponent style={{ display: "inline" }}>
+                    <span>
+                        {category
+                            ? mapMediaTypeToText(category)
+                            : "Your Next Watch"}
+                    </span>
+                </FadeInUpComponent>
             </StyledHeading>
             <SearchInput
                 category={category}

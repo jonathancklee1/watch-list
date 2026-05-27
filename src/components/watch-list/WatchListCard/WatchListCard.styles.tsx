@@ -6,8 +6,13 @@ export const StyledCard = styled(Box)`
     gap: 1rem;
     align-items: stretch;
     padding: 0.75rem;
-    background-color: var(--background--primary-color-80);
+    background: linear-gradient(
+        90deg,
+        var(--background--primary-color-80) 0%,
+        var(--secondary-color) 200%
+    );
     border-radius: 15px;
+    border: 1px solid var(--text--secondary-color);
     cursor: grab;
 `;
 export const StyledImage = styled(Image)`

@@ -49,12 +49,7 @@ export function WatchListCard({
     });
 
     return (
-        <StyledCard
-            ref={ref}
-            className="glass"
-            background={"var(--background--primary-color)"}
-            data-dragging={isDragging}
-        >
+        <StyledCard ref={ref} data-dragging={isDragging}>
             <StyledImage
                 src={
                     data.mediaType == "anime"

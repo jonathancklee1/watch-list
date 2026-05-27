@@ -26,7 +26,7 @@ export const StyledHeading = styled(Heading)`
     span {
         color: var(--text--primary-color);
     }
-    & > span:not(:first-child) {
+    & > *:not(:first-child) {
         background: linear-gradient(
             135deg,
             var(--primary-color),

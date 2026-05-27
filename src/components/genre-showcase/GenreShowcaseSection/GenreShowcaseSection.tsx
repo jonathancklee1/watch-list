@@ -6,6 +6,7 @@ import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { MediaCard } from "../../MediaCard/MediaCard";
 import { StyledDiv } from "./GenreShowcaseSection.styles";
 import type { ApiMovieData, MediaType } from "../../../utils/types";
+import FadeInUpComponent from "../../FadeInUpComponent";
 export function GenreShowcaseSection({
     carouselData,
     isLoading,
@@ -36,41 +37,43 @@ export function GenreShowcaseSection({
         };
     }, []);
     return (
-        <StyledDiv>
-            <Flex gap="4" alignItems={"center"} width={"100%"} mb={"1em"}>
-                <Heading
-                    as={"h2"}
-                    fontSize={"1.5rem"}
-                    color={"var(--text--primary-color)"}
-                    whiteSpace={"nowrap"}
-                >
-                    {genreName}
-                </Heading>
-                <Separator
-                    variant="solid"
-                    width={"100%"}
-                    borderColor={"var(--secondary-color)"}
-                />
-            </Flex>
-            {isLoading ? (
-                <Spinner size="sm" mx={"auto"} />
-            ) : (
-                <CardCarousel
-                    slidesPerPage={mobileSlidesNumber}
-                    items={carouselData?.map((item) => {
-                        return (
-                            <MediaCard
-                                key={item?.id}
-                                data={mapToCard(item)}
-                                isLoading={isLoading}
-                                mediaType={mediaType}
-                            />
-                        );
-                    })}
-                    enableControls
-                />
-            )}
-        </StyledDiv>
+        <FadeInUpComponent>
+            <StyledDiv>
+                <Flex gap="4" alignItems={"center"} width={"100%"} mb={"1em"}>
+                    <Heading
+                        as={"h2"}
+                        fontSize={"1.5rem"}
+                        color={"var(--text--primary-color)"}
+                        whiteSpace={"nowrap"}
+                    >
+                        {genreName}
+                    </Heading>
+                    <Separator
+                        variant="solid"
+                        width={"100%"}
+                        borderColor={"var(--secondary-color)"}
+                    />
+                </Flex>
+                {isLoading ? (
+                    <Spinner size="sm" mx={"auto"} />
+                ) : (
+                    <CardCarousel
+                        slidesPerPage={mobileSlidesNumber}
+                        items={carouselData?.map((item) => {
+                            return (
+                                <MediaCard
+                                    key={item?.id}
+                                    data={mapToCard(item)}
+                                    isLoading={isLoading}
+                                    mediaType={mediaType}
+                                />
+                            );
+                        })}
+                        enableControls
+                    />
+                )}
+            </StyledDiv>
+        </FadeInUpComponent>
     );
 }
 
