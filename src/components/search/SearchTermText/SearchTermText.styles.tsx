@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const StyledSearchHeading = styled(Text)`
     font-size: 2rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: var(--secondary-color);
     span {
         color: var(--text-color);
     }

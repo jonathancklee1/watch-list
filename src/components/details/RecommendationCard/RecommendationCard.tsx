@@ -92,7 +92,7 @@ export function RecommendationCard({
                         >
                             {isInWatchList ? (
                                 <BiCheck
-                                    color="var(--success-color)"
+                                    color="var(--text--primary-color)"
                                     strokeWidth={"1.5"}
                                 />
                             ) : (

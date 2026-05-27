@@ -3,7 +3,7 @@ import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import type { SearchPaginationProps } from "../../../utils/types";
 import { Button } from "../../Button/Button";
 import { isMobile } from "../../../utils/helpers/isMobile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 export function SearchPagination({
     count,
@@ -11,13 +11,21 @@ export function SearchPagination({
     page,
 }: SearchPaginationProps) {
     const [isMobileState, setIsMobileState] = useState(isMobile());
-    window.addEventListener("resize", () => {
-        if (isMobile()) {
-            setIsMobileState(true);
-        } else {
-            setIsMobileState(false);
-        }
-    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (isMobile()) {
+                setIsMobileState(true);
+            } else {
+                setIsMobileState(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     return (
         <Pagination.Root
             count={count}

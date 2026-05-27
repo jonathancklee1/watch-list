@@ -32,7 +32,6 @@ export function WatchListCard({
     id?: number;
 }) {
     const genreList = useContext(GenreListContext)[data.mediaType ?? "movie"];
-    console.log(data, "data in card");
     const mainGenre =
         genreList?.find((genre) => genre.id == data.genres?.[0])?.name ??
         data.genres?.filter(

@@ -12,7 +12,7 @@ import { CardCarousel } from "../../CardCarousel/CardCarousel";
 import { MediaCard } from "../../MediaCard/MediaCard";
 import type { MediaType, RecommendationData } from "../../../utils/types";
 import { StyledHeadingWrapper } from "./SimilarRecommendations.styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RecommendationCard } from "../RecommendationCard/RecommendationCard";
 export function SimilarRecommendations({
     recommendationData,
@@ -24,13 +24,16 @@ export function SimilarRecommendations({
     isLoading: boolean;
 }) {
     const [isMobileState, setIsMobileState] = useState(isMobile());
-    window.addEventListener("resize", () => {
-        if (isMobile()) {
-            setIsMobileState(true);
-        } else {
-            setIsMobileState(false);
-        }
-    });
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobileState(isMobile());
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     return (
         <>
             {isMobileState ? (

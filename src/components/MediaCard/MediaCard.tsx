@@ -130,7 +130,7 @@ export function MediaCard({ data, isLoading, tagText, mediaType }: CardProps) {
                         >
                             {isInWatchList ? (
                                 <BiCheck
-                                    color="var(--success-color)"
+                                    color="var(--text--primary-color)"
                                     strokeWidth={"1.5"}
                                 />
                             ) : (

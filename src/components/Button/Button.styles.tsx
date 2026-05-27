@@ -3,16 +3,25 @@ import styled, { css } from "styled-components";
 import type { StyledButtonProps } from "../../utils/types";
 
 export const StyledButton = styled(Button)<StyledButtonProps>`
-    background-color: ${(props) =>
+    background: ${(props) =>
         props.$secondary
             ? "var(--button--secondary-color)"
             : "var(--button--primary-color)"};
     font-weight: bold;
-    transition: background-color 0.3s ease;
-    border-radius: ${(props) => (props.$secondary ? "10px" : "5px")};
+    transition: all 0.3s ease;
+    border-radius: 5px;
+
     &:hover {
         background-color: var(--secondary-color);
+        transform: scale(1.025);
+        color: var(--background--primary-color);
     }
+
+    &:hover svg,
+    &:hover svg * {
+        stroke: var(--background--primary-color) !important;
+    }
+
     max-width: 200px;
     ${(props) =>
         props.$action &&
@@ -25,15 +34,18 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             height: 3rem;
             width: 3rem;
-            transition: all 0.3s ease;
             &:hover {
                 opacity: 1;
                 background-color: var(--background--primary-color);
                 border: 2px solid var(--primary-color);
-                svg {
-                    transition: all 0.3s ease;
-                    color: var(--primary-color);
-                }
+            }
+
+            /* Also ensure action buttons' SVGs follow the same hover color */
+            &:hover svg,
+            &:hover svg * {
+                fill: var(--background--primary-color) !important;
+                stroke: var(--background--primary-color) !important;
+                color: var(--background--primary-color) !important;
             }
         `}
 `;

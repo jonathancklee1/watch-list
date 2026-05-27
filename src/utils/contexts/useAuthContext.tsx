@@ -16,7 +16,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
         return () => subscription.unsubscribe();
     }, []);
-    console.log(session, "session");
     return (
         <AuthContext.Provider value={{ user: session?.user }}>
             {children}

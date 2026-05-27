@@ -46,7 +46,6 @@ function MediaDetailsComponent() {
             data: { results: ApiMovieData[] } | null;
             isLoading: boolean;
         };
-    console.log(recommendations);
     const recommendationData =
         mediaType == "anime"
             ? animeRecommendations?.data

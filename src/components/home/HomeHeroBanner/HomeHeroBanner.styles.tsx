@@ -15,12 +15,29 @@ export const StyledHomeHeroBanner = styled.div`
     }
 `;
 export const StyledHeading = styled(Heading)`
+    display: inline-block;
     font-size: 1.75rem;
     font-weight: bold;
+    line-height: 1.2;
+    padding: 0.25rem 0;
     text-align: center;
-    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 3rem;
     span {
         color: var(--text--primary-color);
+    }
+    & > span:not(:first-child) {
+        background: linear-gradient(
+            135deg,
+            var(--primary-color),
+            var(--secondary-color)
+        );
+
+        -webkit-background-clip: text;
+        background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
     }
     @media (min-width: 768px) {
         font-size: 3rem;

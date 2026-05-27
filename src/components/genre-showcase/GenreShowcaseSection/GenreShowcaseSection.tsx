@@ -1,5 +1,5 @@
 import { Flex, Heading, Separator, Spinner } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
@@ -21,13 +21,20 @@ export function GenreShowcaseSection({
         isMobile() ? 2 : 4,
     );
 
-    window.addEventListener("resize", () => {
-        if (isMobile()) {
-            setMobileSlidesNumber(2);
-        } else {
-            setMobileSlidesNumber(4);
-        }
-    });
+    useEffect(() => {
+        const handleResize = () => {
+            if (isMobile()) {
+                setMobileSlidesNumber(2);
+            } else {
+                setMobileSlidesNumber(4);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     return (
         <StyledDiv>
             <Flex gap="4" alignItems={"center"} width={"100%"} mb={"1em"}>

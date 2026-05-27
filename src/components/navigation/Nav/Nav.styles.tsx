@@ -35,7 +35,7 @@ export const LinkWrapper = styled.div`
 export const StyledLink = styled(Link)<StyledLinkProps>`
     text-decoration: none;
     color: ${({ $isLogo }) =>
-        $isLogo ? "var(--primary-color)" : "var(--text--tertiary-color)"};
+        $isLogo ? "var(--secondary-color)" : "var(--text--tertiary-color)"};
     font-weight: ${({ $isLogo }) => ($isLogo ? "bold" : "600")};
     font-size: ${({ $isLogo }) => ($isLogo ? "1.5rem" : "1rem")};
     text-transform: uppercase;

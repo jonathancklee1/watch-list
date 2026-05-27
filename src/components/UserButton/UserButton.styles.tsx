@@ -5,7 +5,7 @@ export const StyledUserButton = styled.button`
     border: none;
     border-radius: 100%;
     cursor: pointer;
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--secondary-color);
     width: 3em;
     height: 3em;
     overflow: hidden;

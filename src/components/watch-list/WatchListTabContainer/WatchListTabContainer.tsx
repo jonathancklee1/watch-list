@@ -3,7 +3,7 @@ import { isMobile } from "../../../utils/helpers/isMobile";
 
 import { WATCH_LIST_STATE } from "../../../utils/constants";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { WatchListContext } from "../../../utils/contexts/WatchListContext";
 import { WatchListColumn } from "../WatchListColumn/WatchListColumn";
 import { DragDropProvider } from "@dnd-kit/react";
@@ -20,13 +20,21 @@ export function WatchListTabContainer() {
     const { handleDragWatchList } = useWatchListController();
     const { user } = useContext(AuthContext);
     const [isMobileState, setIsMobileState] = useState(isMobile());
-    window.addEventListener("resize", () => {
-        if (isMobile(1024)) {
-            setIsMobileState(true);
-        } else {
-            setIsMobileState(false);
-        }
-    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (isMobile(1024)) {
+                setIsMobileState(true);
+            } else {
+                setIsMobileState(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     const WATCHLIST_COLUMNS: { name: string; id: WatchStatus }[] = [
         {

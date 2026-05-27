@@ -7,7 +7,7 @@ import {
 } from "./PopularMediaRow.styles";
 import { Text } from "@chakra-ui/react";
 import { CardCarousel } from "../../CardCarousel/CardCarousel";
-import { useState, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { isMobile } from "../../../utils/helpers/isMobile";
 import { mapMediaTypeToText } from "../../../utils/helpers/mapMediaTypeToText";
 
@@ -21,13 +21,21 @@ export function PopularMediaRow({
     const [visibleSlidesNumber, setVisibleSlidesNumber] = useState(
         isMobile() ? 1.5 : 3.5,
     );
-    window.addEventListener("resize", () => {
-        if (isMobile()) {
-            setVisibleSlidesNumber(1.5);
-        } else {
-            setVisibleSlidesNumber(3.5);
-        }
-    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (isMobile()) {
+                setVisibleSlidesNumber(1.5);
+            } else {
+                setVisibleSlidesNumber(3.5);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     return (
         <StyledRowWrapper>
             <StyledRowHeaderWrapper>

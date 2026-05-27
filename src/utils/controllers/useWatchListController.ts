@@ -9,7 +9,6 @@ export function useWatchListController() {
     // const initialState = watchList;
 
     function handleAddToWatchList(data: CardType) {
-        console.log("Add", data);
         try {
             dispatch(["ADD", "toWatch", data]);
             enqueueToast("Added to 'To Watch'", "success");
@@ -18,7 +17,6 @@ export function useWatchListController() {
         }
     }
     function handleDeleteFromWatchList(data: CardType, from: WatchStatus) {
-        console.log("Delete", data);
         try {
             dispatch(["REMOVE", data, from]);
             enqueueToast("Removed from watch list", "success");
@@ -40,7 +38,6 @@ export function useWatchListController() {
         to: WatchStatus,
         index?: number,
     ) {
-        console.log("Move", data);
         const mappedFrom = from === "toWatch" ? "To Watch" : from;
         const mappedTo = to === "toWatch" ? "To Watch" : to;
         try {

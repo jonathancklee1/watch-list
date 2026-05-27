@@ -126,8 +126,6 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
         async function syncData() {
             try {
                 if (user) {
-                    console.log("Upserting to Supabase:", watchListState);
-
                     const { error } = await supabase
                         .from("User Watch List")
                         .upsert(

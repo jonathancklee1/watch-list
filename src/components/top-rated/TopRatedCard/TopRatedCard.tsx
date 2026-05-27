@@ -20,7 +20,6 @@ export function TopRatedCard({
     isLoading?: boolean;
     mediaType: MediaType;
 }) {
-    // console.log(data, "data");
     const isFirst = ranking === 1;
     const { handleAddToWatchList } = useWatchListController();
     const isInWatchList = useIsInWatchList(data);
@@ -127,7 +126,7 @@ export function TopRatedCard({
                                 >
                                     {isInWatchList ? (
                                         <BiCheck
-                                            color="var(--success-color)"
+                                            color="var(--text--primary-color)"
                                             strokeWidth={"1.5"}
                                         />
                                     ) : (
