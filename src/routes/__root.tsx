@@ -3,6 +3,7 @@ import Nav from "../components/navigation/Nav/Nav";
 import { MobileNav } from "../components/navigation/MobileNav/MobileNav";
 import styled from "styled-components";
 import { Toaster } from "../components/ui/toaster";
+import NotFound from "../components/NotFound";
 export const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -15,9 +16,20 @@ export const Route = createRootRoute({
     component: () => (
         <>
             <Nav />
-            <Outlet /> {/* This is where child routes render */}
+            <Outlet />
             <MobileNav />
             <Toaster />
         </>
+    ),
+    notFoundComponent: () => (
+        <PageWrapper
+            style={{
+                alignItems: "center",
+                justifyContent: "center",
+                height: "calc(100vh - 90px)",
+            }}
+        >
+            <NotFound />
+        </PageWrapper>
     ),
 });
