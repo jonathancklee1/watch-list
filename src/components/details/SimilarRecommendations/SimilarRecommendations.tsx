@@ -61,9 +61,10 @@ export function SimilarRecommendations({
                                 <Spinner size="xl" />
                             </Flex>
                         )}
-                        {recommendationData?.length === 0 && (
-                            <EmptyRecommendations />
-                        )}
+                        {recommendationData?.length &&
+                            recommendationData?.length < 1 && (
+                                <EmptyRecommendations />
+                            )}
                         <CardCarousel
                             slidesPerPage={1.5}
                             items={
@@ -115,9 +116,10 @@ export function SimilarRecommendations({
                                 <Spinner size="xl" />
                             </Flex>
                         )}
-                        {recommendationData?.length === 0 && (
-                            <EmptyRecommendations />
-                        )}
+                        {recommendationData?.length &&
+                            recommendationData?.length < 1 && (
+                                <EmptyRecommendations />
+                            )}
                         {recommendationData?.map((item) => {
                             return (
                                 <RecommendationCard

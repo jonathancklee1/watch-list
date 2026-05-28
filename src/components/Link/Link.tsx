@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { StyledLink } from "./Link.styles";
+import { Link as TanstackLink } from "@tanstack/react-router";
 export function Link({
     label,
     href,
@@ -13,7 +14,8 @@ export function Link({
 }) {
     return (
         <StyledLink href={href} style={style}>
-            {label} {icon}
+            <TanstackLink to={href}>{label}</TanstackLink>
+            {icon}
         </StyledLink>
     );
 }

@@ -10,7 +10,10 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
     font-weight: bold;
     transition: all 0.3s ease;
     border-radius: 5px;
-
+    color: ${(props) =>
+        props.$secondary
+            ? "var(--text--primary-color)"
+            : "var(--background--primary-color)"};
     &:hover {
         background-color: var(--secondary-color);
         transform: scale(1.025);
@@ -36,6 +39,7 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
             height: 3rem;
             width: 3rem;
             transition: all 0.3s ease;
+            color: #ffffff;
             &:hover {
                 opacity: 1;
                 background-color: var(--background--primary-color);

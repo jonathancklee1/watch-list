@@ -42,6 +42,7 @@ export function DetailsContent({
                                     fontWeight={"bold"}
                                     p={".5em"}
                                     background={"var(--secondary-color)"}
+                                    color={"var(--background--primary-color)"}
                                 >
                                     {genre.name}
                                 </Badge>
@@ -69,9 +70,7 @@ export function DetailsContent({
                                 width={"fit-content"}
                                 fontWeight={"bold"}
                                 p={".5em"}
-                                background={
-                                    "var(--background--secondary-color)"
-                                }
+                                background={"var(--text--tertiary-color)"}
                                 color={"var(--text--primary-color)"}
                                 display={"flex"}
                                 alignItems={"center"}
@@ -112,7 +111,8 @@ export function DetailsContent({
                                 width={"fit-content"}
                                 fontWeight={"bold"}
                                 p={".5em"}
-                                background={"white"}
+                                background={"var(--text--primary-color)"}
+                                color={"var(--background--primary-color)"}
                                 display={"flex"}
                                 alignItems={"center"}
                                 gap={2}
