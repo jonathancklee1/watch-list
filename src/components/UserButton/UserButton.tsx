@@ -3,7 +3,7 @@ import { supabase } from "../../utils/helpers/supabase";
 import { Button } from "../Button/Button";
 import { StyledUserButton } from "./UserButton.styles";
 import { AuthContext } from "../../utils/contexts/AuthContext";
-import { Image, Popover, Portal, Text } from "@chakra-ui/react";
+import { Image, Popover, Portal, Spinner, Text } from "@chakra-ui/react";
 import { enqueueToast } from "../../utils/helpers/enqueueToast";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -11,8 +11,8 @@ function UserButton() {
     const navigate = useNavigate();
     const [pendingAuth, setPendingAuth] = useState(false);
     async function signIn() {
+        setPendingAuth(true);
         try {
-            setPendingAuth(true);
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
             });
@@ -22,6 +22,8 @@ function UserButton() {
         } catch (error) {
             enqueueToast("Failed to sign in", "error");
             console.error(error);
+        } finally {
+            setPendingAuth(false);
         }
     }
 
@@ -47,6 +49,10 @@ function UserButton() {
                             <Image
                                 src={user.user_metadata.avatar_url}
                                 alt="user avatar"
+                                width="100%"
+                                height="100%"
+                                objectFit="cover"
+                                display="block"
                             />
                         ) : (
                             <Image
@@ -86,7 +92,9 @@ function UserButton() {
             </Popover.Root>
         );
 
-    return (
+    return pendingAuth ? (
+        <Spinner />
+    ) : (
         <Button
             label="Sign In With Google"
             $primary
