@@ -1,75 +1,59 @@
-# React + TypeScript + Vite
+# My Watch List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive React + TypeScript media discovery app for movies, TV shows, and anime with an interactive watch list feature.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+`My Watch List` helps users browse popular media, search by category, view details and recommendations, and manage a personal watch list.
 
-## React Compiler
+Key behaviors:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Google sign-in using Supabase authentication
+- Popular media sections for movies, TV, and anime
+- Search page with filters and paginated results
+- Details pages showing media info and recommendations
+- Watch list management with add/remove and drag/drop behavior
+- Responsive UI with Chakra UI, styled components, and custom animations
 
-Note: This will impact Vite dev & build performances.
+### Live Site
 
-## Expanding the ESLint configuration
+https://my-media-watch-list.netlify.app/
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Technologies Used
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React 19
+- TypeScript
+- Vite
+- @tanstack/react-router
+- Chakra UI
+- styled-components
+- Supabase Auth
+- @tanstack/react-query
+- @dnd-kit/react for drag and drop
+- TMDB API for movies and TV data
+- Jikan API for anime data
+- Next Themes for theme support
+- ESLint for linting
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Google OAuth login** through Supabase
+- **Popular media discovery** across movies, TV shows, and anime
+- **Search with category filters** and paginated results
+- **Media detail pages** with similar/recommended content
+- **User watch list** with categorized status and drag/drop support
+- **Responsive navigation** for mobile and desktop
+- **Toast notifications** for success and error feedback
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `pnpm dev` - start development server
+- `pnpm build` - build production bundle
+- `pnpm lint` - run ESLint
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Project Structure
+
+- `src/components` - reusable UI components and layout pieces
+- `src/routes` - route definitions and page components
+- `src/utils` - helpers, hooks, contexts, and API data hooks
+- `src/assets` - static assets used by the app
