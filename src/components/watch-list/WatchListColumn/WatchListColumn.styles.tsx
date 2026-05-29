@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledTabContainer = styled(Box)`
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 0.5em;
     border-radius: 20px;
     background-color: var(--background--secondary-color);
     padding: 1em;

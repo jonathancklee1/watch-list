@@ -10,6 +10,8 @@ import { mapToCard } from "../../../utils/helpers/mapToCard";
 import { Link } from "@tanstack/react-router";
 import { enqueueToast } from "../../../utils/helpers/enqueueToast";
 import { useIsInWatchList } from "../../../utils/hooks/useIsInWatchList";
+import { useDetailsMedia } from "../../../utils/data-hooks/useDetailsMedia";
+import { useDetailsAnime } from "../../../utils/data-hooks/useDetailsAnime";
 
 export function RecommendationCard({
     data,
@@ -20,6 +22,10 @@ export function RecommendationCard({
 }) {
     const { handleAddToWatchList } = useWatchListController();
     const isInWatchList = useIsInWatchList(data);
+    const { data: detailsData } =
+        useDetailsMedia(mediaType, data?.id ? data?.id.toString() : "") || {};
+    const { data: animeDetails } =
+        useDetailsAnime(data?.id ? data?.id.toString() : "") || {};
 
     return (
         <Link
@@ -87,7 +93,9 @@ export function RecommendationCard({
                                     );
                                     return;
                                 }
-                                handleAddToWatchList(mapToCard(data)!);
+                                handleAddToWatchList(
+                                    mapToCard(detailsData || animeDetails)!,
+                                );
                             }}
                         >
                             {isInWatchList ? (

@@ -1,10 +1,11 @@
 import { StyledTabContainer } from "./WatchListColumn.styles";
-import { EmptyState, Flex, Text } from "@chakra-ui/react";
+import { EmptyState, Field, Flex, Input, Text } from "@chakra-ui/react";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
 import { WatchListCard } from "../WatchListCard/WatchListCard";
 import { useDroppable } from "@dnd-kit/react";
 import type { CardType, WatchStatus } from "../../../utils/types";
 import { CollisionPriority } from "@dnd-kit/abstract";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 
 export function WatchListColumn({
     columnData,
@@ -21,11 +22,46 @@ export function WatchListColumn({
         accept: "card",
         collisionPriority: CollisionPriority.Low,
     });
+    const [filterValue, setFilterValue] = useState("");
+    const [filteredData, setFilteredData] = useState<CardType[] | undefined>(
+        columnData,
+    );
+    const debounceTimer = useRef<number | undefined>(undefined);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setFilteredData(columnData);
+    }, [columnData]);
+
+    useEffect(() => {
+        window.clearTimeout(debounceTimer.current);
+        debounceTimer.current = window.setTimeout(() => {
+            if (!filterValue.trim()) {
+                setFilteredData(columnData);
+                return;
+            }
+
+            const filtered = columnData?.filter(
+                (item) =>
+                    item.title &&
+                    item.title
+                        .toLowerCase()
+                        .includes(filterValue.toLowerCase()),
+            );
+            setFilteredData(filtered);
+        }, 250);
+
+        return () => window.clearTimeout(debounceTimer.current);
+    }, [filterValue, columnData]);
+
+    function handleFilter(e: ChangeEvent<HTMLInputElement>) {
+        setFilterValue(e.target.value);
+    }
 
     return (
         <StyledTabContainer ref={ref}>
             {/* Header Content */}
-            <Flex alignItems={"center"} gap={".5em"} mb="1em">
+            <Flex alignItems={"center"} gap={".5em"}>
                 {id === "completed" ? (
                     <BiCheck size={20} color="var(--primary-color)" />
                 ) : id === "toWatch" ? (
@@ -38,16 +74,27 @@ export function WatchListColumn({
                     {name}
                 </Text>
             </Flex>
+            <Field.Root>
+                <Input
+                    borderRadius={"20px"}
+                    placeholder={`Filter ${name}`}
+                    onChange={handleFilter}
+                    my={"12px"}
+                />
+            </Field.Root>
 
             <Flex
                 flexDirection="column"
                 gap="12px"
                 flexGrow={1}
                 minHeight="150px"
+                maxHeight="1000px"
+                overflowY="auto"
+                paddingRight="6px"
                 width="100%"
             >
-                {columnData && columnData.length > 0 ? (
-                    columnData.map((item, index) => (
+                {filteredData && filteredData.length > 0 ? (
+                    filteredData.map((item, index) => (
                         <WatchListCard
                             key={item.id}
                             data={item}

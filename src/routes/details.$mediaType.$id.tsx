@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageWrapper } from "./__root";
 import { Flex, Grid } from "@chakra-ui/react";
-import { useMediaDetails } from "../utils/data-hooks/useDetailsMedia";
+import { useDetailsMedia } from "../utils/data-hooks/useDetailsMedia";
 import { useDetailsAnime } from "../utils/data-hooks/useDetailsAnime";
 import { useMediaRecommendations } from "../utils/data-hooks/useRecommendationsMedia";
 import { useRecommendationsAnime } from "../utils/data-hooks/useRecommendationsAnime";
@@ -26,7 +26,7 @@ function MediaDetailsComponent() {
         mediaType: Omit<MediaType, "anime">;
         id: string;
     };
-    const { data, isLoading } = useMediaDetails(mediaType, id);
+    const { data, isLoading } = useDetailsMedia(mediaType, id);
     const { data: animeDetail, isLoading: isAnimeLoading } = useDetailsAnime(
         id,
     ) as {
