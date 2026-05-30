@@ -48,13 +48,11 @@ export function WatchListProvider({ children }: { children: React.ReactNode }) {
                     const updatedTargetList =
                         insertIndex !== undefined
                             ? [
-                                  cleanTargetList && {
-                                      ...cleanTargetList?.slice(0, insertIndex),
-                                  },
+                                  ...(cleanTargetList?.slice(0, insertIndex) ||
+                                      []),
                                   item,
-                                  cleanTargetList && {
-                                      ...cleanTargetList?.slice(insertIndex),
-                                  },
+                                  ...(cleanTargetList?.slice(insertIndex) ||
+                                      []),
                               ]
                             : [...(cleanTargetList || []), item];
 

@@ -49,6 +49,7 @@ export function TopRatedCard({
                         position={"absolute"}
                         top={".5em"}
                         p={".4em"}
+                        backgroundColor={"var(--background--primary-color)"}
                     >
                         #{ranking}
                     </Badge>

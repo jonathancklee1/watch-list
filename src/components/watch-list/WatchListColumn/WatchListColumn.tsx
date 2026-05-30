@@ -94,16 +94,20 @@ export function WatchListColumn({
                 width="100%"
             >
                 {filteredData && filteredData.length > 0 ? (
-                    filteredData.map((item, index) => (
-                        <WatchListCard
-                            key={item.id}
-                            data={item}
-                            watchStatus={id}
-                            index={index}
-                            column={id}
-                            id={item.id}
-                        />
-                    ))
+                    filteredData.map((item) => {
+                        const itemIndex =
+                            columnData?.findIndex((d) => d.id === item.id) ?? 0;
+                        return (
+                            <WatchListCard
+                                key={item.id}
+                                data={item}
+                                watchStatus={id}
+                                index={itemIndex}
+                                column={id}
+                                id={item.id}
+                            />
+                        );
+                    })
                 ) : (
                     <EmptyWatchList />
                 )}
