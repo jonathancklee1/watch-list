@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
 export const StyledTabContainer = styled(Box)`
     display: flex;
@@ -22,5 +22,18 @@ export const StyledCardWrapperContainer = styled(Box)`
     }
     @media (min-width: 1024px) {
         display: flex;
+    }
+`;
+export const StyledCardWrapper = styled(Flex)`
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+    min-height: 150px;
+    max-height: calc(100vh - 400px);
+    overflow-y: auto;
+    padding-right: 6px;
+    width: 100%;
+    @media (min-width: 768px) {
+        max-height: 1000px;
     }
 `;

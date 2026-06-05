@@ -1,4 +1,7 @@
-import { StyledTabContainer } from "./WatchListColumn.styles";
+import {
+    StyledCardWrapper,
+    StyledTabContainer,
+} from "./WatchListColumn.styles";
 import { EmptyState, Field, Flex, Input, Text } from "@chakra-ui/react";
 import { BiCheck, BiNotepad, BiSolidBinoculars } from "react-icons/bi";
 import { WatchListCard } from "../WatchListCard/WatchListCard";
@@ -80,19 +83,11 @@ export function WatchListColumn({
                     placeholder={`Filter ${name}`}
                     onChange={handleFilter}
                     my={"12px"}
+                    borderColor={"var(--text--tertiary-color)"}
                 />
             </Field.Root>
 
-            <Flex
-                flexDirection="column"
-                gap="12px"
-                flexGrow={1}
-                minHeight="150px"
-                maxHeight="1000px"
-                overflowY="auto"
-                paddingRight="6px"
-                width="100%"
-            >
+            <StyledCardWrapper>
                 {filteredData && filteredData.length > 0 ? (
                     filteredData.map((item) => {
                         const itemIndex =
@@ -111,7 +106,7 @@ export function WatchListColumn({
                 ) : (
                     <EmptyWatchList />
                 )}
-            </Flex>
+            </StyledCardWrapper>
         </StyledTabContainer>
     );
 }

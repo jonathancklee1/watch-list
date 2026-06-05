@@ -19,13 +19,13 @@ export function GenreShowcaseSection({
     mediaType: MediaType;
 }) {
     const [mobileSlidesNumber, setMobileSlidesNumber] = useState(
-        isMobile() ? 2 : 4,
+        isMobile() ? 1.75 : 4,
     );
 
     useEffect(() => {
         const handleResize = () => {
             if (isMobile()) {
-                setMobileSlidesNumber(2);
+                setMobileSlidesNumber(1.75);
             } else {
                 setMobileSlidesNumber(4);
             }
