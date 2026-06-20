@@ -55,7 +55,7 @@ body {
         background: var(--secondary-color);
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: var(--gradient-primary);
+        background: var(--primary-color);
     }
 }
 
