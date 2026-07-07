@@ -10,7 +10,6 @@ export function useSearchMedia(mediaType: MediaType, query: string, page = 1) {
         {
             q: query,
             page: page.toString(),
-            sfw: "true",
         },
         {
             select: (data) => {

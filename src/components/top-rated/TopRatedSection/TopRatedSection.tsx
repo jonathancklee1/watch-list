@@ -4,6 +4,8 @@ import { TopRatedCard } from "../TopRatedCard/TopRatedCard";
 import { StyledDiv } from "./TopRatedSection.styles";
 import type { ApiMovieData, MediaType } from "../../../utils/types";
 import FadeInUpComponent from "../../FadeInUpComponent";
+import { Box, Text } from "@chakra-ui/react";
+
 export function TopRatedSection({
     cardData,
     isLoading,
@@ -13,6 +15,7 @@ export function TopRatedSection({
     isLoading?: boolean;
     mediaType: MediaType;
 }) {
+    const isEmpty = cardData?.length === 0;
     return (
         <FadeInUpComponent>
             <StyledDiv>
@@ -32,8 +35,18 @@ export function TopRatedSection({
                         Top Rated
                     </Heading>
                 </Flex>
+
                 {isLoading ? (
                     <Spinner size="sm" mx={"auto"} />
+                ) : isEmpty ? (
+                    <Box textAlign="center" p={8}>
+                        <Text
+                            color="var(--text--secondary-color)"
+                            fontSize="1.25rem"
+                        >
+                            Data is unavailable
+                        </Text>
+                    </Box>
                 ) : (
                     <Grid
                         templateColumns={{

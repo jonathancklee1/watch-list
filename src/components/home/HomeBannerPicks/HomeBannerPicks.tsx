@@ -18,9 +18,9 @@ export function HomeBannerPicks() {
         isLoading: boolean;
     };
     const trendingArray = [
-        { ...trendingMovies?.results[0], mediaType: "movie" },
-        { ...trendingShows?.results[0], mediaType: "tv" },
-        { ...trendingAnime?.data[0], mediaType: "anime" },
+        { ...trendingMovies?.results?.[0], mediaType: "movie" },
+        { ...trendingShows?.results?.[0], mediaType: "tv" },
+        { ...trendingAnime?.data?.[0], mediaType: "anime" },
     ]
         .map((item) => mapToCard(item, item.mediaType as MediaType))
         .filter((item) => item !== null && item.title);
